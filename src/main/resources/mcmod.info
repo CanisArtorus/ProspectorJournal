@@ -1,16 +1,16 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "prospectorjournal",
+  "name": "Prospector's Journal",
+  "description": "Helps to track large ore veins.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["CanisArtorus"],
+  "credits": "Dyonovan, for TCNodeTracker doing basically the same thing. GregoriousT for GregTech6 in which this matters. OvermindDL1 for providing a gradle workspace that works.",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["gregtech@[6.09.00,)"]
 }
 ]
