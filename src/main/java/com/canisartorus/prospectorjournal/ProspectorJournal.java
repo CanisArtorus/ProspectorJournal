@@ -34,7 +34,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.0.0"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 
@@ -50,11 +50,11 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	public static boolean doGui = false;
 	public static int xMarker, yMarker, zMarker;
 	public static ArrayList<com.canisartorus.lib.DimTag> dims = new ArrayList<>();
-	public static ArrayList<com.canisartorus.lib.RockMatter> rockSurvey = new ArrayList<>();
+	public static java.util.List<com.canisartorus.lib.RockMatter> rockSurvey = new ArrayList<>();
 
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
-	@Override public String getModNameForLog() {return "Example_Mod";}
+	@Override public String getModNameForLog() {return "Prospector_Journal";}
 	@Override public gregapi.api.Abstract_Proxy getProxy() {return PROXY;}
 
 	// Do not change these 7 Functions. Just keep them this way.
@@ -69,15 +69,15 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModPreInit2(FMLPreInitializationEvent aEvent) {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
-		this.RegisterItems();
+		this.RegisterItems();	//TODO
 		com.canisartorus.prospectorjournal.ConfigHandler.init(event.getSuggestedConfigurationFile());
-		// net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.RightClickEvent());
+		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.RightClickEvent());
 	}
 
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
-		this.RegisterRecipes();
+		this.RegisterRecipes();	//TODO
 		com.canisartorus.prospectorjournal.KeyBindings.init();
 	}
 	
@@ -89,7 +89,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	// @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	// @EventHandler
 	// public void postInit(FMLPostInitializationEvent event) {
-		// net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.gui.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
+		// net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.gui.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
 	}
 	
 	@Override

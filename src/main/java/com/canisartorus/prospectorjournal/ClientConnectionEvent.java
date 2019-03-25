@@ -40,9 +40,11 @@ public class ClientConnectionEvent {
         }
 
         ProspectorJournal.hostName = hostname;
+
+		// extend with additional tracking sets as needed.
         ProspectorJournal.rockSurvey.clear();
 
-        Utils.readJson();
+        Utils.readJson(Utils.GT_FILE);
 
     }
 
