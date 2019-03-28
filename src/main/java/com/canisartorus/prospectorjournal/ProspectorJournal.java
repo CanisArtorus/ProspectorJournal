@@ -49,8 +49,9 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	public static String hostName;
 	public static boolean doGui = false;
 	public static int xMarker, yMarker, zMarker;
-	public static ArrayList<com.canisartorus.lib.DimTag> dims = new ArrayList<>();
-	public static java.util.List<com.canisartorus.lib.RockMatter> rockSurvey = new ArrayList<>();
+	public static ArrayList<com.canisartorus.prospectorjournal.lib.DimTag> dims = new ArrayList<>();
+	public static java.util.List<com.canisartorus.prospectorjournal.lib.RockMatter> rockSurvey = new ArrayList<>();
+	public static java.util.List<com.canisartorus.prospectorjournal.lib.GeoTag> bedrockFault = new ArrayList<>();
 
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
@@ -69,15 +70,15 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModPreInit2(FMLPreInitializationEvent aEvent) {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
-		this.RegisterItems();	//TODO
-		com.canisartorus.prospectorjournal.ConfigHandler.init(event.getSuggestedConfigurationFile());
+		Items.RegisterItems();
+		com.canisartorus.prospectorjournal.ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
 		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.RightClickEvent());
 	}
 
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
-		this.RegisterRecipes();	//TODO
+		Items.RegisterRecipes();
 		com.canisartorus.prospectorjournal.KeyBindings.init();
 	}
 	
@@ -89,7 +90,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	// @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	// @EventHandler
 	// public void postInit(FMLPostInitializationEvent event) {
-		// net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.gui.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
+//		 net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
 	}
 	
 	@Override

@@ -44,3 +44,4 @@
 !/src/main/resources/**/*.info
 !/src/main/resources/**/*.mcmeta
 # Some old scripts in resources...
+/bin/

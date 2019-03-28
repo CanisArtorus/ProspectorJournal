@@ -3,8 +3,8 @@ package com.canisartorus.prospectorjournal.lib;
 // @Author Dyonovan
 
 public class DimTag {
-	public int dimID;
-	public String dimName;
+	public final int dimID;
+	public final String dimName;
 	
 	public DimTag(int dimID, String dimName) {
 		this.dimID = dimID;

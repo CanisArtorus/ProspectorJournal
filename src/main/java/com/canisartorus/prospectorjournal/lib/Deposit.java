@@ -10,17 +10,16 @@ import java.util.Comparator;
 public class Deposit extends RockMatter {
 	public int dist;
 
-	
 	public Deposit(RockMatter datum, float atX, float atZ) {
 		super(datum.ore, datum.dim, datum.x, datum.y, datum.z, datum.sample);
-		this.dist = (int) java.util.Math.round( (datum.x - atX)*(datum.x - atX) + (datum.z - atZ)*(datum.z - atZ) );
+		this.dist = (int) Math.round( (datum.x - atX)*(datum.x - atX) + (datum.z - atZ)*(datum.z - atZ) );
 		// this.exhausted = datum.exhausted;
 	}
 
-	public static Comparator<RockMatter> getCloseComparator() {
-		return new Comparator<RockMatter>() {
+	public static Comparator<Deposit> getCloseComparator() {
+		return new Comparator<Deposit>() {
 			@Override
-			public int compare(RockMatter o1, RockMatter o2) {
+			public int compare(Deposit o1, Deposit o2) {
 				// if(o1.exhausted && !o2.exhausted) {
 				if(o1.multiple == 0 && o2.multiple > 0) {
 					return 50000;
@@ -31,14 +30,14 @@ public class Deposit extends RockMatter {
 					return (o1.dist - o2.dist);
 				}
 			}
-		}
+		};
 	}
 
-	public static Comparator<RockMatter> getQualityComparator(int material) {
-		// XXX check that this shim method works.
-		return new Comparator<RockMatter>() {
+	public static Comparator<Deposit> getQualityComparator(final int material) {
+		// check that this shim method works.
+		return new Comparator<Deposit>() {
 			@Override
-			public int compare(RockMatter o1, RockMatter o2) {
+			public int compare(Deposit o1, Deposit o2) {
 				// if(o1.exhausted && !o2.exhausted) {
 				if( o1.multiple == 0 && o2.multiple > 0) {
 					return ( 0 - Dwarf.getFraction(material, o2.ore) );
@@ -49,6 +48,6 @@ public class Deposit extends RockMatter {
 					return ( Dwarf.getFraction(material, o1.ore) - Dwarf.getFraction(material, o2.ore) ) ;
 				}
 			}
-		}
+		};
 	}
 }

@@ -9,7 +9,7 @@ public class ConfigHandler {
 	
 	public static boolean bookOnly;
 	
-	public void init(java.io.File configFile) {
+	public static void init(java.io.File configFile) {
 		boolean bDirty = false;
 		if (tMainConfig == null) {
 			tMainConfig = new Configuration(configFile);
@@ -17,7 +17,9 @@ public class ConfigHandler {
 		}
 		tMainConfig.load();
 		
-		this.bookOnly = tMainConfig.get("general", "DiageticMode_false", false, "If true only the Notebook can add sample locations, navigation only works while you are holding the Notebook, and the SuveyData screen can only be accessed by reading the Notebook.").setShowInGui(true).getBoolean(false);
+		ConfigHandler.bookOnly = tMainConfig.get("general", "DiageticMode_false", false, "If true only the Notebook can add sample locations, navigation only works while you are holding the Notebook, and the SuveyData screen can only be accessed by reading the Notebook.").setShowInGui(true).getBoolean(false);
+		
+		// XXX additional configs go inside here
 		
 		if (bDirty)
 			tMainConfig.save();
