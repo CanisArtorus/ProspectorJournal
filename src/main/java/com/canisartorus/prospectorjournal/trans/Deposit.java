@@ -1,13 +1,14 @@
-package com.canisartorus.prospectorjournal.lib;
+package com.canisartorus.prospectorjournal.trans;
 
 // @Author Alexander James
 
 import com.canisartorus.prospectorjournal.lib.Dwarf;
+import com.canisartorus.prospectorjournal.lib.RockMatter;
 
 import java.util.Comparator;
 
 @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
-public class Deposit extends RockMatter {
+public class Deposit extends RockMatter  {
 	public int dist;
 
 	public Deposit(RockMatter datum, float atX, float atZ) {
@@ -22,18 +23,18 @@ public class Deposit extends RockMatter {
 			public int compare(Deposit o1, Deposit o2) {
 				// if(o1.exhausted && !o2.exhausted) {
 				if(o1.multiple == 0 && o2.multiple > 0) {
-					return 50000;
+					return -50000;
 				// } else if(o2.exhausted && !o1.exhausted) {
 				} else if( o1.multiple > 0 && o2.multiple == 0) {
-					return -50000;
+					return 50000;
 				} else {
-					return (o1.dist - o2.dist);
+					return Integer.compare(o2.dist , o1.dist);
 				}
 			}
 		};
 	}
 
-	public static Comparator<Deposit> getQualityComparator(final int material) {
+	public static Comparator<Deposit> getQualityComparator(final short material) {
 		// check that this shim method works.
 		return new Comparator<Deposit>() {
 			@Override
@@ -45,7 +46,7 @@ public class Deposit extends RockMatter {
 				} else if( o1.multiple > 0 && o2.multiple == 0) {
 					return Dwarf.getFraction(material, o1.ore);
 				} else {
-					return ( Dwarf.getFraction(material, o1.ore) - Dwarf.getFraction(material, o2.ore) ) ;
+					return Integer.compare( Dwarf.getFraction(material, o1.ore) , Dwarf.getFraction(material, o2.ore) ) ;
 				}
 			}
 		};

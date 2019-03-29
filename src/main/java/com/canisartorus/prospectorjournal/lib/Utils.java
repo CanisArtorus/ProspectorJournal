@@ -16,12 +16,15 @@ import com.google.gson.reflect.TypeToken;
 
 public class Utils {
 
-	public final static String GT_FILE = "GT6OreVeins.json";
-	public final static String GT_BED_FILE = "GT6BedrockSpots.json";
-	public final static byte ROCK = 0;
-	public final static byte FLOWER = 1;
-	public final static byte ORE_VEIN = 2;
-	public final static byte BEDROCK = 3;
+	public final static String GT_FILE = "GT6OreVeins.json",
+			GT_BED_FILE = "GT6BedrockSpots.json",
+			DWARF_FILE = "GT6_Geochemistry.json"
+			;
+	public final static byte ROCK = 0, FLOWER = 1, ORE_VEIN = 2, BEDROCK = 3
+			;
+	
+	public final static int WHITE = 0xFFFFFF, RED = 0xCA1E04, GREEN = 0x26AA30
+			;
 
 	public final static java.util.regex.Pattern patternInvalidChars = java.util.regex.Pattern.compile("[^a-zA-Z0-9_]");
 	
@@ -39,6 +42,9 @@ public class Utils {
         	break;
         case GT_BED_FILE:
         	json = gson.toJson(ProspectorJournal.bedrockFault);
+        	break;
+        case DWARF_FILE:
+        	json = gson.toJson(com.canisartorus.prospectorjournal.lib.Dwarf.knowledge);
         	break;
         }
 

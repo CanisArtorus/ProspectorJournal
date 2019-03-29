@@ -70,8 +70,9 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModPreInit2(FMLPreInitializationEvent aEvent) {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
-		Items.RegisterItems();
 		com.canisartorus.prospectorjournal.ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
+		
+		Items.RegisterItems();
 		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.RightClickEvent());
 	}
 
@@ -80,6 +81,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
 		Items.RegisterRecipes();
 		com.canisartorus.prospectorjournal.KeyBindings.init();
+		com.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
 	}
 	
 	@Override
