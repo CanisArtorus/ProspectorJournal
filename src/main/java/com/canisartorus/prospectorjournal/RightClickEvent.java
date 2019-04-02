@@ -30,7 +30,6 @@ public class RightClickEvent {
 				if (!heldItem.getUnlocalizedName().equalsIgnoreCase("item.ca.GeologySurveyBook")) {
 				    return;
 				}
-
 			}
 		}
 		
@@ -130,6 +129,16 @@ public class RightClickEvent {
 				}
 			}
 			TakeSample(event, type, Utils.FLOWER);
+		} else {
+			// some random block
+			if(event.entityPlayer.inventory.getCurrentItem() == null)
+				return;
+			else {
+				ItemStack heldItem = event.entityPlayer.inventory.getCurrentItem();
+				if (heldItem.getUnlocalizedName().equalsIgnoreCase("item.ca.GeologySurveyBook")) {
+				    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.canisartorus.prospectorjournal.GuiMain());
+				}
+			}
 		}
 	}
 	
@@ -149,6 +158,7 @@ public class RightClickEvent {
 								m.x = event.x;
 		    					m.z = event.z;
 		    					m.sample = false;
+		    					m.dead = false;
 			    				Utils.writeJson(Utils.GT_BED_FILE);
 		    				} else {
 		    					//XXX Chat "Sure are plenty of these Flowers here."
@@ -156,7 +166,7 @@ public class RightClickEvent {
 		    				break;
 		    			}
 		    		} else if (m.dim == dim && m.ore == 0 && sourceType == Utils.BEDROCK) {
-		    			// include adjacent chunks as same unit.
+		    			// found a vein under non-specific flowers
 		    			if(m.x >= event.x - 16 && m.x <= event.x + 16 && m.z >= event.z - 16 && m.z <= event.z + 16) {
 		    				ProspectorJournal.bedrockFault.remove(m);
 //	    					match = false;
@@ -187,13 +197,17 @@ public class RightClickEvent {
                 		if( n.sample ) {
                 			if( (int)n.y > event.y) {
                 				n.sample = false;
+                				if(n.dead) {
+                					n.dead = false;
+                					n.multiple = 1;
+                				}
                 				n.y = (short)event.y;
-                			} else {
+                			} else 
                 				continue;
-                			}
                 		} else {
 //                    			n.y = (short)Math.round((n.y*n.multiple + event.y)/(n.multiple+1.0f));
             				n.multiple += 1;
+            				n.dead = false;
                 		}
                 		break;
                 	case Utils.ROCK:

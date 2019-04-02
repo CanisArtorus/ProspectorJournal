@@ -9,4 +9,13 @@ public class RockMatter extends GeoTag {
 		super(ore, dim, x, z, rock);
 		this.y = (short) y;
 	}
+	
+	public class Display extends GeoTag.Display {
+		public final short y, multiple;
+		public Display(RockMatter datum, int atX, int atZ) {
+			super(datum, atX, atZ);
+			this.y = datum.y;
+			this.multiple = datum.multiple;
+		}
+	}
 }

@@ -28,7 +28,7 @@ public class GuiPointer extends Gui {	//TODO everything
         this.mc = mc;
     }
 
-    @SuppressWarnings("unused")
+//    @SuppressWarnings("unused")
     @cpw.mods.fml.common.eventhandler.SubscribeEvent
     public void onRender(net.minecraftforge.client.event.RenderGameOverlayEvent event) {
 
@@ -36,18 +36,25 @@ public class GuiPointer extends Gui {	//TODO everything
         final int arrowHeight= 64;
 
         if (event.isCancelable() || event.type != net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.EXPERIENCE || !ProspectorJournal.doGui ||
-                this.mc.thePlayer.inventory.armorItemInSlot(3) == null){
+                (ConfigHandler.needHUD && this.mc.thePlayer.inventory.armorItemInSlot(3) == null) ){
             return;
         }
 
-        if (!(this.mc.thePlayer.inventory.armorItemInSlot(3).getItem() instanceof IGoggles)) {
-            return;
+        if (ConfigHandler.needHUD) {
+        	boolean wrong=true;
+        	for(String test : ConfigHandler.HUDsList) { 
+        		if( test == this.mc.thePlayer.inventory.armorItemInSlot(3).getItem().getUnlocalizedName()) {
+        			wrong=false;
+        			break;
+        		}
+        	}
+            if(wrong) return;
         }
 
         double direction = (Math.toDegrees(Math.atan2(ProspectorJournal.xMarker - this.mc.thePlayer.posX,
                 ProspectorJournal.zMarker - this.mc.thePlayer.posZ))) + this.mc.thePlayer.rotationYaw;
 
-            this.mc.getTextureManager().bindTexture(arrow);
+        this.mc.getTextureManager().bindTexture(arrow);
         net.minecraft.client.gui.ScaledResolution scaledresolution = new net.minecraft.client.gui.ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
         double width = scaledresolution.getScaledWidth();
 
@@ -81,7 +88,7 @@ public class GuiPointer extends Gui {	//TODO everything
         GL11.glTranslatef(-fr.getStringWidth(blocks + " " + dirY), 0, 0);
 
         fr.drawString(blocks + " - " + dirY, fr.getStringWidth(blocks + " " + dirY) / 2,
-                0, Utils.WHITE);
+                0, color);
         GL11.glPopMatrix();
 	}
 }

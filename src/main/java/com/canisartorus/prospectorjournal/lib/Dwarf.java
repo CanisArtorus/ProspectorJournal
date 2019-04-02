@@ -131,6 +131,15 @@ public class Dwarf {
 		
 	/**
 	 * 
+	 * @param mat
+	 * @return
+	 */
+	public static String name(short mat) {
+		return OreDictMaterial.MATERIAL_ARRAY[mat].mNameLocal;
+	}
+	
+	/**
+	 * 
 	 * @author Alexander James
 	 *
 	 * Data structure holding the byproducts table for a material.
@@ -152,5 +161,10 @@ public class Dwarf {
 			int old = mByBy.getOrDefault(mat, 0);
 			mByBy.put(mat, old + amount);
 		}
+	}
+
+	public static Map<Short, Integer> singOf(short ore) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

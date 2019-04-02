@@ -18,13 +18,15 @@ public class Utils {
 
 	public final static String GT_FILE = "GT6OreVeins.json",
 			GT_BED_FILE = "GT6BedrockSpots.json",
-			DWARF_FILE = "GT6_Geochemistry.json"
+			DWARF_FILE = "GT6_Geochemistry.json",
+			IE_VOID_FILE = "IE_Excavations.json"
 			;
-	public final static byte ROCK = 0, FLOWER = 1, ORE_VEIN = 2, BEDROCK = 3
+	public final static byte ROCK = 0, FLOWER = 1, ORE_VEIN = 2, BEDROCK = 3, EXCAVATOR = 4
 			;
 	
-	public final static int WHITE = 0xFFFFFF, RED = 0xCA1E04, GREEN = 0x26AA30
+	public final static int WHITE = 0xFFFFFF, RED = 0xCA1E04, GREEN = 0x26AA30, GRAY = 0xAAAA99
 			;
+	public static final short DISTANCE = -1; 
 
 	public final static java.util.regex.Pattern patternInvalidChars = java.util.regex.Pattern.compile("[^a-zA-Z0-9_]");
 	
@@ -46,6 +48,8 @@ public class Utils {
         case DWARF_FILE:
         	json = gson.toJson(com.canisartorus.prospectorjournal.lib.Dwarf.knowledge);
         	break;
+        case IE_VOID_FILE:
+        	json = gson.toJson(ProspectorJournal.voidVeins);
         }
 
         if (json == null) throw new java.lang.IllegalArgumentException(ProspectorJournal.MOD_ID + ": " + name + " is not a recognized data file.");
@@ -78,5 +82,9 @@ public class Utils {
             System.out.println(ProspectorJournal.MOD_ID + ": No " + name + " file found.");
         }
 
+    }
+    
+    public static boolean inBounds(int t, int a, int b) {
+    	return t <= b && t >= a;
     }
 }

@@ -2,30 +2,25 @@ package com.canisartorus.prospectorjournal;
 
 /**
  * @author Max Mustermann
+ * @author Dyonovan
  * @author Alexander James
  * 
- * An example implementation for a Mod using my System. Copy and rename this File into your source Directory.
  * 
- * If you have ANY Problems with the examples here, then you can contact me on the Forums or IRC.
+ * Core file for the Prospector's Journal mod.
+ * This keeps track of ore bearing rocks, and indicator flowers,
+ * in order to make waypointing everywhere unnecessary 
+ * to find the large ore Veins as are present in GT6.
  * 
- * You may ask yourself why there are no imports on this File.
- * I decided to do that, so Beginners cannot mess up by choosing wrong imports when they copy and paste Stuff.
- * Also I avoided creating Variables, because people tend to copy them over for no reason, because they don't understand what they were for, and that they could be removed easily.
- * 
- * Note: it is important to load after "gregapi_post".
- * 
- * Note: There are NO TEXTURES contained in GT that correspond to the Examples. Those you will have to do or copy them yourself.
- * 
- * uncomment the @cpw.mods.fml.common.Mod-Annotation for actual usage.
+ *  Built primarily off of TCNodeTracker at https://github.com/Dyonovan/TCNodeTracker
+ *  and thus remains under Creative Commons CC-BY-NC-SA4.0 (attribution, non-commercial, share-alike)
  */
  
  import cpw.mods.fml.common.Mod.EventHandler;
  import cpw.mods.fml.common.event.*;
- import cpw.mods.fml.common.registry.GameRegistry;
- import cpw.mods.fml.relauncher.Side;
- import cpw.mods.fml.relauncher.SideOnly;
+ //import cpw.mods.fml.common.registry.GameRegistry;
  
  import java.util.ArrayList;
+ import java.util.List;
   
 @cpw.mods.fml.common.Mod(modid=ProspectorJournal.MOD_ID, name=ProspectorJournal.MOD_NAME, version=ProspectorJournal.VERSION, dependencies="required-after:gregapi_post; after:gregtech; after:immersiveengineering")
 public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
@@ -49,9 +44,10 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	public static String hostName;
 	public static boolean doGui = false;
 	public static int xMarker, yMarker, zMarker;
-	public static ArrayList<com.canisartorus.prospectorjournal.lib.DimTag> dims = new ArrayList<>();
-	public static java.util.List<com.canisartorus.prospectorjournal.lib.RockMatter> rockSurvey = new ArrayList<>();
-	public static java.util.List<com.canisartorus.prospectorjournal.lib.GeoTag> bedrockFault = new ArrayList<>();
+	public static List<com.canisartorus.prospectorjournal.lib.DimTag> dims 			= new ArrayList<>();
+	public static List<com.canisartorus.prospectorjournal.lib.RockMatter> rockSurvey = new ArrayList<>();
+	public static List<com.canisartorus.prospectorjournal.lib.GeoTag> bedrockFault 	= new ArrayList<>();
+	public static List<com.canisartorus.prospectorjournal.lib.VoidMine> voidVeins	= new ArrayList<>(); 
 
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
