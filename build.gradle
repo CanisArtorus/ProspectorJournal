@@ -12,7 +12,8 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		#classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2.0.777'
 		classpath 'de.undercouch:gradle-download-task:3.2.0'
 	}
 }
@@ -72,8 +73,8 @@ dependencies {
 	//compileOnly "appeng:appliedenergistics2:rv3-beta-6:dev"
 	//compileOnly "applecore:AppleCore:1.7.10-3.1.1:deobf"
 	//compileOnly "ic2:IC2Classic:1.2.1.8:dev"
-	compileOnly "micdoodle8.mods:GalacticraftCore:1.7-3.0.12.504:Dev"
-	compileOnly "micdoodle8.mods:MicdoodleCore:1.7-3.0.12.504:Dev"
+	//compileOnly "micdoodle8.mods:GalacticraftCore:1.7-3.0.12.504:Dev"
+	//compileOnly "micdoodle8.mods:MicdoodleCore:1.7-3.0.12.504:Dev"
 	//compile fileTree(dir: 'libs', include: '*.jar') // If you use this, don't commit them to VCS
 	//compileOnly "appeng:appliedenergistics2:rv3-beta-6:dev"
 	//compileOnly "applecore:AppleCore:1.7.10-3.1.1:deobf"
