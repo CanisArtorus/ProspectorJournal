@@ -1,4 +1,4 @@
-package com.canisartorus.prospectorjournal.compat;
+package com.github.canisartorus.prospectorjournal.compat;
 
 import java.util.Map;
 
@@ -8,9 +8,9 @@ public class IEHandler {
 
 	
 	
-	public static class Dwarf extends com.canisartorus.prospectorjournal.lib.Dwarf {
+	public static class Dwarf extends com.github.canisartorus.prospectorjournal.lib.Dwarf {
 
-		public static int getFraction(MineralMix oreSet, short material) {
+		public static int getFractionIn(MineralMix oreSet, short material) {
 			// TODO Auto-generated method stub
 			return 0;
 		}

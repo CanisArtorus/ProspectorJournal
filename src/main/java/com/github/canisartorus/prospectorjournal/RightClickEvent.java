@@ -1,8 +1,8 @@
-package com.canisartorus.prospectorjournal;
+package com.github.canisartorus.prospectorjournal;
 
-import com.canisartorus.prospectorjournal.lib.GeoTag;
-import com.canisartorus.prospectorjournal.lib.RockMatter;
-import com.canisartorus.prospectorjournal.lib.Utils;
+import com.github.canisartorus.prospectorjournal.lib.GeoTag;
+import com.github.canisartorus.prospectorjournal.lib.RockMatter;
+import com.github.canisartorus.prospectorjournal.lib.Utils;
 
 /**	@author Alexander James
 	@author Dyonovan
@@ -21,7 +21,7 @@ public class RightClickEvent {
 		if (event.isCanceled() || !event.entityPlayer.worldObj.isRemote ||
 		        event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
 			return;
-		} else if(com.canisartorus.prospectorjournal.ConfigHandler.bookOnly) {
+		} else if(com.github.canisartorus.prospectorjournal.ConfigHandler.bookOnly) {
 			if(event.entityPlayer.inventory.getCurrentItem() == null)
 				return;
 
@@ -134,7 +134,7 @@ public class RightClickEvent {
 
 			ItemStack heldItem = event.entityPlayer.inventory.getCurrentItem();
 			if (heldItem.getUnlocalizedName().equalsIgnoreCase("item.ca.GeologySurveyBook"))
-			    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.canisartorus.prospectorjournal.GuiMain());
+			    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
 		}
 	}
 	

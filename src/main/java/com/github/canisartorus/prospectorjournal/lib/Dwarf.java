@@ -1,11 +1,11 @@
-package com.canisartorus.prospectorjournal.lib;
-
-import com.canisartorus.prospectorjournal.ProspectorJournal;
+package com.github.canisartorus.prospectorjournal.lib;
 
 import gregapi.oredict.OreDictMaterial;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 
 /**
  * 
@@ -14,7 +14,7 @@ import java.util.Map;
  * Derived data regarding ore availability and byproducts.
  */
 public class Dwarf {
-//	calculated trace ratios for ores to products
+	//	calculated trace ratios for ores to products
 	static final int
 		N_PURE = 36,		C_PURE = 9*8,
 		N_SELF = 44,		C_SELF = 12*8,
@@ -38,16 +38,24 @@ public class Dwarf {
 	 * @param ore the matID for a desired product
 	 * @return parts per Dwarf.UNIT available
 	 */
-	public static int getFraction(short material, short ore) {
+	public static int getFractionIn(short material, short ore) {
 		GeoChemistry gc = read(material);
-		if(gc.mByBy.size() != 0) {
+		if(gc.mByBy.size() != 0) 
 			return gc.mByBy.getOrDefault(ore, 0);
-		} else if (gc.mBy.size() != 0) {
+		if (gc.mBy.size() != 0)
 			return C_PURE * gc.mBy.getOrDefault(ore,  0);
-		}
-		if(material == ore)	return N_SELF * C_SELF;
+		if(material == ore)	
+			return N_SELF * C_SELF;
 		return 0;
 	}
+	public static int getFractionIn(MineralMine deposit, short product) {
+		if (deposit instanceof GeoTag)
+			return Dwarf.getFractionIn(((GeoTag)deposit).ore, product);
+		if (deposit instanceof VoidMine)
+			return com.github.canisartorus.prospectorjournal.compat.IEHandler.Dwarf.getFractionIn(((VoidMine)deposit).oreSet, product);
+		return 0;
+	}
+
 	
 	/**
 	 *  Reads the list of materials and byproducts to build a data table
@@ -111,7 +119,7 @@ public class Dwarf {
 				gc.mBy2.putIfAbsent(odm.mID, C_PURE);
 				short tID = odm.mTargetSmelting.mMaterial.mID;
 				int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U72);
-				if(com.canisartorus.prospectorjournal.ConfigHandler.allowSmelt && purity > gc.mBy2.getOrDefault(tID, 0)) gc.mBy2.put(tID,  purity);
+				if(com.github.canisartorus.prospectorjournal.ConfigHandler.allowSmelt && purity > gc.mBy2.getOrDefault(tID, 0)) gc.mBy2.put(tID,  purity);
 				knowledge.add(gc);
 			}
 		}
@@ -125,14 +133,14 @@ public class Dwarf {
 				}
 			}
 		}
-		if(com.canisartorus.prospectorjournal.ConfigHandler.exportDwarf) Utils.writeJson(Utils.DWARF_FILE);
+		if(com.github.canisartorus.prospectorjournal.ConfigHandler.exportDwarf) Utils.writeJson(Utils.DWARF_FILE);
 		System.out.println(ProspectorJournal.MOD_ID + ": Crossreferenced the byproduct data.");
 	}
 		
 	/**
 	 * 
-	 * @param mat
-	 * @return
+	 * @param mat	a Greg material System ID number
+	 * @return The localized display name
 	 */
 	public static String name(short mat) {
 		return OreDictMaterial.MATERIAL_ARRAY[mat].mNameLocal;
@@ -163,8 +171,14 @@ public class Dwarf {
 		}
 	}
 
+	/**
+	 * For Bedrock veins; includes the chance to generate byproduct ore blocks.
+	 * @param ore	the major ore type ID
+	 * @return	the extended byproduct table
+	 */
 	public static Map<Short, Integer> singOf(short ore) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

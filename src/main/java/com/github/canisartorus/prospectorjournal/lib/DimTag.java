@@ -1,4 +1,4 @@
-package com.canisartorus.prospectorjournal.lib;
+package com.github.canisartorus.prospectorjournal.lib;
 
 // @Author Dyonovan
 

@@ -1,4 +1,4 @@
-package com.canisartorus.prospectorjournal;
+package com.github.canisartorus.prospectorjournal;
 
 /**
  * @author Max Mustermann
@@ -44,10 +44,10 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	public static String hostName;
 	public static boolean doGui = false;
 	public static int xMarker, yMarker, zMarker;
-	public static List<com.canisartorus.prospectorjournal.lib.DimTag> dims 			= new ArrayList<>();
-	public static List<com.canisartorus.prospectorjournal.lib.RockMatter> rockSurvey = new ArrayList<>();
-	public static List<com.canisartorus.prospectorjournal.lib.GeoTag> bedrockFault 	= new ArrayList<>();
-	public static List<com.canisartorus.prospectorjournal.lib.VoidMine> voidVeins	= new ArrayList<>(); 
+	public static List<com.github.canisartorus.prospectorjournal.lib.DimTag> dims 			= new ArrayList<>();
+	public static List<com.github.canisartorus.prospectorjournal.lib.RockMatter> rockSurvey = new ArrayList<>();
+	public static List<com.github.canisartorus.prospectorjournal.lib.GeoTag> bedrockFault 	= new ArrayList<>();
+	public static List<com.github.canisartorus.prospectorjournal.lib.VoidMine> voidVeins	= new ArrayList<>(); 
 
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
@@ -66,18 +66,18 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModPreInit2(FMLPreInitializationEvent aEvent) {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
-		com.canisartorus.prospectorjournal.ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
+		com.github.canisartorus.prospectorjournal.ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
 		
 		Items.RegisterItems();
-		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.RightClickEvent());
+		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.github.canisartorus.prospectorjournal.RightClickEvent());
 	}
 
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
 		Items.RegisterRecipes();
-		com.canisartorus.prospectorjournal.KeyBindings.init();
-		com.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
+		com.github.canisartorus.prospectorjournal.KeyBindings.init();
+		com.github.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
 	}
 	
 	@Override

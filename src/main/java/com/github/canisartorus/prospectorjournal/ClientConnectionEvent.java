@@ -1,9 +1,4 @@
-package com.canisartorus.prospectorjournal;
-
-// @Author Dyonovan
-
-import com.canisartorus.prospectorjournal.ProspectorJournal;
-import com.canisartorus.prospectorjournal.lib.Utils;
+package com.github.canisartorus.prospectorjournal;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent;
@@ -12,6 +7,9 @@ import net.minecraft.server.integrated.IntegratedServer;
 
 import java.io.File;
 import java.net.InetSocketAddress;
+
+import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.lib.Utils;
 
 public class ClientConnectionEvent {
 

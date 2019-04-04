@@ -1,4 +1,4 @@
-package com.canisartorus.prospectorjournal;
+package com.github.canisartorus.prospectorjournal;
 
 import gregapi.api.Abstract_Proxy;
 

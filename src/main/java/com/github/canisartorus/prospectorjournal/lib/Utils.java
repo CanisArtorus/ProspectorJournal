@@ -1,4 +1,4 @@
-package com.canisartorus.prospectorjournal.lib;
+package com.github.canisartorus.prospectorjournal.lib;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,10 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-// @Author Dyonovan
-
-import com.canisartorus.prospectorjournal.ProspectorJournal;
-import com.canisartorus.prospectorjournal.lib.RockMatter;
+import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.lib.RockMatter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -46,7 +44,7 @@ public class Utils {
         	json = gson.toJson(ProspectorJournal.bedrockFault);
         	break;
         case DWARF_FILE:
-        	json = gson.toJson(com.canisartorus.prospectorjournal.lib.Dwarf.knowledge);
+        	json = gson.toJson(com.github.canisartorus.prospectorjournal.lib.Dwarf.knowledge);
         	break;
         case IE_VOID_FILE:
         	json = gson.toJson(ProspectorJournal.voidVeins);
