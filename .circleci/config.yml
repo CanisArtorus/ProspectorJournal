@@ -42,5 +42,5 @@ jobs:
       # - run: gradle test
       - run: ./gradlew build
 
-      - store_artifacts
-          path: build
+      - store_artifacts:
+          path: ~/build
