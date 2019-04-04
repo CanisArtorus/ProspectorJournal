@@ -31,7 +31,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: gradle setupCiWorkspace --refresh-dependencies --stacktrace
+      - run: ./gradlew setupCiWorkspace --refresh-dependencies --stacktrace
 
       - save_cache:
           paths:
@@ -40,6 +40,6 @@ jobs:
 
       # run tests!
       # - run: gradle test
-      - run: gradle build
+      - run: ./gradlew build
       # - store_artifacts
       #    path: ~/.build
