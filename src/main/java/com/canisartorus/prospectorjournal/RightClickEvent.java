@@ -24,13 +24,11 @@ public class RightClickEvent {
 		} else if(com.canisartorus.prospectorjournal.ConfigHandler.bookOnly) {
 			if(event.entityPlayer.inventory.getCurrentItem() == null)
 				return;
-			else {
-				ItemStack heldItem = event.entityPlayer.inventory.getCurrentItem();
 
-				if (!heldItem.getUnlocalizedName().equalsIgnoreCase("item.ca.GeologySurveyBook")) {
-				    return;
-				}
-			}
+			ItemStack heldItem = event.entityPlayer.inventory.getCurrentItem();
+			if (!heldItem.getUnlocalizedName().equalsIgnoreCase("item.ca.GeologySurveyBook"))
+			    return;
+			
 		}
 		
 		net.minecraft.world.World aWorld = event.entityPlayer.worldObj;
@@ -133,12 +131,10 @@ public class RightClickEvent {
 			// some random block
 			if(event.entityPlayer.inventory.getCurrentItem() == null)
 				return;
-			else {
-				ItemStack heldItem = event.entityPlayer.inventory.getCurrentItem();
-				if (heldItem.getUnlocalizedName().equalsIgnoreCase("item.ca.GeologySurveyBook")) {
-				    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.canisartorus.prospectorjournal.GuiMain());
-				}
-			}
+
+			ItemStack heldItem = event.entityPlayer.inventory.getCurrentItem();
+			if (heldItem.getUnlocalizedName().equalsIgnoreCase("item.ca.GeologySurveyBook"))
+			    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.canisartorus.prospectorjournal.GuiMain());
 		}
 	}
 	
@@ -195,7 +191,7 @@ public class RightClickEvent {
                 	switch(sourceType) {
                 	case Utils.ORE_VEIN:
                 		if( n.sample ) {
-                			if( (int)n.y > event.y) {
+                			if( n.y > event.y) {
                 				n.sample = false;
                 				if(n.dead) {
                 					n.dead = false;
@@ -213,10 +209,10 @@ public class RightClickEvent {
                 	case Utils.ROCK:
                 		if(n.sample) {
                 			n.multiple += 1;
-                    		if((int)n.y > event.y)
+                    		if(n.y > event.y)
                     			n.y = (short) event.y;
                 		} else {
-                			if((int)n.y > event.y)
+                			if(n.y > event.y)
                 				continue;
                 			//XXX Chat "I've already found this vein."
                 			return;
@@ -225,12 +221,10 @@ public class RightClickEvent {
                 	default:
                     	if(n.sample)
                     		return;
-                    	if (n.y > (short) 10) {
+                    	if (n.y > (short) 10)
                     		continue;
-                    	} else {
-                    		//XXX Chat "I've found that vein already!"
-                    		return;
-                    	}
+						//XXX Chat "I've found that vein already!"
+						return;
                 	}
                 	// Editing an existing vein
                 	if(n.multiple == 4) {

@@ -2,7 +2,6 @@ package com.canisartorus.prospectorjournal;
 
 import com.canisartorus.prospectorjournal.compat.IEHandler;
 import com.canisartorus.prospectorjournal.lib.*;
-import com.canisartorus.prospectorjournal.trans.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

@@ -21,7 +21,7 @@ public abstract class MineralMine {
 
 		public Display(MineralMine datum, int atX, int atZ){
 			super(datum.dim, datum.x, datum.z);
-			this.dist = (int) Math.round( (datum.x - atX)*(datum.x - atX) + (datum.z - atZ)*(datum.z - atZ) );
+			this.dist = Math.round( (datum.x - atX)*(datum.x - atX) + (datum.z - atZ)*(datum.z - atZ) );
 			this.dead = datum.dead;
 		}
 
