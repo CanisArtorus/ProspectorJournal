@@ -33,7 +33,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 
-	@cpw.mods.fml.common.SidedProxy(modId = MOD_ID, clientSide = "com.canisartorus.prospectorjournal.ProxyClient", serverSide = "com.canisartorus.prospectorjournal.ProxyServer")
+	@cpw.mods.fml.common.SidedProxy(modId = MOD_ID, clientSide = "com.github.canisartorus.prospectorjournal.ProxyClient", serverSide = "com.github.canisartorus.prospectorjournal.ProxyServer")
     public static gregapi.api.Abstract_Proxy PROXY;
 	
 	/*
@@ -88,7 +88,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	// @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	// @EventHandler
 	// public void postInit(FMLPostInitializationEvent event) {
-	 net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
+	 net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.github.canisartorus.prospectorjournal.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
 	}
 	
 	@Override
