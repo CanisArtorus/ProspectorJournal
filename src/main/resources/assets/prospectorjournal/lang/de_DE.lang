@@ -1,0 +1,28 @@
+btn.bedrock.name=Bedrock Erz
+btn.delete.name=Lös
+btn.excavator.name= IE Bohrer
+btn.exhaust.name=Leer
+btn.map.name=Karograph
+btn.mark.name=Ziel
+btn.oreveins.name=Große Erz
+btn.stoptrack.name=Verfolgung nicht
+
+key.cat.prospectorjournal=Prospector's Journal
+key.geoSurveyMenu=Õffne Erzkarograph
+
+str.above.name= hõhen
+str.any.name=alles
+str.below.name= untern
+str.blocks.name=meter
+str.content.name= filtern haben
+str.distance.name=Fahr
+str.floor.name=0
+str.level.name= am
+str.listparts.name=Zusammensetzung
+str.material.name=Erznammen
+str.num.name=Num
+str.search.name=Suchen Sie Erz?
+str.value.name=mit
+
+sym.inf.name=inf
+sym.x.name=*

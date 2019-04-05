@@ -88,7 +88,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	// @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	// @EventHandler
 	// public void postInit(FMLPostInitializationEvent event) {
-//		 net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
+	 net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.canisartorus.prospectorjournal.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
 	}
 	
 	@Override

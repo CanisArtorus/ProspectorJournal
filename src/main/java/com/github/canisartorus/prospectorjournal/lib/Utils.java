@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
-import com.github.canisartorus.prospectorjournal.lib.RockMatter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -74,6 +73,8 @@ public class Utils {
             case GT_BED_FILE:
             	ProspectorJournal.bedrockFault = gson.fromJson(br, new TypeToken<java.util.List<GeoTag>>(){}.getType());
             	break;
+			case IE_VOID_FILE:
+				ProspectorJournal.voidVeins = gson.fromJson(br, new TypeToken<java.util.List<VoidMine>>(){}.getType());
             }
         } catch (FileNotFoundException e) {
             //e.printStackTrace();

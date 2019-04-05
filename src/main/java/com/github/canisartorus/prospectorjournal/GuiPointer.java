@@ -17,8 +17,8 @@ import net.minecraft.util.StatCollector;
  * @author Dyonovan
  *
  */
-public class GuiPointer extends Gui {	//TODO everything
-	 private static final ResourceLocation arrow = new ResourceLocation("tcnodetracker:textures/gui/arrow.png");
+public class GuiPointer extends Gui {	
+	 private static final ResourceLocation arrow = new ResourceLocation("prospectorjournal:gui/NavArrow.png");
     private Minecraft mc;
 
 
@@ -75,11 +75,19 @@ public class GuiPointer extends Gui {	//TODO everything
         GL11.glPopMatrix();
 
         int distancePL = (int) Math.round(this.mc.thePlayer.getDistance(ProspectorJournal.xMarker, mc.thePlayer.posY, ProspectorJournal.zMarker));
-        String dirY = mc.thePlayer.posY > ProspectorJournal.yMarker ? StatCollector.translateToLocal("str.below.name") :
-                mc.thePlayer.posY == ProspectorJournal.yMarker ? StatCollector.translateToLocal("str.level.name") :
-                StatCollector.translateToLocal("str.above.name");
+        String dirY;
+		int color;
+		if(mc.thePlayer.posY > ProspectorJournal.yMarker) {
+			dirY = StatCollector.translateToLocal("str.below.name");
+			color = Utils.RED;
+		} else if(mc.thePlayer.posY == ProspectorJournal.yMarker) {
+			dirY = StatCollector.translateToLocal("str.level.name");
+			color = Utils.WHITE;
+		} else {
+            dirY = StatCollector.translateToLocal("str.above.name");
+			color = Utils.GREEN;
+		}
         String blocks = Integer.toString(distancePL) + StatCollector.translateToLocal("str.blocks.name");
-        int color = dirY.equals("Below") ? Utils.RED : dirY.equals("Level") ? Utils.WHITE : Utils.GREEN;
         net.minecraft.client.gui.FontRenderer fr = this.mc.fontRenderer;
 
         GL11.glPushMatrix();

@@ -20,7 +20,7 @@ import com.github.canisartorus.prospectorjournal.lib.*;
 
 @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 public class GuiMain extends net.minecraft.client.gui.GuiScreen {
-	private static final ResourceLocation smallArrow = new ResourceLocation("prospectorjournal:textures/gui/small_arrows.png");
+	private static final ResourceLocation smallArrow = new ResourceLocation("prospectorjournal:gui/arrows_small.png");
 	
 	public List<Display<RockMatter>> oreVeins =	new ArrayList<>();
 	public List<Display<GeoTag>> rockSpots =	new ArrayList<>();
@@ -415,7 +415,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         	if(Utils.inBounds(x, start +172, start +350) && Utils.inBounds(y, l-5, l+8)) {
         		java.util.List<String> toolTip = new ArrayList<>();
         		java.util.Map <Short, Integer> longChant;
-        		toolTip.add("\u00a7"+Integer.toHexString(15)+"Contains");
+        		toolTip.add("\u00a7"+Integer.toHexString(15)+StatCollector.translateToLocal("str.listparts.name"));
         		switch(lastData) {
         		case Utils.ORE_VEIN:
 	        		longChant = Dwarf.read(((Display<RockMatter>)e).datum.ore).mByBy;
