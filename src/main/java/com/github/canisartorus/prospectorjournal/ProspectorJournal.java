@@ -17,7 +17,6 @@ package com.github.canisartorus.prospectorjournal;
  
  import cpw.mods.fml.common.Mod.EventHandler;
  import cpw.mods.fml.common.event.*;
- //import cpw.mods.fml.common.registry.GameRegistry;
  
  import java.util.ArrayList;
  import java.util.List;
@@ -66,17 +65,20 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModPreInit2(FMLPreInitializationEvent aEvent) {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
-		com.github.canisartorus.prospectorjournal.ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
+		ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
 		
-		Items.RegisterItems();
-		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.github.canisartorus.prospectorjournal.RightClickEvent());
+		if(ConfigHandler.makeBook)
+			Items.RegisterItems();
+		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new RightClickEvent());
 	}
 
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
-		Items.RegisterRecipes();
-		com.github.canisartorus.prospectorjournal.KeyBindings.init();
+//		Items.RegisterRecipes();
+		if(ConfigHandler.applyPatches)
+			com.github.canisartorus.prospectorjournal.compat.GtPatches.onInit();
+		KeyBindings.init();
 		com.github.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
 	}
 	
@@ -88,7 +90,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	// @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	// @EventHandler
 	// public void postInit(FMLPostInitializationEvent event) {
-	 net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new com.github.canisartorus.prospectorjournal.GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
+	 net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
 	}
 	
 	@Override

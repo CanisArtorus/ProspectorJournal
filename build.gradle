@@ -71,8 +71,8 @@ dependencies {
 	compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
 	compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
 	compileOnly "appeng:appliedenergistics2:rv3-beta-6:dev"
-	//compileOnly "applecore:AppleCore:1.7.10-3.1.1:deobf"
-	//compileOnly "ic2:IC2Classic:1.2.1.8:dev"
+	compileOnly "applecore:AppleCore:1.7.10-3.1.1:deobf"
+	compileOnly "ic2:IC2Classic:1.2.1.8:dev"
 	compileOnly "micdoodle8.mods:GalacticraftCore:1.7-3.0.12.504:Dev"
 	compileOnly "micdoodle8.mods:MicdoodleCore:1.7-3.0.12.504:Dev"
 	//compile fileTree(dir: 'libs', include: '*.jar') // If you use this, don't commit them to VCS

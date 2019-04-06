@@ -1,17 +1,31 @@
 package com.github.canisartorus.prospectorjournal;
 
+import java.util.List;
+
+import gregapi.data.OP;
+import gregapi.data.TC;
+import gregapi.util.CR;
+import net.minecraft.item.ItemStack;
+
 //@author Alexander James
 
 public class Items {
+	public static ItemStack noteBook;
 
 	static void RegisterItems() {
-		// TODO Auto-generated method stub
+		new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook") {
+			@Override
+			public void addItems() {
+				Items.noteBook = addItem(0, "Prospector's Journal",	"Cross-referencing all the rocks.", JournalBehaviour.INSTANCE, TC.PERFODIO.get(2), TC.COGNITO.get(4), TC.ORDO.get(1));
+//				Items.noteBook = ST.make(this, 1, 0);
+				
+				CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
+			}
+		};
 		
 	}
 
 	static void RegisterRecipes() {
-		// TODO Auto-generated method stub
-		
+		CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
 	}
-
 }

@@ -32,24 +32,26 @@ public class GuiPointer extends Gui {
     @cpw.mods.fml.common.eventhandler.SubscribeEvent
     public void onRender(net.minecraftforge.client.event.RenderGameOverlayEvent event) {
 
-        final int arrowWidth = 64;
-        final int arrowHeight= 64;
-
-        if (event.isCancelable() || event.type != net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.EXPERIENCE || !ProspectorJournal.doGui ||
-                (ConfigHandler.needHUD && this.mc.thePlayer.inventory.armorItemInSlot(3) == null) ){
-            return;
+        if (event.isCancelable() || event.type != net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.EXPERIENCE || !ProspectorJournal.doGui) {
+        	return;
         }
-
+    	boolean wrong=true;
         if (ConfigHandler.needHUD) {
-        	boolean wrong=true;
-        	for(String test : ConfigHandler.HUDsList) { 
-        		if( test == this.mc.thePlayer.inventory.armorItemInSlot(3).getItem().getUnlocalizedName()) {
-        			wrong=false;
-        			break;
-        		}
+        	if(this.mc.thePlayer.inventory.armorItemInSlot(3) != null) {
+	        	for(String test : ConfigHandler.HUDsList) { 
+	        		if( test == this.mc.thePlayer.inventory.armorItemInSlot(3).getItem().getUnlocalizedName()) {
+	        			wrong=false;
+	        			break;
+	        		}
+	        	}
         	}
-            if(wrong) return;
-        }
+        } else if(this.mc.thePlayer.getCurrentEquippedItem() != null)
+			if(this.mc.thePlayer.getCurrentEquippedItem().getUnlocalizedName().equalsIgnoreCase("ca.prospectorjournal.notebook"))
+				wrong =false;
+		if(wrong) return;
+
+		final int arrowWidth = 64;
+        final int arrowHeight= 64;
 
         double direction = (Math.toDegrees(Math.atan2(ProspectorJournal.xMarker - this.mc.thePlayer.posX,
                 ProspectorJournal.zMarker - this.mc.thePlayer.posZ))) + this.mc.thePlayer.rotationYaw;

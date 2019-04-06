@@ -245,7 +245,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		int aX = (int) this.mc.thePlayer.posX, aZ = (int) this.mc.thePlayer.posZ;
 		switch(dataSet) {
 		case Utils.BEDROCK:
-			if(rockSpots.isEmpty() || lastSort != sortBy) {
+//			if(rockSpots.isEmpty() || lastSort != sortBy) {
 				rockSpots.clear();
 				if(ProspectorJournal.bedrockFault.isEmpty()) {
 					rockSpots.add(new Display<GeoTag>(new GeoTag(0, dimID, aX, aZ, true), aX, aZ));
@@ -255,12 +255,12 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 					if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.singOf(r.ore).containsKey(sortBy) )
 						rockSpots.add(new Display<GeoTag>(r, aX, aZ));
 				}
-			}
+//			}
 			Collections.sort(rockSpots, sortBy == Utils.DISTANCE ? rockSpots.get(0).getCloseComparator() : rockSpots.get(0).getQualityComparator(sortBy));
 			high = (rockSpots.size() > 10) ? 10 : rockSpots.size();
 			break;
 		case Utils.ORE_VEIN:
-			if(oreVeins.isEmpty() || lastSort != sortBy) {
+//			if(oreVeins.isEmpty() || lastSort != sortBy) {
 				oreVeins.clear();
 				if(ProspectorJournal.rockSurvey.isEmpty()) {
 					oreVeins.add(new Display<RockMatter>(new RockMatter(0, dimID, aX, 255, aZ, true), aX, aZ));
@@ -270,12 +270,12 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 					if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.getFractionIn(r, sortBy) != 0)
 						oreVeins.add(new Display<RockMatter>(r, aX, aZ));
 				}
-			}
+//			}
 			Collections.sort(oreVeins, sortBy == Utils.DISTANCE ? oreVeins.get(0).getCloseComparator() : oreVeins.get(0).getQualityComparator(sortBy));
 			high = (oreVeins.size() > 10) ? 10 : oreVeins.size();
 			break;
 		case Utils.EXCAVATOR:
-			if(zonesIE.isEmpty() || lastSort != sortBy) {
+//			if(zonesIE.isEmpty() || lastSort != sortBy) {
 				zonesIE.clear();
 				if(ProspectorJournal.voidVeins.isEmpty()) {
 					zonesIE.add(new Display<VoidMine>(new VoidMine(dimID, aX, aZ, new blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralWorldInfo()), aX, aZ));
@@ -285,7 +285,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 					if(sortBy == Utils.DISTANCE || IEHandler.Dwarf.getFractionIn(r.oreSet, sortBy) != 0)
 						zonesIE.add(new Display<VoidMine>(r, aX, aZ));
 				}
-			}
+//			}
 			Collections.sort(zonesIE, sortBy == Utils.DISTANCE ? zonesIE.get(0).getCloseComparator() : zonesIE.get(0).getQualityComparator(sortBy));
 			high = (zonesIE.size() > 10) ? 10 : zonesIE.size();
 			break;
@@ -356,9 +356,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (83 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
         		ts = r.datum.multiple + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(r.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(Dwarf.getFractionIn(r.datum.ore, lastSort));
+    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(r.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(Dwarf.getFractionIn(r.datum, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
-
 
         		break;
         	case Utils.BEDROCK:
@@ -374,9 +373,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (83 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
            		ts = StatCollector.translateToLocal("sym.inf.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(q.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(Dwarf.getFractionIn(q.datum.ore, lastSort));
+    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(q.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(Dwarf.getFractionIn(q.datum, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
-
 
         		break;
         	case Utils.EXCAVATOR:
@@ -388,9 +386,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         		
         		ts = StatCollector.translateToLocal("str.any.name");
            		this.fontRendererObj.drawString(ts, start + (83 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-           		ts = p.datum.multiple + StatCollector.translateToLocal("sym.x.name"); // XXX really big numbers
+           		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? p.datum.oreSet.name : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(IEHandler.Dwarf.getFractionIn(p.datum.oreSet, lastSort));
+    			ts = lastSort == Utils.DISTANCE ? p.datum.oreSet.name : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.getFractionIn(p.datum.oreSet, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
 
     			break;
@@ -430,7 +428,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         			longChant = new java.util.HashMap<>(0);
         		}
         		for(short byMat : longChant.keySet()) {
-        			toolTip.add(Dwarf.name(byMat) + Integer.toString(longChant.get(byMat)));
+        			toolTip.add(Dwarf.name(byMat)+ ": " + Integer.toString(longChant.get(byMat)));
         		}
         		drawHoveringText(toolTip, x, y, fontRendererObj);
         	}

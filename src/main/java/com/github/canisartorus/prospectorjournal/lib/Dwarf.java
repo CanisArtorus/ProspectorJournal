@@ -4,6 +4,8 @@ import gregapi.oredict.OreDictMaterial;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 
@@ -159,7 +161,7 @@ public class Dwarf {
 		//Direct Byproducts in centrifuge + smelting conversion.
 		public final Map<Short, Integer> mBy2 = new HashMap<>(6, 0.99f);
 		// Total, including indirect, byproducts
-		public final Map<Short, Integer> mByBy = new HashMap<>();
+		public final Map<Short, Integer> mByBy = new HashMap<>(15, 0.9f);
 		
 		public GeoChemistry(short aID) {
 			mID = aID;
@@ -170,6 +172,10 @@ public class Dwarf {
 			mByBy.put(mat, old + amount);
 		}
 	}
+	
+	static private final int[] weightsMeasure = new int[] {
+			8*3*5*7, 0, 24*35, 12*35, 8*35, 6*35, 24*7, 4*35, 24*5, 3*35
+	};
 
 	/**
 	 * For Bedrock veins; includes the chance to generate byproduct ore blocks.
@@ -177,8 +183,22 @@ public class Dwarf {
 	 * @return	the extended byproduct table
 	 */
 	public static Map<Short, Integer> singOf(short ore) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<Short, Integer> rMap = new HashMap<>();
+		final Set<Short> allByprod = Dwarf.read(ore).mBy.keySet();
+		for(short tID : allByprod) {
+			for(Entry<Short, Integer> tPair : Dwarf.read(tID).mByBy.entrySet()) {
+				int tI = rMap.getOrDefault(tPair.getKey(), 0);
+				if(tID == ore) {
+					if(allByprod.size() ==1)
+						rMap.put(tPair.getKey(), tPair.getValue() *32*weightsMeasure[0] + tI);
+					else
+						rMap.put(tPair.getKey(), tPair.getValue() *31*weightsMeasure[0] + tI);
+				} else {
+					rMap.put(tPair.getKey(), tPair.getValue() *weightsMeasure[allByprod.size()] + tI);
+				}
+			}
+		}
+		return rMap;
 	}
 
 }

@@ -76,7 +76,8 @@ public class Utils {
 			case IE_VOID_FILE:
 				ProspectorJournal.voidVeins = gson.fromJson(br, new TypeToken<java.util.List<VoidMine>>(){}.getType());
             }
-        } catch (FileNotFoundException e) {
+            br.close();
+        } catch ( IOException e) {
             //e.printStackTrace();
             System.out.println(ProspectorJournal.MOD_ID + ": No " + name + " file found.");
         }
@@ -86,4 +87,23 @@ public class Utils {
     public static boolean inBounds(int t, int a, int b) {
     	return t <= b && t >= a;
     }
+
+    /**
+     * Expresses an integer in Engineering notation with 3 significant figures
+     */
+	public static String approx(int multiple) {
+		String rNum = Integer.toString(multiple);
+		if(rNum.length() > 3) {
+			String[] prefix = new String[] {"", "k", "M", "G", "T"};
+			switch(rNum.length() % 3) {
+			case 0:
+				return rNum.substring(0, 3) + prefix[(rNum.length() / 3)-1];
+			case 1:
+				return rNum.charAt(0) + "." + rNum.substring(1, 3) +prefix[rNum.length() /3 ];
+			case 2:
+				return rNum.substring(0, 2) + "." +rNum.charAt(2) +prefix[rNum.length() /3];
+			}
+		}
+		return rNum;
+	}
 }
