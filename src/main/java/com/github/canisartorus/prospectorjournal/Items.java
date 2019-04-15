@@ -20,6 +20,8 @@ public class Items {
 //				Items.noteBook = ST.make(this, 1, 0);
 				
 				CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
+				
+				gregapi.data.CS.BooksGT.BOOK_REGISTER.add(ST.make(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook", 1, 0)), (byte)53);
 			}
 		};
 		

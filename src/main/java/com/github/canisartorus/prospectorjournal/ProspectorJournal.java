@@ -40,7 +40,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	public static ProspectorJournal instance;
 	*/
 	
-	public static String hostName;
+	public static String hostName = "ProspectorJournal";
 	public static boolean doGui = false;
 	public static int xMarker, yMarker, zMarker;
 	public static List<com.github.canisartorus.prospectorjournal.lib.DimTag> dims 			= new ArrayList<>();

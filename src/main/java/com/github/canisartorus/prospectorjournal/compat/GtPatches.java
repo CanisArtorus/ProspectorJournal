@@ -12,16 +12,43 @@ public class GtPatches {
 
 	public static void onInit() {
 		if( ConfigHandler.patchHazMat) {
+			if(MD.GC_ADV_ROCKETRY.mLoaded) {
+				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceHelmet", 1, W));
+				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceBoots", 1, W));
+				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceChest", 1, W));
+				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceLeggings", 1, W));
+
+				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceHelmet", 1, W));
+				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceBoots", 1, W));
+				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceChest", 1, W));
+				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceLeggings", 1, W));
+
+				ArmorsGT.HAZMATS_GAS.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceHelmet", 1, W));
+				ArmorsGT.HAZMATS_GAS.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceBoots", 1, W));
+				ArmorsGT.HAZMATS_GAS.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceChest", 1, W));
+				ArmorsGT.HAZMATS_GAS.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceLeggings", 1, W));
+
+				ArmorsGT.HAZMATS_FROST.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceHelmet", 1, W));
+				ArmorsGT.HAZMATS_FROST.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceBoots", 1, W));
+				ArmorsGT.HAZMATS_FROST.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceChest", 1, W));
+				ArmorsGT.HAZMATS_FROST.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceLeggings", 1, W));
+
+				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceHelmet", 1, W));
+				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceBoots", 1, W));
+				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceChest", 1, W));
+				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.GC_ADV_ROCKETRY, "item.spaceLeggings", 1, W));
+
+			}
 			if(MD.ARS.mLoaded) {
-				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.ARS, "lifeWard", 1, W));
+				// ArmorsGT.HAZMATS_BIO.add(ST.make(MD.ARS, "lifeWard", 1, W));
 				
 				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ARS, "water_orbs", 1, W));
 				
-				ArmorsGT.HAZMATS_GAS.add(ST.make(MD.ARS, "air_sled", 1, W));
+				// ArmorsGT.HAZMATS_GAS.add(ST.make(MD.ARS, "air_sled", 1, W));
 				
 				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ARS, "fire_ears", 1, W));
 				
-				ArmorsGT.HAZMATS_LIGHTNING.add(ST.make(MD.ARS, "lightningCharm", 1, W));
+				// ArmorsGT.HAZMATS_LIGHTNING.add(ST.make(MD.ARS, "lightningCharm", 1, W));
 				
 				ArmorsGT.HAZMATS_RADIOACTIVE.add(ST.make(MD.ARS, "enderBoots", 1, W));
 				ArmorsGT.HAZMATS_RADIOACTIVE.add(ST.make(MD.ARS, "earth_armor", 1, W));
@@ -32,36 +59,26 @@ public class GtPatches {
 				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.ATUM, "item.mummyChest", 1, W));
 				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.ATUM, "item.mummyLegs", 1, W));
 				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.ATUM, "item.mummyBoots", 1, W));
+				ArmorsGT.HAZMATS_BIO.add(ST.make(MD.ATUM, "item.isisEmbrace", 1, W));
+				
+				ArmorsGT.HAZMATS_GAS.add(ST.make(MD.ATUM, "item.horusFlight", 1, W));
+				ArmorsGT.HAZMATS_GAS.add(ST.make(MD.ATUM, "item.nutsAgility", 1, W));
 				
 				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.mummyHelmet", 1, W));
 				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.mummyChest", 1, W));
 				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.mummyLegs", 1, W));
 				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.mummyBoots", 1, W));
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.wandererHelmet", 1, W));
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.wandererChest", 1, W));
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.wandererLegs", 1, W));
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.wandererBoots", 1, W));
+				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ATUM, "item.sekmetsWrath", 1, W));
+				
+				ArmorsGT.HAZMATS_RADIOACTIVE.add(ST.make(MD.ATUM, "item.rasGlory", 1, W));
 			}
 			
 			if(MD.ERE.mLoaded) {
 				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ERE, "waterStriders", 1, W));
-				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ERE, "exoBootsRein", 1,  W));
-				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ERE, "exoLeggingsRein", 1,  W));
-				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ERE, "exoChestplateRein", 1,  W));
-				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ERE, "exoHelmetRein", 1,  W));
 				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ERE, "compoundGoggles", 1, W));
 				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ERE, "reinCompoundGoggles", 1, W));
 				
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ERE, "exoBootsRein", 1,  W));
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ERE, "exoLeggingsRein", 1,  W));
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ERE, "exoChestplateRein", 1,  W));
-				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ERE, "exoHelmetRein", 1,  W));
-				
 				ArmorsGT.HAZMATS_INSECTS.add(ST.make(MD.ERE, "spiderTShirt", 1, W));
-				ArmorsGT.HAZMATS_INSECTS.add(ST.make(MD.ERE, "exoBootsRein", 1,  W));
-				ArmorsGT.HAZMATS_INSECTS.add(ST.make(MD.ERE, "exoLeggingsRein", 1,  W));
-				ArmorsGT.HAZMATS_INSECTS.add(ST.make(MD.ERE, "exoChestplateRein", 1,  W));
-				ArmorsGT.HAZMATS_INSECTS.add(ST.make(MD.ERE, "exoHelmetRein", 1,  W));
 			}
 			
 			if(MD.TC.mLoaded) {

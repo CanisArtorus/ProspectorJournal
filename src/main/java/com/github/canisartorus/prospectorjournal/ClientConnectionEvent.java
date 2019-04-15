@@ -34,6 +34,7 @@ public class ClientConnectionEvent {
 
         File fileJson = new File(hostname);
         if (!fileJson.exists()) {
+			System.out.println("Creating new directory "+ hostname);
             fileJson.mkdirs();
         }
 
