@@ -5,6 +5,7 @@ import java.util.List;
 import gregapi.data.OP;
 import gregapi.data.TC;
 import gregapi.util.CR;
+import gregapi.util.ST;
 import net.minecraft.item.ItemStack;
 
 //@author Alexander James
@@ -21,7 +22,7 @@ public class Items {
 				
 				CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
 				
-				gregapi.data.CS.BooksGT.BOOK_REGISTER.add(ST.make(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook", 1, 0)), (byte)53);
+				gregapi.data.CS.BooksGT.BOOK_REGISTER.add(ST.make(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook", 1, 0), (byte)53);
 			}
 		};
 		

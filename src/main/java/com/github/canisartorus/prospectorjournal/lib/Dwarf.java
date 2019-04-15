@@ -2,11 +2,13 @@ package com.github.canisartorus.prospectorjournal.lib;
 
 import gregapi.oredict.OreDictMaterial;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.github.canisartorus.prospectorjournal.ConfigHandler;
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 
 /**
@@ -119,9 +121,14 @@ public class Dwarf {
 				}
 				gc.mBy.putIfAbsent(odm.mID, N_PURE);
 				gc.mBy2.putIfAbsent(odm.mID, C_PURE);
-				short tID = odm.mTargetSmelting.mMaterial.mID;
-				int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U72);
-				if(com.github.canisartorus.prospectorjournal.ConfigHandler.allowSmelt && purity > gc.mBy2.getOrDefault(tID, 0)) gc.mBy2.put(tID,  purity);
+				if(ConfigHandler.allowSmelt) {
+					if(ConfigHandler.debug)
+						System.out.println("smelting "+odm.mID);
+					final short tID = odm.mTargetSmelting.mMaterial.mID;
+					final int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U72);
+					if (purity > gc.mBy2.getOrDefault(tID, 0)) 
+						gc.mBy2.put(tID,  purity);
+				}
 				knowledge.add(gc);
 			}
 		}
@@ -135,8 +142,15 @@ public class Dwarf {
 				}
 			}
 		}
-		if(com.github.canisartorus.prospectorjournal.ConfigHandler.exportDwarf) Utils.writeJson(Utils.DWARF_FILE);
 		System.out.println(ProspectorJournal.MOD_ID + ": Crossreferenced the byproduct data.");
+		if(ConfigHandler.exportDwarf) {
+	        File fileJson = new File(ProspectorJournal.hostName);
+	        if (!fileJson.exists()) {
+				System.out.println("Creating new directory "+ ProspectorJournal.hostName);
+	            fileJson.mkdirs();
+	        }
+			Utils.writeJson(Utils.DWARF_FILE);
+		}
 	}
 		
 	/**

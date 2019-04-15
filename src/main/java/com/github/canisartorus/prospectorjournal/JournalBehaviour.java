@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault {
-	JournalBehaviour INSTANCE = new JournalBehaviour();
+	public static JournalBehaviour INSTANCE = new JournalBehaviour();
 	@Override 
 	public boolean onItemUse(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, byte aSide, float hitX, float hitY, float hitZ) {
 		if(ConfigHandler.bookOnly) {

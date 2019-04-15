@@ -9,7 +9,8 @@ public class ConfigHandler {
 	
 	public static boolean bookOnly, needHUD, makeBook,
 		allowSmelt, exportDwarf,
-		applyPatches, patchHazMat, generateArmour
+		applyPatches, patchHazMat, generateArmour,
+		debug
 		;
 	public static double arrowSize
 		;
@@ -39,6 +40,8 @@ public class ConfigHandler {
 		
 		ConfigHandler.applyPatches = tMainConfig.getBoolean("ChangeGT_false", "Optional Patches", false, "Master switch for the section. Should any of the listed extensions to GT6 code be applied? REQUIRES mod to be installed Server side.");
 		ConfigHandler.patchHazMat = tMainConfig.getBoolean("More_HazMat_Suits_true", "Optional Patches", true, "Register additional armour pieces as HazMat protection.");
+		
+		ConfigHandler.debug = tMainConfig.getBoolean("debug_logs_false", "Dbug", false, "");
 		
 		// XXX additional configs go inside here
 
