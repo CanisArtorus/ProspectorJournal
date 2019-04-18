@@ -67,7 +67,7 @@ public class Dwarf {
 	public static void readTheStones() {
 		System.out.println(ProspectorJournal.MOD_ID + ": Reading all the material dictionaries.");
 		for (OreDictMaterial odm : OreDictMaterial.MATERIAL_MAP.values()) {
-			if(odm.contains(gregapi.data.TD.ItemGenerator.ORES)) {
+			if(odm.contains(gregapi.data.TD.ItemGenerator.ORES) && odm.mID > 0) {
 				GeoChemistry gc = new GeoChemistry(odm.mID);
 				switch (odm.mByProducts.size()) {
 				case 0:
@@ -122,8 +122,8 @@ public class Dwarf {
 				gc.mBy.putIfAbsent(odm.mID, N_PURE);
 				gc.mBy2.putIfAbsent(odm.mID, C_PURE);
 				if(ConfigHandler.allowSmelt) {
-					if(ConfigHandler.debug)
-						System.out.println("smelting "+odm.mID);
+//					if(ConfigHandler.debug)
+//						System.out.println("smelting "+odm.mID);
 					final short tID = odm.mTargetSmelting.mMaterial.mID;
 					final int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U72);
 					if (purity > gc.mBy2.getOrDefault(tID, 0)) 

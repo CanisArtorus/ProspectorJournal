@@ -15,17 +15,19 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
 	@Override 
 	public boolean onItemUse(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, byte aSide, float hitX, float hitY, float hitZ) {
 		if(ConfigHandler.bookOnly) {
-			if(lookForSample(aWorld, aX, aY, aZ, aPlayer))
+			if(aWorld.isRemote && lookForSample(aWorld, aX, aY, aZ, aPlayer))
 				return true;
+		} else if(aWorld.isRemote) {
+			// XXX if sneak-using?
+		    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
 		}
-		// XXX if sneak-using?
-	    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
 		return false;
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(MultiItem aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer) {
-		net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
+		if(aWorld.isRemote)
+			net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
 		return aStack;
 	}
 	
@@ -39,11 +41,14 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
 	 * @return
 	 */
 	public static boolean lookForSample(World aWorld, int x, int y, int z, EntityPlayer aPlayer) {
+		if(!aWorld.isRemote)
+			return false;
 		net.minecraft.tileentity.TileEntity i = aWorld.getTileEntity(x, y, z);
 
 		if (i instanceof TileEntityBase03MultiTileEntities) {
 			if(((TileEntityBase03MultiTileEntities)i).getTileEntityName().equalsIgnoreCase("gt.multitileentity.rock")) {
-				ItemStack sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
+//				ItemStack sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
+				ItemStack sample = ((gregtech.tileentity.misc.MultiTileEntityRock)i).mRock;
 				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.ROCK, aPlayer);
 				return true;
 			} return false;

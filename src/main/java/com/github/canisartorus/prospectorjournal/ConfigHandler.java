@@ -32,7 +32,7 @@ public class ConfigHandler {
 		ConfigHandler.HUDsList = tMainConfig.getStringList("Available HUDs", "general", new String[] {"glasses", "item.BiblioGlasses", "sonicglasses", "item.logisticHUDGlasses", "reactorcraft_item_goggles", "rotarycraft_item_iogoggles", "armor.goggles", "ItemGoggles", "magitechGoggles", "pneumaticHelmet", "naturalistHelmet"}, "The internal names of every piece of headgear that is considered have a HUD.");
 
 		ConfigHandler.allowSmelt = tMainConfig.getBoolean("Include smelting transform_true", "Ore Helper", true, "Chose if it should detect melting in a crucible as an allowed method to get a product from the ore. Disable to get only sluice / sifter / centrifuge by products.");
-		ConfigHandler.exportDwarf = tMainConfig.getBoolean("ExportFile_false", "Ore Helper", false, "Set to true to export ore by product data to $save$/ProspectorJournal/GT6_Geochemistry.json. \n I suggest excluding Smelting transforms for this.");
+		ConfigHandler.exportDwarf = tMainConfig.getBoolean("ExportFile_false", "Ore Helper", false, "Set to true to export ore by product data to $instance$/ProspectorJournal/GT6_Geochemistry.json. \n I suggest excluding Smelting transforms for this.");
 		
 		ConfigHandler.arrowX = tMainConfig.getInt("Arrow X Coord_0", "Pointer", 0, -512, 512, "Horizontal offset from screen centre of the navigation pointer.");
 		ConfigHandler.arrowY = tMainConfig.getInt("Arrow Y Coord_0", "Pointer", 0, -512, 512, "Vertical offset from screen centre of the navigation pointer.");

@@ -51,8 +51,9 @@ public class Utils {
 
         if (json == null) throw new java.lang.IllegalArgumentException(ProspectorJournal.MOD_ID + ": " + name + " is not a recognized data file.");
         try {
-			if(com.github.canisartorus.prospectorjournal.ConfigHandler.debug)
-				System.out.println("Attempting to write to "+ ProspectorJournal.hostName+"/ at "+ name);
+			if(com.github.canisartorus.prospectorjournal.ConfigHandler.debug) {
+				System.out.println("Attempting to write to "+ ProspectorJournal.hostName+"/"+ name);
+			}
             FileWriter fw = new FileWriter(ProspectorJournal.hostName + "/" + name);
             fw.write(json);
             fw.close();
