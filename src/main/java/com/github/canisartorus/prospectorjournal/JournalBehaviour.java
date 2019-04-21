@@ -47,9 +47,13 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
 
 		if (i instanceof TileEntityBase03MultiTileEntities) {
 			if(((TileEntityBase03MultiTileEntities)i).getTileEntityName().equalsIgnoreCase("gt.multitileentity.rock")) {
-//				ItemStack sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
 				ItemStack sample = ((gregtech.tileentity.misc.MultiTileEntityRock)i).mRock;
-				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.ROCK, aPlayer);
+				if(sample == null) {
+					//XXX is default rock.
+//					sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
+					Utils.chatAt(aPlayer, "Nope, just rock");
+				} else 
+					TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.ROCK, aPlayer);
 				return true;
 			} return false;
 		}
@@ -64,7 +68,7 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
 			} else if (tName.startsWith("gt.meta.ore.normal.")) {
 				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.ORE_VEIN, aPlayer);
 			}
-			// XXX Chat "not worth recording"
+			Utils.chatAt(aPlayer, "Small ore, not worth recording");
 			return true;
 		} else if( b instanceof gregapi.block.misc.BlockBaseFlower) {
 			int type = 0;
@@ -150,7 +154,7 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
 		    					m.dead = false;
 			    				Utils.writeJson(Utils.GT_BED_FILE);
 		    				} else {
-		    					//XXX Chat "Sure are plenty of these Flowers here."
+		    					Utils.chatAt(aPlayer, "Sure are plenty of these Flowers here.");
 		    				}
 		    				break;
 		    			}
@@ -165,7 +169,7 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
 		    		} else if(m.dim == dim && meta == 0 && ! m.sample) {
 		    			if(m.x >= x - 16 && m.x <= x + 16 && m.z >= z - 16 && m.z <= z + 16) {
 		    				match = true;
-		    				//XXX Chat "I expected to find these Orechids here."
+		    				Utils.chatAt(aPlayer, "I expected to find these Orechids here.");
 		    				break;
 		    			}
 		    		}
@@ -206,7 +210,7 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
                 		} else {
                 			if(n.y > y)
                 				continue;
-                			//XXX Chat "I've already found this vein."
+                			Utils.chatAt(aPlayer, "I've already found this vein.");
                 			return;
                 		}
                 		break;
@@ -215,7 +219,7 @@ class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.Abstra
                     		return;
                     	if (n.y > (short) 10)
                     		continue;
-						//XXX Chat "I've found that vein already!"
+						Utils.chatAt(aPlayer, "I've found that vein already!");
 						return;
                 	}
                 	// Editing an existing vein

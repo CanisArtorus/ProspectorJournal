@@ -43,7 +43,7 @@ idea{
 
 apply plugin: 'forge'
 
-version = "0.1.0"
+version = "0.4.0"
 group = "com.github.canisartorus.prospectorjournal" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "prospectorjournal"
 

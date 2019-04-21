@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 public class Utils {
 
 	public final static String GT_FILE = "GT6OreVeins.json",
@@ -108,5 +110,10 @@ public class Utils {
 			}
 		}
 		return rNum;
+	}
+
+	public static void chatAt(EntityPlayer aPlayer, String msg) {
+		net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(msg);
+		aPlayer.addChatMessage(chaty);
 	}
 }

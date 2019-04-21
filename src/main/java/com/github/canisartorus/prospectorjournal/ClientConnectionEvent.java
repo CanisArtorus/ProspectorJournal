@@ -57,7 +57,7 @@ public class ClientConnectionEvent {
     public void onPlayerTickEventClient(cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent aEvent) {
     	if(CLIENT_JUST_CONNECTED && aEvent.phase == Phase.END && aEvent.side.isClient() ) {
     		CLIENT_JUST_CONNECTED = false;
-    		System.err.println("Initializing on Client Player Tick. On server join has failed!");
+    		System.out.println("!!Warning!! Initializing on Client Player Tick. On server join has failed!");
 
     		String hostname;
     		if(Minecraft.getMinecraft().isIntegratedServerRunning()) {
