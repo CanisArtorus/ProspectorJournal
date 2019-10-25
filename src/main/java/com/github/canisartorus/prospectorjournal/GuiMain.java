@@ -214,6 +214,11 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	protected void keyTyped(char key, int i) {
 		// searchbox stuff
 		if(oSearchBox.hasFocus){
+			if(i == 1) {	//esc key
+				this.mc.displayGuiScreen(null);
+				allClear();
+				return;
+			} // else if (i == ) // enter & return keys
 		// TODO
 			updateScreen();
 		// close on hotkey press, or ESCape key
@@ -386,7 +391,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         		
         		ts = StatCollector.translateToLocal("str.any.name");
            		this.fontRendererObj.drawString(ts, start + (83 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-           		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
+//           		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
+           		ts = Utils.approx(blusunrize.immersiveengineering.api.tool.ExcavatorHandler.mineralVeinCapacity) + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
     			ts = lastSort == Utils.DISTANCE ? p.datum.oreSet.name : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.getFractionIn(p.datum.oreSet, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);

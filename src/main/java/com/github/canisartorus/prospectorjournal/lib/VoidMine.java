@@ -8,7 +8,7 @@ import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
 
 public class VoidMine extends MineralMine {
 	public final ExcavatorHandler.MineralMix oreSet;
-	public int multiple;
+//	public int multiple;
 	
 	public VoidMine(int dim, int x, int z, ExcavatorHandler.MineralWorldInfo voidSample) {
 		super((short)dim, x, z);
@@ -16,7 +16,12 @@ public class VoidMine extends MineralMine {
 			oreSet = voidSample.mineralOverride;
 		else
 			oreSet = voidSample.mineral;
-		this.multiple = voidSample.depletion;
+//		this.multiple = voidSample.depletion;
+	}
+	
+	public VoidMine(int dim, int x, int z, ExcavatorHandler.MineralMix vSample) {
+		super((short)dim, x, z);
+		oreSet = vSample;
 	}
 	
 //	public static class Display extends MineralMine.Display {

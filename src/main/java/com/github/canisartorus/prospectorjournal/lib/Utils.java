@@ -7,13 +7,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.lib.Utils.ChatString;
+import com.github.canisartorus.prospectorjournal.network.ChatPacket;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.StatCollector;
 
 public class Utils {
+	
+	public static gregapi.network.INetworkHandler NW_PJ;
 
 	public final static String GT_FILE = "GT6OreVeins.json",
 			GT_BED_FILE = "GT6BedrockSpots.json",
@@ -112,8 +118,36 @@ public class Utils {
 		return rNum;
 	}
 
-	public static void chatAt(EntityPlayer aPlayer, String msg) {
-		net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(msg);
-		aPlayer.addChatMessage(chaty);
+	public static void chatAt(EntityPlayer aPlayer, Utils.ChatString rock2) {
+		if(aPlayer.isClientWorld()) {
+			net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(rock2.toString());
+			aPlayer.addChatMessage(chaty);
+		} else {
+			Utils.NW_PJ.sendToPlayer(new ChatPacket(rock2), (EntityPlayerMP) aPlayer);
+		}
+	}
+	
+	public enum ChatString {
+		ROCK("msg.rock.name"),
+		DRILL_FAIL("msg.iesamplefail.name"),
+		CORE_WAIT("msg.core_wait.name"),
+		SMALL("msg.smallore.name"),
+		FLINT("msg.flint.name"),
+		METEOR("msg.meteor.name"),
+		FLOWERS("msg.flowerpatch.name"),
+		BEDFLOWER("msg.bedflower.name"),
+		DUPE("msg.duplicate.name"),
+		DEPLETED("msg.depleted.name"),
+		CHANGED("msg.iechanged.name")
+		;
+		ChatString(String key) {
+			mKey = key;
+		}
+		String mKey;
+		
+		@Override
+		public String toString(){
+			return StatCollector.translateToLocal(mKey);
+		}
 	}
 }

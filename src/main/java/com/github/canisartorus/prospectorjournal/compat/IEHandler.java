@@ -2,11 +2,24 @@ package com.github.canisartorus.prospectorjournal.compat;
 
 import java.util.Map;
 
+import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
 
 public class IEHandler {
 
+	public static final String DEPLETED = "*Nil";
 	
+	public static MineralMix getByName(String sMineral) {
+		if (sMineral.equals(DEPLETED))
+			return null;
+		for (MineralMix variant : blusunrize.immersiveengineering.api.tool.ExcavatorHandler.mineralList.keySet()) {
+			if(variant.name.equalsIgnoreCase(sMineral))
+				return variant;
+		}
+		System.out.println(ProspectorJournal.MOD_NAME+"[WARNING] Failed to identify MineralMix: "+sMineral);
+		return null;
+	}
 	
 	public static class Dwarf extends com.github.canisartorus.prospectorjournal.lib.Dwarf {
 
@@ -32,4 +45,5 @@ public class IEHandler {
 		}
 		
 	}
+
 }

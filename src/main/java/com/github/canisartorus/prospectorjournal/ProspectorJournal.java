@@ -17,8 +17,9 @@ package com.github.canisartorus.prospectorjournal;
  
  import cpw.mods.fml.common.Mod.EventHandler;
  import cpw.mods.fml.common.event.*;
- 
- import java.util.ArrayList;
+import gregapi.network.NetworkHandler;
+import com.github.canisartorus.prospectorjournal.network.*;
+import java.util.ArrayList;
  import java.util.List;
   
 @cpw.mods.fml.common.Mod(modid=ProspectorJournal.MOD_ID, name=ProspectorJournal.MOD_NAME, version=ProspectorJournal.VERSION, dependencies="required-after:gregapi_post; after:gregtech; after:immersiveengineering")
@@ -69,6 +70,12 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 		
 		if(ConfigHandler.makeBook)
 			Items.RegisterItems();
+		
+		com.github.canisartorus.prospectorjournal.lib.Utils.NW_PJ = new NetworkHandler(MOD_ID, "CAPJ", 
+				new ChatPacket(0), new ChatPacket(1), new ChatPacket(2),
+				new PacketOreSurvey(0), new PacketOreSurvey(1), new PacketOreSurvey(2), new PacketOreSurvey(3), new PacketOreSurvey(4), new PacketOreSurvey(5), new PacketOreSurvey(6), new PacketOreSurvey(7), 
+				new PacketVoidVein(0), new PacketVoidVein(1), new PacketVoidVein(2), new PacketVoidVein(3));
+				
 		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new RightClickEvent());
 	}
 
