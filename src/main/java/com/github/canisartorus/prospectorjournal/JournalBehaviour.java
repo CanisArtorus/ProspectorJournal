@@ -62,6 +62,8 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 					// is default rock.
 //					sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
 					Utils.chatAt(aPlayer, ChatString.ROCK);	//"Just normal rock");
+				} else if(gregapi.util.OM.is(gregapi.data.OD.itemFlint, sample)) {
+					Utils.chatAt(aPlayer, ChatString.FLINT);
 				} else if(gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
 					Utils.chatAt(aPlayer, ChatString.ROCK);
 				} else 
@@ -187,12 +189,13 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 
 //	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
 	static void TakeSampleServer(final World aWorld, int x, int y, int z, short meta, byte sourceType, final EntityPlayer aPlayer) {
-		if(meta == 8002) {
-			Utils.chatAt(aPlayer, ChatString.FLINT);// "Just a chip of Flint.");
-			return;
-		} else if (sourceType == Utils.ROCK && ( meta == 8649 || meta == 8757) ) {
+//		if(meta == 8002) {
+//			Utils.chatAt(aPlayer, ChatString.FLINT);// "Just a chip of Flint.");
+//			return;
+//		} else 
+		if (sourceType == Utils.ROCK && ( meta == 8649 || meta == 8757) ) {
 			Utils.chatAt(aPlayer, ChatString.METEOR);// "It fell from the sky. Not related to an ore vein.");
-			return;
+//			return;
 		} else 
 			Utils.NW_PJ.sendToPlayer(new PacketOreSurvey(x, y, z, meta, sourceType), (EntityPlayerMP) aPlayer);
 	}

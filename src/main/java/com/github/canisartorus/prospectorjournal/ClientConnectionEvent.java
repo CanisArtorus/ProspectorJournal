@@ -13,6 +13,7 @@ import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 import com.github.canisartorus.prospectorjournal.lib.Utils;
 
 public class ClientConnectionEvent {
+	public static final String PJ_FOLDER = "ProspectorJournal/";
 	private boolean CLIENT_JUST_CONNECTED = true; 
 
     @SubscribeEvent
@@ -33,7 +34,7 @@ public class ClientConnectionEvent {
         }
 
         hostname = Utils.invalidChars(hostname);
-        hostname = "ProspectorJournal/" + hostname;
+        hostname = PJ_FOLDER + hostname;
 
         File fileJson = new File(hostname);
         if (!fileJson.exists()) {
@@ -69,7 +70,7 @@ public class ClientConnectionEvent {
     		}
     		
             hostname = Utils.invalidChars(hostname);
-            hostname = "ProspectorJournal/" + hostname;
+            hostname = PJ_FOLDER + hostname;
 
             File fileJson = new File(hostname);
             if (!fileJson.exists()) {

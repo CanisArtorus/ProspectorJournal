@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.github.canisartorus.prospectorjournal.ClientConnectionEvent;
 import com.github.canisartorus.prospectorjournal.ConfigHandler;
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 
@@ -144,9 +145,9 @@ public class Dwarf {
 		}
 		System.out.println(ProspectorJournal.MOD_ID + ": Crossreferenced the byproduct data.");
 		if(ConfigHandler.exportDwarf) {
-	        File fileJson = new File(ProspectorJournal.hostName);
+	        File fileJson = new File(ClientConnectionEvent.PJ_FOLDER);
 	        if (!fileJson.exists()) {
-				System.out.println("Creating new directory "+ ProspectorJournal.hostName);
+				System.out.println("Creating new directory "+ ClientConnectionEvent.PJ_FOLDER);
 	            fileJson.mkdirs();
 	        }
 			Utils.writeJson(Utils.DWARF_FILE);

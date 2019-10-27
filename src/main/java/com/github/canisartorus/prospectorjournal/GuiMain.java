@@ -402,7 +402,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 //           		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
            		ts = Utils.approx(blusunrize.immersiveengineering.api.tool.ExcavatorHandler.mineralVeinCapacity) + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? p.datum.oreSet.name : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.getFractionIn(p.datum.oreSet, lastSort));
+    			ts = lastSort == Utils.DISTANCE ? (p.datum.oreSet!=null ? p.datum.oreSet.name : "Nil") : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.getFractionIn(p.datum.oreSet, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
 
     			break;
@@ -442,7 +442,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         			longChant = new java.util.HashMap<>(0);
         		}
         		for(short byMat : longChant.keySet()) {
-        			toolTip.add(Dwarf.name(byMat)+ ": " + Integer.toString(longChant.get(byMat)));
+        			toolTip.add(Dwarf.name(byMat)+ ": " + Utils.approx(longChant.get(byMat)));
         		}
         		drawHoveringText(toolTip, x, y, fontRendererObj);
         	}
