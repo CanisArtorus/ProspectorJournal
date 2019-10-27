@@ -1,13 +1,11 @@
 package com.github.canisartorus.prospectorjournal.lib;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
-import com.github.canisartorus.prospectorjournal.lib.Utils.ChatString;
 import com.github.canisartorus.prospectorjournal.network.ChatPacket;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -127,7 +125,7 @@ public class Utils {
 		}
 	}
 	
-	public enum ChatString {
+	public static enum ChatString {
 		ROCK("msg.rock.name"),
 		DRILL_FAIL("msg.iesamplefail.name"),
 		CORE_WAIT("msg.core_wait.name"),
@@ -138,7 +136,8 @@ public class Utils {
 		BEDFLOWER("msg.bedflower.name"),
 		DUPE("msg.duplicate.name"),
 		DEPLETED("msg.depleted.name"),
-		CHANGED("msg.iechanged.name")
+		CHANGED("msg.iechanged.name"),
+		RECLASS("msg.reclass.name")
 		;
 		ChatString(String key) {
 			mKey = key;

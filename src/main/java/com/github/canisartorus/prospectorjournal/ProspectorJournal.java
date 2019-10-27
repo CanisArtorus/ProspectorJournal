@@ -82,7 +82,8 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
-//		Items.RegisterRecipes();
+		if(ConfigHandler.makeBook)
+			Items.RegisterRecipes();
 		if(ConfigHandler.applyPatches)
 			com.github.canisartorus.prospectorjournal.compat.GtPatches.onInit();
 		KeyBindings.init();

@@ -34,7 +34,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	private String dimName;
 	private SearchBox oSearchBox;
 	
-	public GuiMain() {}
+	public GuiMain() {
+		oSearchBox = new SearchBox(this);
+	}
 	
 	private void allClear() {
 		oreVeins.clear();
@@ -143,6 +145,12 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 						if(ProspectorJournal.doGui && ProspectorJournal.xMarker == o.x && ProspectorJournal.yMarker == o.y && ProspectorJournal.zMarker == o.z) {
 							ProspectorJournal.doGui = false;
 							ProspectorJournal.yMarker = -1;
+						}
+						if(e.sample) {
+							ProspectorJournal.rockSurvey.remove(e);
+							Utils.writeJson(Utils.GT_FILE);
+							sorted(Utils.ORE_VEIN, lastSort);
+							return;
 						}
 						e.dead = ! e.dead;
 						e.multiple = 0;
@@ -526,6 +534,11 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		boolean hasFocus = false;
 		private java.util.List<Character> request = new ArrayList<>();
 		private String suggestion = StatCollector.translateToLocal("str.search.name");
+		private net.minecraft.client.gui.GuiScreen mParent;
+		
+		SearchBox(net.minecraft.client.gui.GuiScreen aParent){
+			mParent = aParent;
+		}
 		
 		void activate() {
 			if(hasFocus){

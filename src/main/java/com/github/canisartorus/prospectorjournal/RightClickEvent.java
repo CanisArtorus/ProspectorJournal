@@ -25,8 +25,8 @@ public class RightClickEvent {
 //			if (!heldItem.getUnlocalizedName().equalsIgnoreCase("ca.prospectorjournal.notebook"))
 				return;
 		}
-		if(com.github.canisartorus.prospectorjournal.ConfigHandler.debug)
-			System.out.println("Right-Click event");
+//		if(com.github.canisartorus.prospectorjournal.ConfigHandler.debug)
+//			System.out.println("Right-Click event");
 		JournalBehaviour.lookForSample(aWorld, event.x, event.y, event.z, event.entityPlayer);
 	}
 }

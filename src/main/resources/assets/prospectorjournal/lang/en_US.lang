@@ -21,6 +21,7 @@ msg.bedflower.name=I expected to find these Orechids here.
 msg.duplicate.name=I've already found this vein.
 msg.depleted.name=This vein is played out.
 msg.iechanged.name=Wow, something is different under here!
+msg.reclass.name=I thought I found that ore in a weird place...
 
 str.above.name= up
 str.any.name=any

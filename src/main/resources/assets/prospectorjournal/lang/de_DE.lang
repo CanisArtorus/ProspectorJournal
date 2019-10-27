@@ -10,6 +10,19 @@ btn.stoptrack.name=Verfolgung nicht
 key.cat.prospectorjournal=Prospector's Journal
 key.geoSurveyMenu=Õffne Erzkarograph
 
+msg.rock.name=Just a normal Rock
+msg.iesamplefail.name=Incorrect search for sample drill core. Report this error!
+msg.core_wait.name=Wait for the core sample to be extracted.
+msg.smallore.name=Some small ore, not worth recording.
+msg.flint.name=Just a chip of flint.
+msg.meteor.name=It fell from the sky. Not related to an ore vein.
+msg.flowerpatch.name=Sure are plenty of these Flowers here.
+msg.bedflower.name=I expected to find these Orechids here.
+msg.duplicate.name=I've already found this vein.
+msg.depleted.name=This vein is played out.
+msg.iechanged.name=Wow, something is different under here!
+msg.reclass.name=I thought I found that ore in a weird place...
+
 str.above.name= hõhen
 str.any.name=alles
 str.below.name= untern

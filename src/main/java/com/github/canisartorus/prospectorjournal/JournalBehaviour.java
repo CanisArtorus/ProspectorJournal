@@ -49,7 +49,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 	 * @return
 	 */
 	public static boolean lookForSample(World aWorld, int x, int y, int z, EntityPlayer aPlayer) {
-		if(aWorld.isRemote) {
+		if(!aWorld.isRemote) {
 //			return false;
 			// stuff that needs server-side data
 		final net.minecraft.tileentity.TileEntity i = aWorld.getTileEntity(x, y, z);
@@ -61,7 +61,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				if(sample == null) {
 					//XXX is default rock.
 //					sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
-					Utils.chatAt(aPlayer, Utils.ChatString.ROCK);	//"Just normal rock");
+					Utils.chatAt(aPlayer, ChatString.ROCK);	//"Just normal rock");
 				} else 
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);
 				return true;
@@ -84,7 +84,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 					ti = (TileEntitySampleDrill) t2;
 				} else {
 //					System.out.println
-					Utils.chatAt(aPlayer, Utils.ChatString.DRILL_FAIL);// "Incorrect search for sample drill core. Report this error!");
+					Utils.chatAt(aPlayer, ChatString.DRILL_FAIL);// "Incorrect search for sample drill core. Report this error!");
 					return false;
 				}
 			}
@@ -94,7 +94,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				TakeSampleServer(aWorld, aPlayer, info, x>>4, z>>4);
 				return true;
 			}
-			Utils.chatAt(aPlayer, Utils.ChatString.CORE_WAIT);// "Wait for the core sample to be extracted.");
+			Utils.chatAt(aPlayer, ChatString.CORE_WAIT);// "Wait for the core sample to be extracted.");
 			return true;
 		}
 		} else {
@@ -109,7 +109,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 			} else if (tName.startsWith("gt.meta.ore.normal.")) {
 				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.ORE_VEIN, aPlayer);
 			} else 
-				Utils.chatAt(aPlayer, Utils.ChatString.SMALL);// "Small ore, not worth recording");
+				Utils.chatAt(aPlayer, ChatString.SMALL);// "Small ore, not worth recording");
 			return true;
 		} else if( b instanceof gregapi.block.misc.BlockBaseFlower) {
 			int type = 0;
@@ -186,10 +186,10 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 //	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
 	static void TakeSampleServer(final World aWorld, int x, int y, int z, short meta, byte sourceType, final EntityPlayer aPlayer) {
 		if(meta == 8002) {
-			Utils.chatAt(aPlayer, Utils.ChatString.FLINT);// "Just a chip of Flint.");
+			Utils.chatAt(aPlayer, ChatString.FLINT);// "Just a chip of Flint.");
 			return;
 		} else if (sourceType == Utils.ROCK && ( meta == 8649 || meta == 8757) ) {
-			Utils.chatAt(aPlayer, Utils.ChatString.METEOR);// "It fell from the sky. Not related to an ore vein.");
+			Utils.chatAt(aPlayer, ChatString.METEOR);// "It fell from the sky. Not related to an ore vein.");
 			return;
 		} else 
 			Utils.NW_PJ.sendToPlayer(new PacketOreSurvey(x, y, z, meta, sourceType), (EntityPlayerMP) aPlayer);
@@ -218,7 +218,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		    		// flower could be non-specific - match any
 		    		if(dim == m.dim && meta == m.ore) {
 		    			// include adjacent chunks as same unit.
-		    			if(m.x >= x - 16 && m.x <= x + 16 && m.z >= z - 16 && m.z <= z + 16) {
+		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
 		    				match = true;
 		    				if(sourceType == Utils.BEDROCK) {
 								m.x = x;
@@ -227,22 +227,22 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		    					m.dead = false;
 			    				Utils.writeJson(Utils.GT_BED_FILE);
 		    				} else {
-		    					Utils.chatAt(aPlayer, Utils.ChatString.FLOWERS);// "Sure are plenty of these Flowers here.");
+		    					Utils.chatAt(aPlayer, ChatString.FLOWERS);// "Sure are plenty of these Flowers here.");
 		    				}
 		    				break;
 		    			}
 		    		} else if (m.dim == dim && m.ore == 0 && sourceType == Utils.BEDROCK) {
 		    			// found a vein under non-specific flowers
-		    			if(m.x >= x - 16 && m.x <= x + 16 && m.z >= z - 16 && m.z <= z + 16) {
+		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
 		    				ProspectorJournal.bedrockFault.remove(m);
 //	    					match = false;
 	    					break;
 		    			}
     		
 		    		} else if(m.dim == dim && meta == 0 && ! m.sample) {
-		    			if(m.x >= x - 16 && m.x <= x + 16 && m.z >= z - 16 && m.z <= z + 16) {
+		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
 		    				match = true;
-		    				Utils.chatAt(aPlayer, Utils.ChatString.BEDFLOWER);// "I expected to find these Orechids here.");
+		    				Utils.chatAt(aPlayer, ChatString.BEDFLOWER);// "I expected to find these Orechids here.");
 		    				break;
 		    			}
 		    		}
@@ -283,7 +283,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
                 		} else {
                 			if(n.y > y)
                 				continue;
-                			Utils.chatAt(aPlayer, Utils.ChatString.DUPE);// "I've already found this vein.");
+                			Utils.chatAt(aPlayer, ChatString.DUPE);// "I've already found this vein.");
                 			return;
                 		}
                 		break;
@@ -292,7 +292,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
                     		return;
                     	if (n.y > (short) 10)
                     		continue;
-						Utils.chatAt(aPlayer, Utils.ChatString.DUPE);// "I've found that vein already!");
+						Utils.chatAt(aPlayer, ChatString.RECLASS);// "I've found that vein already!");
 						return;
                 	}
                 	// Editing an existing vein
