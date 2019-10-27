@@ -59,9 +59,11 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				// serverside data only!!!
 				final ItemStack sample = ((gregtech.tileentity.misc.MultiTileEntityRock)i).mRock;
 				if(sample == null) {
-					//XXX is default rock.
+					// is default rock.
 //					sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
 					Utils.chatAt(aPlayer, ChatString.ROCK);	//"Just normal rock");
+				} else if(gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
+					Utils.chatAt(aPlayer, ChatString.ROCK);
 				} else 
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);
 				return true;

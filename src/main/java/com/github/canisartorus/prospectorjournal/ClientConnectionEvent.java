@@ -24,7 +24,7 @@ public class ClientConnectionEvent {
         if (!event.isLocal) {
 
             InetSocketAddress address = (InetSocketAddress) event.manager.getSocketAddress();
-            hostname = address.getHostName() + "_" + address.getPort();
+            hostname = address.getHostString() + "_" + address.getPort();
 
         } else {
 
@@ -43,9 +43,9 @@ public class ClientConnectionEvent {
 
         ProspectorJournal.hostName = hostname;
 
-        ProspectorJournal.rockSurvey.clear();
-        ProspectorJournal.bedrockFault.clear();
-		ProspectorJournal.voidVeins.clear();
+//        ProspectorJournal.rockSurvey.clear();
+//        ProspectorJournal.bedrockFault.clear();
+//		ProspectorJournal.voidVeins.clear();
 
         Utils.readJson(Utils.GT_FILE);
         Utils.readJson(Utils.GT_BED_FILE);
@@ -54,6 +54,7 @@ public class ClientConnectionEvent {
     }
     
     @SubscribeEvent
+    @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
     public void onPlayerTickEventClient(cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent aEvent) {
     	if(CLIENT_JUST_CONNECTED && aEvent.phase == Phase.END && aEvent.side.isClient() ) {
     		CLIENT_JUST_CONNECTED = false;
@@ -78,9 +79,9 @@ public class ClientConnectionEvent {
 
             ProspectorJournal.hostName = hostname;
 
-            ProspectorJournal.rockSurvey.clear();
-            ProspectorJournal.bedrockFault.clear();
-    		ProspectorJournal.voidVeins.clear();
+//            ProspectorJournal.rockSurvey.clear();
+//            ProspectorJournal.bedrockFault.clear();
+//    		ProspectorJournal.voidVeins.clear();
 
             Utils.readJson(Utils.GT_FILE);
             Utils.readJson(Utils.GT_BED_FILE);

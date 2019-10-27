@@ -29,7 +29,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.4.0"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.5.0"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 
@@ -77,6 +77,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 				new PacketVoidVein(0), new PacketVoidVein(1), new PacketVoidVein(2), new PacketVoidVein(3));
 				
 		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new RightClickEvent());
+        cpw.mods.fml.common.FMLCommonHandler.instance().bus().register(new ClientConnectionEvent());
 	}
 
 	@Override
