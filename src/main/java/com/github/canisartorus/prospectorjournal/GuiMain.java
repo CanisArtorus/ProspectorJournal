@@ -20,14 +20,15 @@ import com.github.canisartorus.prospectorjournal.lib.*;
 
 @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 public class GuiMain extends net.minecraft.client.gui.GuiScreen {
-	private static final ResourceLocation smallArrow = new ResourceLocation("prospectorjournal:gui/arrows_small.png");
+	private static final ResourceLocation smallArrow = new ResourceLocation("prospectorjournal:textures/gui/arrows_small.png");
 	
-	public List<Display<RockMatter>> oreVeins =	new ArrayList<>();
-	public List<Display<GeoTag>> rockSpots =	new ArrayList<>();
-	public List<Display<VoidMine>> zonesIE =	new ArrayList<>();
+	private List<Display<RockMatter>> oreVeins =	new ArrayList<>();
+	private List<Display<GeoTag>> rockSpots =	new ArrayList<>();
+	private List<Display<VoidMine>> zonesIE =	new ArrayList<>();
 	
 	private int display = 425, start, low = 0, high,
-		dimID = 0, dimIndex
+		dimID = 0, dimIndex,
+		wCol
 		;
 	private static short lastSort = Utils.DISTANCE;
 	private static byte lastData = Utils.ORE_VEIN;
@@ -83,10 +84,11 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	public void initGui() {
 //		display = 425;
 		start = (this.width - display) /2;
+		wCol = this.fontRendererObj.getStringWidth("Charged Certus Quartz: 8.88M");	// 150pixels, in screen units
 		
 		dimID = Minecraft.getMinecraft().theWorld.provider.dimensionId;
 		portal();
-		guiButtons();
+//		guiButtons();
 	}
 	
 	/**
@@ -96,7 +98,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	protected void guiButtons() {
 		final int x = 47;
 		this.buttonList.clear();
-		for (int j = low; j< (high*2); j+=2) {
+		for (int j = 0; j< ((high-low)*2); j+=2) {
 			if(lastData == Utils.EXCAVATOR) {
 				this.buttonList.add(new GuiButton(j  , start +400, x +8*j, 20, 10, StatCollector.translateToLocal("btn.delete.name")));
 			} else {
@@ -125,7 +127,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			allClear();
 		} else if(button.id == this.buttonList.size() -2) {
 			// the map screen button.
-			// TODO
+			// TODO a map
 		} else if(button.id == this.buttonList.size() -3) {
 			// the excavator tracking select
 			sorted(Utils.EXCAVATOR, lastSort);
@@ -195,7 +197,6 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		} else if (button.id % 2 == 1) {
 			// the Tracking activation buttons
 			final int i = button.id / 2;
-			this.mc.displayGuiScreen(null);
 			ProspectorJournal.doGui = true;
 			switch (lastData) {
 			case Utils.ORE_VEIN:
@@ -214,6 +215,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 				ProspectorJournal.xMarker = zonesIE.get(low+i).datum.z;
 				break;
 			}
+			this.mc.displayGuiScreen(null);
 			allClear();
 		}
 	}
@@ -227,7 +229,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 				allClear();
 				return;
 			} // else if (i == ) // enter & return keys
-		// TODO
+		// TODO typing in search
 			updateScreen();
 		// close on hotkey press, or ESCape key
 		} else if(i == KeyBindings.rocksMenu.getKeyCode() || i == 1) {
@@ -255,50 +257,47 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	 * @param sortBy	how to sort and/or filter it
 	 */
 	private void sorted(final byte dataSet, final short sortBy) {
-		int aX = (int) this.mc.thePlayer.posX, aZ = (int) this.mc.thePlayer.posZ;
+		final int aX = (int) this.mc.thePlayer.posX, aZ = (int) this.mc.thePlayer.posZ;
 		switch(dataSet) {
 		case Utils.BEDROCK:
-//			if(rockSpots.isEmpty() || lastSort != sortBy) {
-				rockSpots.clear();
-				if(ProspectorJournal.bedrockFault.isEmpty()) {
-					rockSpots.add(new Display<GeoTag>(new GeoTag(0, dimID, aX, aZ, true), aX, aZ));
-					break;
-				}
-				for(GeoTag r : ProspectorJournal.bedrockFault) {
-					if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.singOf(r.ore).containsKey(sortBy) )
-						rockSpots.add(new Display<GeoTag>(r, aX, aZ));
-				}
-//			}
+			rockSpots.clear();
+			for(GeoTag r : ProspectorJournal.bedrockFault) {
+				if(dimID != r.dim) continue;
+				if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.singOf(r.ore).containsKey(sortBy) )
+					rockSpots.add(new Display<GeoTag>(r, aX, aZ));
+			}
+			if(rockSpots.isEmpty()) {
+				rockSpots.add(new Display<GeoTag>(new GeoTag(0, dimID, aX, aZ, true), aX, aZ));
+				break;
+			}
 			Collections.sort(rockSpots, sortBy == Utils.DISTANCE ? rockSpots.get(0).getCloseComparator() : rockSpots.get(0).getQualityComparator(sortBy));
 			high = (rockSpots.size() > 10) ? 10 : rockSpots.size();
 			break;
 		case Utils.ORE_VEIN:
-//			if(oreVeins.isEmpty() || lastSort != sortBy) {
-				oreVeins.clear();
-				if(ProspectorJournal.rockSurvey.isEmpty()) {
-					oreVeins.add(new Display<RockMatter>(new RockMatter(0, dimID, aX, 255, aZ, true), aX, aZ));
-					break;
-				}
-				for(RockMatter r : ProspectorJournal.rockSurvey) {
-					if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.getFractionIn(r, sortBy) != 0)
-						oreVeins.add(new Display<RockMatter>(r, aX, aZ));
-				}
-//			}
+			oreVeins.clear();
+			for(RockMatter r : ProspectorJournal.rockSurvey) {
+				if(dimID != r.dim) continue;
+				if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.getFractionIn(r, sortBy) != 0)
+					oreVeins.add(new Display<RockMatter>(r, aX, aZ));
+			}
+			if(oreVeins.isEmpty()) {
+				oreVeins.add(new Display<RockMatter>(new RockMatter(0, dimID, aX, 255, aZ, true), aX, aZ));
+				break;
+			}
 			Collections.sort(oreVeins, sortBy == Utils.DISTANCE ? oreVeins.get(0).getCloseComparator() : oreVeins.get(0).getQualityComparator(sortBy));
 			high = (oreVeins.size() > 10) ? 10 : oreVeins.size();
 			break;
 		case Utils.EXCAVATOR:
-//			if(zonesIE.isEmpty() || lastSort != sortBy) {
-				zonesIE.clear();
-				if(ProspectorJournal.voidVeins.isEmpty()) {
-					zonesIE.add(new Display<VoidMine>(new VoidMine(dimID, aX, aZ, new blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralWorldInfo()), aX, aZ));
-					break;
-				}
-				for(VoidMine r : ProspectorJournal.voidVeins) {
-					if(sortBy == Utils.DISTANCE || IEHandler.Dwarf.getFractionIn(r.oreSet, sortBy) != 0)
-						zonesIE.add(new Display<VoidMine>(r, aX, aZ));
-				}
-//			}
+			zonesIE.clear();
+			for(VoidMine r : ProspectorJournal.voidVeins) {
+				if(dimID != r.dim) continue;
+				if(sortBy == Utils.DISTANCE || IEHandler.Dwarf.getFractionIn(r.oreSet, sortBy) != 0)
+					zonesIE.add(new Display<VoidMine>(r, aX, aZ));
+			}
+			if(zonesIE.isEmpty()) {
+				zonesIE.add(new Display<VoidMine>(new VoidMine(dimID, aX, aZ, new blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralWorldInfo()), aX, aZ));
+				break;
+			}
 			Collections.sort(zonesIE, sortBy == Utils.DISTANCE ? zonesIE.get(0).getCloseComparator() : zonesIE.get(0).getQualityComparator(sortBy));
 			high = (zonesIE.size() > 10) ? 10 : zonesIE.size();
 			break;
@@ -310,10 +309,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		guiButtons();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void drawScreen(int x, int y, float f) {
-		int l = 70;
+		int l = 50;
 		drawDefaultBackground();
 		
 //		drawRect(start + 20, 210, start + 100, 225, -9408400);
@@ -365,7 +363,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         			colour = Utils.GRAY;
         		else colour = Utils.WHITE;
         		
-        		ts = r.datum.sample ? ("< "+ Integer.toString(r.datum.y)+ "?" ) : Integer.toString(r.datum.y);
+        		ts = r.datum.sample ? ("<"+ Integer.toString(r.datum.y)+ "?" ) : Integer.toString(r.datum.y);
            		this.fontRendererObj.drawString(ts, start + (83 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
         		ts = r.datum.multiple + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
@@ -407,7 +405,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 
     			break;
 			default:
-				e = null;
+				e = new Display<RockMatter>(new RockMatter(0, dimID, 0, 255, 0, true), 0, 0);
 				colour = Utils.RED;
         	}
         	ts = Integer.toString(e.dist);
@@ -424,27 +422,60 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         	drawRect(start, l+11, start + display, l + 12, -9408400);
         	GL11.glPopMatrix();
         	
+        	// would be z-layered by lower lines here
+        	l += 16;
+		}
+		l = 50;
+		for(int i = low; i<high; i++) {
         	if(Utils.inBounds(x, start +172, start +350) && Utils.inBounds(y, l-5, l+8)) {
-        		java.util.List<String> toolTip = new ArrayList<>();
+        		List<String> toolTip = new ArrayList<>();
         		java.util.Map <Short, Integer> longChant;
         		toolTip.add("\u00a7"+Integer.toHexString(15)+StatCollector.translateToLocal("str.listparts.name"));
         		switch(lastData) {
         		case Utils.ORE_VEIN:
-	        		longChant = Dwarf.read(((Display<RockMatter>)e).datum.ore).mByBy;
+	        		longChant = Dwarf.read(oreVeins.get(i).datum.ore).mByBy;
 	        		break;
         		case Utils.BEDROCK:
-        			longChant = Dwarf.singOf(((Display<GeoTag>)e).datum.ore);
+        			longChant = Dwarf.singOf(rockSpots.get(i).datum.ore);
         			break;
         		case Utils.EXCAVATOR:
-        			longChant = IEHandler.Dwarf.singOf(((Display<VoidMine>)e).datum.oreSet);
+        			longChant = IEHandler.Dwarf.singOf(zonesIE.get(i).datum.oreSet);
         			break;
         		default:
         			longChant = new java.util.HashMap<>(0);
         		}
-        		for(short byMat : longChant.keySet()) {
-        			toolTip.add(Dwarf.name(byMat)+ ": " + Utils.approx(longChant.get(byMat)));
+        		List<java.util.Map.Entry<Short, Integer>> verses = new ArrayList<java.util.Map.Entry<Short, Integer>>(longChant.entrySet());
+        		Collections.sort(verses, Dwarf.FractionSorter);
+        		for (int g = 0; g < 22 && g < verses.size(); g++) {
+        			toolTip.add(Dwarf.name(verses.get(g).getKey())+ ": "+ Utils.approx(verses.get(g).getValue()));
         		}
+//        		for(java.util.Map.Entry<Short, Integer> byMat : verses) {
+//        			toolTip.add(Dwarf.name(byMat.getKey())+ ": " + Utils.approx(byMat.getValue()));
+//        		}
         		drawHoveringText(toolTip, x, y, fontRendererObj);
+        		if(verses.size() > 22) {
+        			toolTip.clear();
+            		for (int g = 0; g < 22 && g < (verses.size() - 22); g++) {
+            			toolTip.add(Dwarf.name(verses.get(g+22).getKey())+ ": "+ Utils.approx(verses.get(g+22).getValue()));
+            		}
+            		drawHoveringText(toolTip, x + 10 + wCol, y, fontRendererObj);
+        			if(verses.size() > 44) {
+        				toolTip.clear();
+                		for (int g = 0; g < 21 && g < (verses.size() - 44); g++) {
+                			toolTip.add(Dwarf.name(verses.get(g+44).getKey())+ ": "+ Utils.approx(verses.get(g+44).getValue()));
+                		}
+                		if(verses.size() == 66) {
+                			toolTip.add(Dwarf.name(verses.get(65).getKey())+": "+ Utils.approx(verses.get(65).getValue()));
+                		} else if(verses.size() > 66) {
+                			int u = 0;
+                			for(int g=65; g < verses.size(); g++) {
+                				u += verses.get(g).getValue();
+                			}
+                			toolTip.add(StatCollector.translateToLocal("str.trace.name") + ": " + Utils.approx(u));
+                		}
+                		drawHoveringText(toolTip, x + 20 + 2 * wCol, y, fontRendererObj);
+        			}
+        		}
         	}
         	
         	l += 16;

@@ -164,6 +164,17 @@ public class Dwarf {
 	}
 	
 	/**
+	 * A Comparator for sorting byproduct list entries.
+	 */
+	public static java.util.Comparator<java.util.Map.Entry<Short, Integer>> FractionSorter =
+		new java.util.Comparator<java.util.Map.Entry<Short, Integer>>() {
+			@Override
+			public int compare(java.util.Map.Entry<Short, Integer> o1, java.util.Map.Entry<Short, Integer> o2) {
+				return Integer.compare(o1.getValue(), o2.getValue());
+			}
+	};
+	
+	/**
 	 * 
 	 * @author Alexander James
 	 *

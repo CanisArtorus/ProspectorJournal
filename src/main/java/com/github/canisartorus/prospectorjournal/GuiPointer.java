@@ -18,7 +18,7 @@ import net.minecraft.util.StatCollector;
  *
  */
 public class GuiPointer extends Gui {	
-	 private static final ResourceLocation arrow = new ResourceLocation("prospectorjournal:gui/NavArrow.png");
+	private static final ResourceLocation arrow = new ResourceLocation("prospectorjournal:textures/gui/NavArrow.png");
     private Minecraft mc;
 
 

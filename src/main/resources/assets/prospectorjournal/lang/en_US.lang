@@ -1,14 +1,14 @@
 btn.bedrock.name=Bedrock Ores
 btn.delete.name=del
-btn.excavator.name= IE core samples
+btn.excavator.name= Core samples
 btn.exhaust.name=off
 btn.map.name=Map screen
 btn.mark.name=Mark
 btn.oreveins.name=Ore Veins
 btn.stoptrack.name=Clear tracker
 
-key.cat.prospectorjournal=Prospector's Journal
-key.geoSurveyMenu=Open geological survey screen
+key.cat.prospectorjournal.name=Prospector's Journal
+key.geoSurveyMenu.name=Open geological survey screen
 
 msg.rock.name=Just a normal Rock
 msg.iesamplefail.name=Incorrect search for sample drill core. Report this error!
@@ -23,18 +23,19 @@ msg.depleted.name=This vein is played out.
 msg.iechanged.name=Wow, something is different under here!
 msg.reclass.name=I thought I found that ore in a weird place...
 
-str.above.name= up
+str.above.name=up
 str.any.name=any
-str.below.name= down
+str.below.name=down
 str.blocks.name=blocks
-str.content.name= content
+str.content.name=content
 str.distance.name=Dist
 str.floor.name=below
-str.level.name= level
+str.level.name=level
 str.listparts.name=Contains
 str.material.name=Main Ore
 str.num.name=Num
 str.search.name=Search...
+str.trace.name=Other traces
 str.value.name=worth
 
 sym.inf.name=inf

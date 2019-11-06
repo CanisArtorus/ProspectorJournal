@@ -7,8 +7,8 @@ btn.mark.name=Ziel
 btn.oreveins.name=Große Erz
 btn.stoptrack.name=Verfolgung nicht
 
-key.cat.prospectorjournal=Prospector's Journal
-key.geoSurveyMenu=Õffne Erzkarograph
+key.cat.prospectorjournal.name=Prospector's Journal
+key.geoSurveyMenu.name=Õffne Erzkarograph
 
 msg.rock.name=Just a normal Rock
 msg.iesamplefail.name=Incorrect search for sample drill core. Report this error!
@@ -23,18 +23,19 @@ msg.depleted.name=This vein is played out.
 msg.iechanged.name=Wow, something is different under here!
 msg.reclass.name=I thought I found that ore in a weird place...
 
-str.above.name= hõhen
+str.above.name=hõhen
 str.any.name=alles
-str.below.name= untern
+str.below.name=untern
 str.blocks.name=meter
-str.content.name= filtern haben
+str.content.name=filtern haben
 str.distance.name=Fahr
 str.floor.name=0
-str.level.name= am
+str.level.name=am
 str.listparts.name=Zusammensetzung
 str.material.name=Erznammen
 str.num.name=Num
 str.search.name=Suchen Sie Erz?
+str.trace.name=Überrest
 str.value.name=mit
 
 sym.inf.name=inf
