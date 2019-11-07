@@ -15,6 +15,8 @@ import org.lwjgl.opengl.GL11;
 import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 import com.github.canisartorus.prospectorjournal.lib.*;
 
+import gregapi.data.OP;
+
 // @author Alexander James
 // @author Dyonovan
 
@@ -349,8 +351,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		default:
 			j = 0;
 		}
+		if (high > j) high = j;
 		for(int i = low; i<high; i++) {
-        	int colour;
+        	int colour, w;
         	String ts;
         	Display<? extends MineralMine> e;
         	switch(lastData) {
@@ -369,7 +372,12 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
     			ts = lastSort == Utils.DISTANCE ? Dwarf.name(r.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(Dwarf.getFractionIn(r.datum, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
-
+    			w = r.datum.ore;
+    			if(lastSort == Utils.DISTANCE || lastSort == w) {
+    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    			} else {
+    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.crushedPurified.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    			}
         		break;
         	case Utils.BEDROCK:
         		Display<GeoTag> q = rockSpots.get(i);
@@ -386,7 +394,12 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
     			ts = lastSort == Utils.DISTANCE ? Dwarf.name(q.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(Dwarf.getFractionIn(q.datum, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
-
+    			w = q.datum.ore;
+    			if(lastSort == Utils.DISTANCE || lastSort == w) {
+    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    			} else {
+    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.crushedPurified.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    			}
         		break;
         	case Utils.EXCAVATOR:
         		Display<VoidMine> p = zonesIE.get(i);
@@ -402,7 +415,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
     			ts = lastSort == Utils.DISTANCE ? (p.datum.oreSet!=null ? p.datum.oreSet.name : "Nil") : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.getFractionIn(p.datum.oreSet, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
-
+    			this.drawTexturedModelRectFromIcon(start + 172, l, OP.crushed.mRegisteredPrefixItems.get(0).getIconFromDamage(IEHandler.Dwarf.getMajor(p.datum.oreSet)), 16, 16);
     			break;
 			default:
 				e = new Display<RockMatter>(new RockMatter(0, dimID, 0, 255, 0, true), 0, 0);
@@ -414,7 +427,6 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         	this.fontRendererObj.drawString(ts, start + (52 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
         	ts = Integer.toString(e.datum.z);
         	this.fontRendererObj.drawString(ts, start + (112 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-			//TODO icon @172
         	
         	GL11.glPushMatrix();
         	GL11.glDisable(GL11.GL_LIGHTING);
@@ -484,7 +496,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         this.mc.getTextureManager().bindTexture(smallArrow);
         if(low > 0) 
         	this.drawTexturedModalRect((this.width -50)/2, 210, 1, 1, 15, 17);
-        if(high < j -1)
+        if(high < j)
         	this.drawTexturedModalRect((this.width +32) /2, 210,  17, 1, 32, 17);
         this.drawTexturedModalRect(start     , 210, 91, 41, 17, 17);
         this.drawTexturedModalRect(start +102, 210, 91, 25, 17, 17);
@@ -503,15 +515,15 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			} else if(Utils.inBounds(mouseX, (this.width+32)/2, (this.width+32)/2 +15) &&Utils.inBounds(mouseY, 210, 227) ) {
 				switch(lastData) {
 				case Utils.ORE_VEIN:
-					if(high == oreVeins.size() -1)
+					if(high == oreVeins.size())
 						return;
 					break;
 				case Utils.BEDROCK:
-					if(high == rockSpots.size() -1)
+					if(high == rockSpots.size())
 						return;
 					break;
 				case Utils.EXCAVATOR:
-					if(high == zonesIE.size() -1)
+					if(high == zonesIE.size())
 						return;
 					break;
 				}
