@@ -1,8 +1,6 @@
 package com.github.canisartorus.prospectorjournal.lib;
 
-//import java.util.Comparator;
-
-//import com.github.canisartorus.prospectorjournal.compat.IEHandler;
+import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
 
@@ -22,6 +20,11 @@ public class VoidMine extends MineralMine {
 	public VoidMine(int dim, int x, int z, ExcavatorHandler.MineralMix vSample) {
 		super((short)dim, x, z);
 		oreSet = vSample;
+	}
+	
+	public int getFraction(short material) {
+		int f = IEHandler.Dwarf.singOf(oreSet).getOrDefault(material, 0);
+		return f == 0 ? 0 : Integer.max(f / 1000 , 1);
 	}
 	
 //	public static class Display extends MineralMine.Display {

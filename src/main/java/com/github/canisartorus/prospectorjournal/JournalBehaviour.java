@@ -65,6 +65,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				} else if(gregapi.util.OM.is(gregapi.data.OD.itemFlint, sample)) {
 					Utils.chatAt(aPlayer, ChatString.FLINT);
 				} else if(gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
+					// TODO config option
 					Utils.chatAt(aPlayer, ChatString.ROCK);
 				} else 
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);

@@ -39,11 +39,12 @@ public abstract class MineralMine {
 //			};
 //		}
 //	
-////		public abstract Comparator<Display> getQualityComparator(final short material);
+//		public abstract java.util.Comparator<Display<? extends MineralMine>> getQualityComparator(final short material);
 ////		throws Exception{
 ////			throw new Exception("raw abstract static method used: MineralMine.getQualityComparator(short)");
 //////			return getCloseComparator();
 ////		}
 //		
 //	}
+		public abstract int getFraction(short material);
 }

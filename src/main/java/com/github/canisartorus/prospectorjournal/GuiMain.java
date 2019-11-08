@@ -279,7 +279,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			oreVeins.clear();
 			for(RockMatter r : ProspectorJournal.rockSurvey) {
 				if(dimID != r.dim) continue;
-				if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.getFractionIn(r, sortBy) != 0)
+				if(sortBy == Utils.DISTANCE || r.ore == 0 || Dwarf.getFractionIn(r.ore, sortBy) != 0)
 					oreVeins.add(new Display<RockMatter>(r, aX, aZ));
 			}
 			if(oreVeins.isEmpty()) {
@@ -293,7 +293,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			zonesIE.clear();
 			for(VoidMine r : ProspectorJournal.voidVeins) {
 				if(dimID != r.dim) continue;
-				if(sortBy == Utils.DISTANCE || IEHandler.Dwarf.getFractionIn(r.oreSet, sortBy) != 0)
+				if(sortBy == Utils.DISTANCE || r.getFraction(sortBy) != 0)
 					zonesIE.add(new Display<VoidMine>(r, aX, aZ));
 			}
 			if(zonesIE.isEmpty()) {
@@ -370,7 +370,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (83 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
         		ts = r.datum.multiple + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(r.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(Dwarf.getFractionIn(r.datum, lastSort));
+    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(r.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(Dwarf.getFractionIn(r.datum.ore, lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
     			w = r.datum.ore;
     			if(lastSort == Utils.DISTANCE || lastSort == w) {
@@ -392,7 +392,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (83 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
            		ts = StatCollector.translateToLocal("sym.inf.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(q.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(Dwarf.getFractionIn(q.datum, lastSort));
+    			ts = lastSort == Utils.DISTANCE ? Dwarf.name(q.datum.ore) : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(Dwarf.singOf(q.datum.ore).get(lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
     			w = q.datum.ore;
     			if(lastSort == Utils.DISTANCE || lastSort == w) {
@@ -413,7 +413,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 //           		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
            		ts = Utils.approx(blusunrize.immersiveengineering.api.tool.ExcavatorHandler.mineralVeinCapacity) + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? (p.datum.oreSet!=null ? p.datum.oreSet.name : "Nil") : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.getFractionIn(p.datum.oreSet, lastSort));
+    			ts = lastSort == Utils.DISTANCE ? (p.datum.oreSet!=null ? p.datum.oreSet.name : "Nil") : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.singOf(p.datum.oreSet).get(lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
     			this.drawTexturedModelRectFromIcon(start + 172, l, OP.crushed.mRegisteredPrefixItems.get(0).getIconFromDamage(IEHandler.Dwarf.getMajor(p.datum.oreSet)), 16, 16);
     			break;

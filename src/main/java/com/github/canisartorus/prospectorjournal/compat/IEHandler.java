@@ -26,10 +26,8 @@ public class IEHandler {
 		static Map<String, Map<Short, Integer>> mCache = new java.util.HashMap<>();
 		static Map<String, Short> faces = new java.util.HashMap<>();
 		
-		public static int getFractionIn(MineralMix oreSet, short material) {
-			// TODO Auto-generated method stub
-			return 0;
-		}
+//		public static int getFractionIn(MineralMix oreSet, short material) {
+//		}
 
 		/**
 		 * Cached search of the weighted list of drops for a vein type, 
@@ -53,12 +51,31 @@ public class IEHandler {
 		/**
 		 * Searches the weighted list of drops for a vein type, 
 		 * and cross-references all the geochemistry for the ultimate list of byproducts
+		 * Spawn weights rounded to parts per thousand
+		 * 
+		 * Also stores characteristic ore icon in 'faces' Map
 		 * @param oreSet to be checked
 		 * @return map of oremat ids to proportional amounts
 		 */
 		static Map<Short, Integer> readManual(MineralMix oreSet) {
+			Map<Short, Float> mContent = new java.util.HashMap<>();
+			oreSet.recalculateChances();
+			float total =0.0f, iMax = 0.0f;
+			short best = 0;
+			for(int i =0; i < oreSet.oreOutput.length; i++) {
+				total += oreSet.recalculatedChances[i];
+				net.minecraft.item.ItemStack realStuff = oreSet.oreOutput[i];
 			// TODO Auto-generated method stub
-			return null;
+			}
+			faces.put(oreSet.name, best);
+			
+			Map<Short, Integer> mProcess = new java.util.HashMap<>();
+			for(java.util.Map.Entry<Short, Float> piece : mContent.entrySet()) {
+				mProcess.put(piece.getKey(), Math.round(piece.getValue() * 1000 / total));
+			}
+			Map<Short, Integer> mOut = new java.util.HashMap<>();
+			// TODO accumulate byproducts
+			return mOut;
 		}
 
 		/**
@@ -67,8 +84,16 @@ public class IEHandler {
 		 * @return the gregapi material id of the characteristic material in that vein type
 		 */
 		public static short getMajor(MineralMix mix) {
-			// TODO Auto-generated method stub
-			return 0;
+			short fId = 0;
+			if(mix == null)
+				return 0;
+			if(faces.containsKey(mix.name)) {
+				fId = faces.get(mix.name);
+			} else {
+				readManual(mix);
+				fId = faces.getOrDefault(mix.name, (short) 0);
+			}
+			return fId;
 		}
 		
 	}

@@ -21,12 +21,12 @@ import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 public class Dwarf {
 	//	calculated trace ratios for ores to products
 	static final int
-		N_PURE = 36,		C_PURE = 9*8,
-		N_SELF = 44,		C_SELF = 12*8,
-		N_BY_ONLY = 8,		C_BY_ONLY = 3*8,
-		N_BY_TWO = 4,		C_BYTWO_1 = 2*8,	C_BYTWO_2 = 1*8,
-		N_BYTHREE = 3,		N_BYTHREE_3 = 2,	C_BY_THREE = 1*8,
-		N_MINOR = 1,		N_MAJOR = 2,		C_MAJOR = 1*8,
+		N_PURE = 36,		C_PURE = 9,
+		N_SELF = 44,		C_SELF = 12,
+		N_BY_ONLY = 8,		C_BY_ONLY = 3,
+		N_BY_TWO = 4,		C_BYTWO_1 = 2,		C_BYTWO_2 = 1,
+		N_BYTHREE = 3,		N_BYTHREE_3 = 2,	C_BY_THREE = 1,
+		N_MINOR = 1,		N_MAJOR = 2,		C_MAJOR = 1,
 		UNIT = N_PURE*C_PURE;
 	static java.util.Collection<GeoChemistry> knowledge = new java.util.ArrayList<>();
 	
@@ -53,13 +53,13 @@ public class Dwarf {
 			return N_SELF * C_SELF;
 		return 0;
 	}
-	public static int getFractionIn(MineralMine deposit, short product) {
-		if (deposit instanceof GeoTag)
-			return Dwarf.getFractionIn(((GeoTag)deposit).ore, product);
-		if (deposit instanceof VoidMine)
-			return com.github.canisartorus.prospectorjournal.compat.IEHandler.Dwarf.getFractionIn(((VoidMine)deposit).oreSet, product);
-		return 0;
-	}
+//	public static int getFractionIn(MineralMine deposit, short product) {
+//		if (deposit instanceof GeoTag)
+//			return Dwarf.getFractionIn(((GeoTag)deposit).ore, product);
+//		if (deposit instanceof VoidMine)
+//			return com.github.canisartorus.prospectorjournal.compat.IEHandler.Dwarf.getFractionIn(((VoidMine)deposit).oreSet, product);
+//		return 0;
+//	}
 
 	
 	/**
@@ -126,7 +126,7 @@ public class Dwarf {
 //					if(ConfigHandler.debug)
 //						System.out.println("smelting "+odm.mID);
 					final short tID = odm.mTargetSmelting.mMaterial.mID;
-					final int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U72);
+					final int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U9);
 					if (purity > gc.mBy2.getOrDefault(tID, 0)) 
 						gc.mBy2.put(tID,  purity);
 				}
@@ -170,7 +170,7 @@ public class Dwarf {
 		new java.util.Comparator<java.util.Map.Entry<Short, Integer>>() {
 			@Override
 			public int compare(java.util.Map.Entry<Short, Integer> o1, java.util.Map.Entry<Short, Integer> o2) {
-				return Integer.compare(o1.getValue(), o2.getValue());
+				return Integer.compare(o2.getValue(), o1.getValue());
 			}
 	};
 	
@@ -199,7 +199,7 @@ public class Dwarf {
 		}
 	}
 	
-	static private final int[] weightsMeasure = new int[] {
+	static final int[] weightsMeasure = new int[] {
 			8*3*5*7, 0, 24*35, 12*35, 8*35, 6*35, 24*7, 4*35, 24*5, 3*35
 	};
 
