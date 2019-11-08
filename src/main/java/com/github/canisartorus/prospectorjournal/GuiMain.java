@@ -415,7 +415,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
     			ts = lastSort == Utils.DISTANCE ? (p.datum.oreSet!=null ? p.datum.oreSet.name : "Nil") : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.singOf(p.datum.oreSet).get(lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
-    			this.drawTexturedModelRectFromIcon(start + 172, l, OP.crushed.mRegisteredPrefixItems.get(0).getIconFromDamage(IEHandler.Dwarf.getMajor(p.datum.oreSet)), 16, 16);
+    			this.drawTexturedModelRectFromIcon(start + 172, l, IEHandler.Dwarf.getMajor(p.datum.oreSet), 16, 16);
     			break;
 			default:
 				e = new Display<RockMatter>(new RockMatter(0, dimID, 0, 255, 0, true), 0, 0);

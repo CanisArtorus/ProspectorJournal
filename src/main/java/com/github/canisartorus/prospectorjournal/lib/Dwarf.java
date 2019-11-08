@@ -20,15 +20,15 @@ import com.github.canisartorus.prospectorjournal.ProspectorJournal;
  */
 public class Dwarf {
 	//	calculated trace ratios for ores to products
-	static final int
+	protected static final int
 		N_PURE = 36,		C_PURE = 9,
 		N_SELF = 44,		C_SELF = 12,
 		N_BY_ONLY = 8,		C_BY_ONLY = 3,
 		N_BY_TWO = 4,		C_BYTWO_1 = 2,		C_BYTWO_2 = 1,
 		N_BYTHREE = 3,		N_BYTHREE_3 = 2,	C_BY_THREE = 1,
-		N_MINOR = 1,		N_MAJOR = 2,		C_MAJOR = 1,
-		UNIT = N_PURE*C_PURE;
-	static java.util.Collection<GeoChemistry> knowledge = new java.util.ArrayList<>();
+		N_MINOR = 1,		N_MAJOR = 2,		C_MAJOR = 1;
+	protected static final int UNIT = N_PURE*C_PURE;
+	protected static java.util.Collection<GeoChemistry> knowledge = new java.util.ArrayList<>();
 	
 	public static GeoChemistry read(int material) {
 		for( GeoChemistry gc : knowledge) {

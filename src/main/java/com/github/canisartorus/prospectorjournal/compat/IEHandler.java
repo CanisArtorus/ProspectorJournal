@@ -5,6 +5,7 @@ import java.util.Map;
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
+import gregapi.data.OP;
 
 public class IEHandler {
 
@@ -24,7 +25,7 @@ public class IEHandler {
 	public static class Dwarf extends com.github.canisartorus.prospectorjournal.lib.Dwarf {
 
 		static Map<String, Map<Short, Integer>> mCache = new java.util.HashMap<>();
-		static Map<String, Short> faces = new java.util.HashMap<>();
+		static Map<String, net.minecraft.util.IIcon> faces = new java.util.HashMap<>();
 		
 //		public static int getFractionIn(MineralMix oreSet, short material) {
 //		}
@@ -58,40 +59,79 @@ public class IEHandler {
 		 * @return map of oremat ids to proportional amounts
 		 */
 		static Map<Short, Integer> readManual(MineralMix oreSet) {
-			Map<Short, Float> mContent = new java.util.HashMap<>();
+			Map<Short, Integer> mProcess = new java.util.HashMap<>();
+			if(oreSet == null)
+				return mProcess;
 			oreSet.recalculateChances();
-			float total =0.0f, iMax = 0.0f;
+			if(oreSet.oreOutput.length == 0)
+				return mProcess;
+			float total =0.0f;
+			double iMax = 0.0D;
 			short best = 0;
+			Map<Short, Double> mContent = new java.util.HashMap<>();
 			for(int i =0; i < oreSet.oreOutput.length; i++) {
 				total += oreSet.recalculatedChances[i];
 				net.minecraft.item.ItemStack realStuff = oreSet.oreOutput[i];
-			// TODO Auto-generated method stub
+				gregapi.oredict.OreDictItemData matType = gregapi.oredict.OreDictManager.INSTANCE.getItemData(realStuff);
+				if(matType != null && matType.hasValidMaterialData()) {
+					for (gregapi.oredict.OreDictMaterialStack part : matType.getAllMaterialStacks()) {
+						final double iWeigh = part.mAmount * oreSet.recalculatedChances[i];
+						if (iWeigh > iMax && ! part.mMaterial.contains(gregapi.data.TD.Properties.STONE) && part.mMaterial.contains(gregapi.data.TD.ItemGenerator.ORES)) {
+							iMax = iWeigh;
+							best = part.mMaterial.mID;
+						}
+						mContent.put(part.mMaterial.mID, mContent.getOrDefault(part.mMaterial.mID, 0.0D) + iWeigh);
+					}
+				}
 			}
-			faces.put(oreSet.name, best);
-			
-			Map<Short, Integer> mProcess = new java.util.HashMap<>();
-			for(java.util.Map.Entry<Short, Float> piece : mContent.entrySet()) {
-				mProcess.put(piece.getKey(), Math.round(piece.getValue() * 1000 / total));
+			if(mContent.isEmpty()) {
+				int better = 0;
+				for(int i = 0; i < oreSet.oreOutput.length; i++) {
+					if(oreSet.recalculatedChances[i] > iMax) {
+						iMax = oreSet.recalculatedChances[i];
+						better = i;
+					}
+				}
+				faces.put(oreSet.name, oreSet.oreOutput[better].getIconIndex());
+				return mProcess;
 			}
-			Map<Short, Integer> mOut = new java.util.HashMap<>();
-			// TODO accumulate byproducts
-			return mOut;
+			if(best != 0) {
+				faces.put(oreSet.name, OP.crushed.mRegisteredPrefixItems.get(0).getIconFromDamage(best));
+			}
+			for(java.util.Map.Entry<Short, Double> piece : mContent.entrySet()) {
+				if(! faces.containsKey(oreSet.name) && piece.getValue() > iMax) {
+					iMax = piece.getValue();
+					best = piece.getKey();
+				}
+				final int pAmt = (int) Math.round(piece.getValue() * 1000 / total / gregapi.data.CS.U);
+				if(gregapi.oredict.OreDictMaterial.MATERIAL_ARRAY[piece.getKey()].contains(gregapi.data.TD.ItemGenerator.ORES)) {
+					for(java.util.Map.Entry<Short, Integer> byProd : Dwarf.read(piece.getKey()).mByBy.entrySet()) {
+						mProcess.put(byProd.getKey(), mProcess.getOrDefault(byProd.getKey(), 0) + byProd.getValue() * pAmt);
+					}
+				} else {
+					mProcess.put(piece.getKey(), mProcess.getOrDefault(piece.getKey(), 0) + pAmt * Dwarf.UNIT);
+				}
+			}
+			if( ! faces.containsKey(oreSet.name)) {
+				faces.put(oreSet.name, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(best));
+			}
+			return mProcess;
 		}
 
 		/**
 		 * Selects a mineral icon for the vein based on the name and weighted drop list.
 		 * @param mix The blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix looking for an icon
-		 * @return the gregapi material id of the characteristic material in that vein type
+		 * @return icon of the characteristic drop from that vein type
 		 */
-		public static short getMajor(MineralMix mix) {
-			short fId = 0;
+		public static net.minecraft.util.IIcon getMajor(MineralMix mix) {
+			net.minecraft.util.IIcon fId = null;
 			if(mix == null)
-				return 0;
+				return null;
 			if(faces.containsKey(mix.name)) {
 				fId = faces.get(mix.name);
 			} else {
 				readManual(mix);
-				fId = faces.getOrDefault(mix.name, (short) 0);
+				fId = faces.getOrDefault(mix.name, null);
 			}
 			return fId;
 		}
