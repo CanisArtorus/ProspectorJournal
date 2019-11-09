@@ -26,6 +26,7 @@ public class IEHandler {
 
 		static Map<String, Map<Short, Integer>> mCache = new java.util.HashMap<>();
 		static Map<String, net.minecraft.util.IIcon> faces = new java.util.HashMap<>();
+		static Map<String, Short> characters = new java.util.HashMap<>();
 		
 //		public static int getFractionIn(MineralMix oreSet, short material) {
 //		}
@@ -58,6 +59,7 @@ public class IEHandler {
 		 * @param oreSet to be checked
 		 * @return map of oremat ids to proportional amounts
 		 */
+		@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 		static Map<Short, Integer> readManual(MineralMix oreSet) {
 			Map<Short, Integer> mProcess = new java.util.HashMap<>();
 			if(oreSet == null)
@@ -93,10 +95,12 @@ public class IEHandler {
 					}
 				}
 				faces.put(oreSet.name, oreSet.oreOutput[better].getIconIndex());
+				characters.put(oreSet.name, best);
 				return mProcess;
 			}
 			if(best != 0) {
 				faces.put(oreSet.name, OP.crushed.mRegisteredPrefixItems.get(0).getIconFromDamage(best));
+				characters.put(oreSet.name, best);
 			}
 			for(java.util.Map.Entry<Short, Double> piece : mContent.entrySet()) {
 				if(! faces.containsKey(oreSet.name) && piece.getValue() > iMax) {
@@ -112,9 +116,8 @@ public class IEHandler {
 					mProcess.put(piece.getKey(), mProcess.getOrDefault(piece.getKey(), 0) + pAmt * Dwarf.UNIT);
 				}
 			}
-			if( ! faces.containsKey(oreSet.name)) {
-				faces.put(oreSet.name, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(best));
-			}
+			faces.putIfAbsent(oreSet.name, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(best));
+			characters.putIfAbsent(oreSet.name, best);
 			return mProcess;
 		}
 
@@ -123,7 +126,7 @@ public class IEHandler {
 		 * @param mix The blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix looking for an icon
 		 * @return icon of the characteristic drop from that vein type
 		 */
-		public static net.minecraft.util.IIcon getMajor(MineralMix mix) {
+		public static net.minecraft.util.IIcon getIcon(MineralMix mix) {
 			net.minecraft.util.IIcon fId = null;
 			if(mix == null)
 				return null;
@@ -134,6 +137,24 @@ public class IEHandler {
 				fId = faces.getOrDefault(mix.name, null);
 			}
 			return fId;
+		}
+
+		/**
+		 * Attempts to find the closest ore type to the content of this MineralMix.
+		 * @param oreSet to search for similarities
+		 * @return the gregapi OreDictMaterialID most characteristic of this ore vein
+		 */
+		public static short getMajor(MineralMix oreSet) {
+			short sBest;
+			if(oreSet == null)
+				return 0;
+			if(characters.containsKey(oreSet.name)) {
+				sBest = characters.get(oreSet.name);
+			} else { 
+				readManual(oreSet);
+				sBest = characters.getOrDefault(oreSet.name, (short) 0);
+			}
+			return sBest;
 		}
 		
 	}
