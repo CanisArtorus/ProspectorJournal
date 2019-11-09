@@ -2,6 +2,7 @@ package com.github.canisartorus.prospectorjournal;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.DimensionManager;
@@ -375,9 +376,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
     			w = r.datum.ore;
     			if(lastSort == Utils.DISTANCE || lastSort == w) {
-    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    				this.drawTexturedModelRectFromIcon(start + 172, l, ((Item)OP.dust.mRegisteredPrefixItems.get(0)).getIconFromDamage(w), 16, 16);
     			} else {
-    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.crushedPurified.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    				this.drawTexturedModelRectFromIcon(start + 172, l, ((Item)OP.crushedPurified.mRegisteredPrefixItems.get(0)).getIconFromDamage(w), 16, 16);
     			}
         		break;
         	case Utils.BEDROCK:
@@ -397,9 +398,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
     			w = q.datum.ore;
     			if(lastSort == Utils.DISTANCE || lastSort == w) {
-    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    				this.drawTexturedModelRectFromIcon(start + 172, l, ((Item)OP.dust.mRegisteredPrefixItems.get(0)).getIconFromDamage(w), 16, 16);
     			} else {
-    				this.drawTexturedModelRectFromIcon(start + 172, l, OP.crushedPurified.mRegisteredPrefixItems.get(0).getIconFromDamage(w), 16, 16);
+    				this.drawTexturedModelRectFromIcon(start + 172, l, ((Item)OP.crushedPurified.mRegisteredPrefixItems.get(0)).getIconFromDamage(w), 16, 16);
     			}
         		break;
         	case Utils.EXCAVATOR:

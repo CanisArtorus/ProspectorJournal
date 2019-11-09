@@ -99,7 +99,7 @@ public class IEHandler {
 				return mProcess;
 			}
 			if(best != 0) {
-				faces.put(oreSet.name, OP.crushed.mRegisteredPrefixItems.get(0).getIconFromDamage(best));
+				faces.put(oreSet.name, ((net.minecraft.item.Item)OP.crushed.mRegisteredPrefixItems.get(0)).getIconFromDamage(best));
 				characters.put(oreSet.name, best);
 			}
 			for(java.util.Map.Entry<Short, Double> piece : mContent.entrySet()) {
@@ -116,7 +116,7 @@ public class IEHandler {
 					mProcess.put(piece.getKey(), mProcess.getOrDefault(piece.getKey(), 0) + pAmt * Dwarf.UNIT);
 				}
 			}
-			faces.putIfAbsent(oreSet.name, OP.dust.mRegisteredPrefixItems.get(0).getIconFromDamage(best));
+			faces.putIfAbsent(oreSet.name, ((net.minecraft.item.Item)OP.dust.mRegisteredPrefixItems.get(0)).getIconFromDamage(best));
 			characters.putIfAbsent(oreSet.name, best);
 			return mProcess;
 		}
