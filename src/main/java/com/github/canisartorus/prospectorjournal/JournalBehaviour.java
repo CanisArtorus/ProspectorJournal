@@ -10,6 +10,7 @@ import com.github.canisartorus.prospectorjournal.network.PacketVoidVein;
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
 import blusunrize.immersiveengineering.common.blocks.metal.TileEntityExcavator;
 import blusunrize.immersiveengineering.common.blocks.metal.TileEntitySampleDrill;
+import gregapi.block.metatype.BlockStones;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.tileentity.notick.TileEntityBase03MultiTileEntities;
 import net.minecraft.entity.player.EntityPlayer;
@@ -64,8 +65,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 					Utils.chatAt(aPlayer, ChatString.ROCK);	//"Just normal rock");
 				} else if(gregapi.util.OM.is(gregapi.data.OD.itemFlint, sample)) {
 					Utils.chatAt(aPlayer, ChatString.FLINT);
-				} else if(gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
-					// TODO config option
+				} else if( ! ConfigHandler.trackRock && gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
 					Utils.chatAt(aPlayer, ChatString.ROCK);
 				} else 
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);
@@ -167,6 +167,8 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 			}
 			TakeSample(aWorld, x, y, z, type, Utils.FLOWER, aPlayer);
 			return true;
+		} else if(ConfigHandler.trackRock &&  b instanceof BlockStones && b.getDamageValue(aWorld, x, y, z) == BlockStones.STONE) {
+			TakeSample(aWorld, x, y, z, ((BlockStones) b).mMaterial.mID, Utils.ORE_VEIN, aPlayer);
 		}
 		}
 		return false;

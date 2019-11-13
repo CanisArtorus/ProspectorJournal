@@ -68,7 +68,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
 		ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
 		
-		if(ConfigHandler.makeBook)
+//		if(ConfigHandler.makeBook)
 			Items.RegisterItems();
 		
 		com.github.canisartorus.prospectorjournal.lib.Utils.NW_PJ = new NetworkHandler(MOD_ID, "CAPJ", 
@@ -83,7 +83,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
-		if(ConfigHandler.makeBook)
+//		if(ConfigHandler.makeBook)
 			Items.RegisterRecipes();
 		if(ConfigHandler.applyPatches)
 			com.github.canisartorus.prospectorjournal.compat.GtPatches.onInit();
