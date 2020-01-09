@@ -13,8 +13,8 @@ public class KeyBindings {
 	@cpw.mods.fml.common.eventhandler.SubscribeEvent
 	public void onKeyInput(cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent event) {
 		if (rocksMenu.isPressed() && !com.github.canisartorus.prospectorjournal.ConfigHandler.bookOnly && 
-				! (net.minecraft.client.Minecraft.getMinecraft().currentScreen instanceof com.github.canisartorus.prospectorjournal.GuiMain) ) {
-			net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
+				! (net.minecraft.client.Minecraft.getMinecraft().currentScreen instanceof com.github.canisartorus.prospectorjournal.gui.GuiMain) ) {
+			net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.gui.GuiMain());
 		}
 	}
 }

@@ -18,6 +18,8 @@ package com.github.canisartorus.prospectorjournal;
  import cpw.mods.fml.common.Mod.EventHandler;
  import cpw.mods.fml.common.event.*;
 import gregapi.network.NetworkHandler;
+
+import com.github.canisartorus.prospectorjournal.gui.GuiPointer;
 import com.github.canisartorus.prospectorjournal.network.*;
 import java.util.ArrayList;
  import java.util.List;
@@ -29,7 +31,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.6.0"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.7.0"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 
@@ -68,6 +70,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
 		ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
 		
+		new gregapi.block.multitileentity.MultiTileEntityRegistry("ca.pj.multitileentity");
 //		if(ConfigHandler.makeBook)
 			Items.RegisterItems();
 		
@@ -83,12 +86,14 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
+		new com.github.canisartorus.prospectorjournal.lib.Dwarf().run();
+		
 //		if(ConfigHandler.makeBook)
 			Items.RegisterRecipes();
 		if(ConfigHandler.applyPatches)
 			com.github.canisartorus.prospectorjournal.compat.GtPatches.onInit();
 		KeyBindings.init();
-		com.github.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
+//		com.github.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
 	}
 	
 	@Override

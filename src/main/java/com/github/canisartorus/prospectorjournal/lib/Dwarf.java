@@ -18,7 +18,7 @@ import com.github.canisartorus.prospectorjournal.ProspectorJournal;
  *
  * Derived data regarding ore availability and byproducts.
  */
-public class Dwarf {
+public class Dwarf implements Runnable {
 	//	calculated trace ratios for ores to products
 	protected static final int
 		N_PURE = 36,		C_PURE = 9,
@@ -225,6 +225,11 @@ public class Dwarf {
 			}
 		}
 		return rMap;
+	}
+
+	@Override
+	public void run() {
+		Dwarf.readTheStones();		
 	}
 
 }

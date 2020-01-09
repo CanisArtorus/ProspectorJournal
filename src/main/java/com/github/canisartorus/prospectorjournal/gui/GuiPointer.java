@@ -2,10 +2,12 @@
  * @author Alexander James
  * @author Dyonovan
  */
-package com.github.canisartorus.prospectorjournal;
+package com.github.canisartorus.prospectorjournal.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import com.github.canisartorus.prospectorjournal.ConfigHandler;
+import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 import com.github.canisartorus.prospectorjournal.lib.Utils;
 
 import net.minecraft.client.Minecraft;

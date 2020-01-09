@@ -28,7 +28,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				return true;
 		} 
 		if(aWorld.isRemote && aPlayer.isSneaking() ) {
-		    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
+		    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.gui.GuiMain());
 		}
 		return false;
 	}
@@ -36,7 +36,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 	@Override
 	public ItemStack onItemRightClick(MultiItem aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer) {
 		if(aWorld.isRemote)
-			net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.GuiMain());
+			net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.gui.GuiMain());
 		return aStack;
 	}
 	
