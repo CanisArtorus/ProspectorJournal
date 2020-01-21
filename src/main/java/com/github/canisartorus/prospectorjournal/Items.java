@@ -116,7 +116,7 @@ public class Items {
 			
 			ItemStack makeBox(OreDictMaterial aMat, Number aSize) {
 				return addItem(i++, "Rock Sample Box (" + aMat.getLocal() + ")", TIP_BAG_1, new SampleBoxBehaviour(aMat, aSize.byteValue()),
-						TC.VACUOS.get(aSize/5), TC.INSTRUMENTUM.get(1));
+						TC.VACUOS.get(aSize.intValue()/5), TC.INSTRUMENTUM.get(1));
 			}
 		};
 		
