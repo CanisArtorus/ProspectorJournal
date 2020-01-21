@@ -2,6 +2,8 @@ package com.github.canisartorus.prospectorjournal;
 
 import java.util.List;
 
+import com.github.canisartorus.prospectorjournal.inventory.SampleBoxBehaviour;
+
 import gregapi.data.ANY;
 import gregapi.data.CS;
 import gregapi.data.MD;
@@ -55,7 +57,7 @@ public class Items {
 				makeBox(MT.Dreamwood,	16);
 				makeBox(MT.Shimmerwood,	16);
 				makeBox(MT.IronWood,	12);
-				makeBox(MT.GreatWood,	12);
+				makeBox(MT.Greatwood,	12);
 				makeBox(MT.Silverwood,	16);
 				makeBox(MT.Plastic,		16);
 				makeBox(MT.Pb	,		8);
@@ -112,8 +114,8 @@ public class Items {
 				makeBox(MT.Infinity,	60);
 			}
 			
-			ItemStack makeBox(OreDictMaterial aMat, byte aSize) {
-				return addItem(i++, "Rock Sample Box (" + aMat.getLocal() + ")", TIP_BAG_1, new SampleBoxBehaviour(aMat, aSize),
+			ItemStack makeBox(OreDictMaterial aMat, Number aSize) {
+				return addItem(i++, "Rock Sample Box (" + aMat.getLocal() + ")", TIP_BAG_1, new SampleBoxBehaviour(aMat, aSize.byteValue()),
 						TC.VACUOS.get(aSize/5), TC.INSTRUMENTUM.get(1));
 			}
 		};
@@ -127,17 +129,17 @@ public class Items {
 //		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new BoxBehaviour(mBoxes));
 	}
 	
-	private static void woodBoxRecipe(short iId, OreDictMaterial aMat) {
-		CR.shaped(Items.mBoxes.make(iId), CR.DEF, " PS", "P P", " P ", 'P', OP.plate.dat(odm), 'S', OP.stick.dat(odm));
+	private static void woodBoxRecipe(Number iId, OreDictMaterial aMat) {
+		CR.shaped(Items.mBoxes.make(iId.shortValue()), CR.DEF, " PS", "P P", " P ", 'P', OP.plate.dat(aMat), 'S', OP.stick.dat(aMat));
 	}
-	private static void metalBoxRecipe(short iId, OreDictMaterial aMat) {
-		CR.shaped(Items.mBoxes.make(iId), CR.DEF, " PS", "PhP", " P ", 'P', OP.plate.dat(odm), 'S', OP.stick.dat(odm));
+	private static void metalBoxRecipe(Number iId, OreDictMaterial aMat) {
+		CR.shaped(Items.mBoxes.make(iId.shortValue()), CR.DEF, " PS", "PhP", " P ", 'P', OP.plate.dat(aMat), 'S', OP.stick.dat(aMat));
 	}
 
 	public static void RegisterRecipes() {
 		CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
 		// fabric / cloth  / wool / silk are not odm
-		int i = 1;
+		short i = 1;
 		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " LS", "LbL", " L ", 'L', OD.itemLeather, 'S', OP.stick.dat(ANY.Wood));
 		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "P P", " P ", 'P', OD.plankAnyWood, 'S', OP.stick.dat(ANY.WoodNormal));
 		woodBoxRecipe(i++, MT.WoodSealed);
@@ -149,7 +151,7 @@ public class Items {
 		woodBoxRecipe(i++, MT.IronWood);
 		woodBoxRecipe(i++, MT.Greatwood);
 		woodBoxRecipe(i++, MT.Silverwood);
-		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "PbP", " P ", 'P', OP.plate.dat(MT.Plastic), 'S', OP.stick.dat(MT.plastic));
+		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "PbP", " P ", 'P', OP.plate.dat(MT.Plastic), 'S', OP.stick.dat(MT.Plastic));
 		metalBoxRecipe(i++, MT.Pb);
 		metalBoxRecipe(i++, MT.Bi);
 		metalBoxRecipe(i++, MT.Sb);
