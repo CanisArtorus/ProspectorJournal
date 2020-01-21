@@ -70,7 +70,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 		// Make new items, add them to OreDicts, and do recipes using only internal items.
 		ConfigHandler.init(aEvent.getSuggestedConfigurationFile());
 		
-		new gregapi.block.multitileentity.MultiTileEntityRegistry("ca.pj.multitileentity");
+//		new gregapi.block.multitileentity.MultiTileEntityRegistry("ca.pj.multitileentity");
 //		if(ConfigHandler.makeBook)
 			Items.RegisterItems();
 		

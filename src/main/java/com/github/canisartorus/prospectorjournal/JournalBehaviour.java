@@ -61,8 +61,9 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				final ItemStack sample = ((gregtech.tileentity.misc.MultiTileEntityRock)i).mRock;
 				if(sample == null) {
 					// is default rock.
-//					sample = ((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0);
-					Utils.chatAt(aPlayer, ChatString.ROCK);	//"Just normal rock");
+					if(ConfigHandler.trackRock) TakeSampleServer(aWorld, x, y, z, 
+							(short)((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0).getItemDamage(), Utils.ROCK, aPlayer);
+					else Utils.chatAt(aPlayer, ChatString.ROCK);	//"Just normal rock");
 				} else if(gregapi.util.OM.is(gregapi.data.OD.itemFlint, sample)) {
 					Utils.chatAt(aPlayer, ChatString.FLINT);
 				} else if( ! ConfigHandler.trackRock && gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
