@@ -111,7 +111,7 @@ public class Items {
 				makeBox(MT.Ad	,		60);
 				makeBox(MT.Bedrock_HSLA_Alloy,	60);
 				makeBox(MT.DraconiumAwakened,	60);
-				makeBox(MT.Infinity,	60);
+				makeBox(MT.Infinity,	60);	//id = 64
 			}
 			
 			ItemStack makeBox(OreDictMaterial aMat, Number aSize) {
