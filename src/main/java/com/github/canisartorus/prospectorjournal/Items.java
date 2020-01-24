@@ -21,9 +21,9 @@ import net.minecraft.item.ItemStack;
 
 public class Items {
 
-	public static final String CTAB_BOXES = "Prospector Collection Boxes";
-	public static ItemStack noteBook;
-	static gregapi.item.multiitem.MultiItem mBoxes;
+//	public static final String CTAB_BOXES = "Prospector Collection Boxes";
+//	public static ItemStack noteBook;
+	static gregapi.item.multiitem.MultiItem mBoxes, mBook;
 
 	public static void RegisterItems() {
 		// invent a Block for the TileEntities to Have-A
@@ -31,22 +31,26 @@ public class Items {
 //		MultiTileEntityBlock.getOrCreate(ProspectorJournal.MOD_ID, "wood", Material.wood, Block.soundTypeWood, CS.TOOL_axe, -2, -1, 5, false, false);
 		
 		// makes a bunch of items to the same ID and name
-		new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook") {
+		mBook = new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook") {
 			@Override
 			public void addItems() {
-				Items.noteBook = addItem(0, "Prospector's Journal", "Cross-referencing all the rocks.", JournalBehaviour.INSTANCE, TC.PERFODIO.get(2), TC.COGNITO.get(4), TC.ORDO.get(1));
+				addItem(0, "Prospector's Journal", "Cross-referencing all the rocks.", JournalBehaviour.INSTANCE, TC.PERFODIO.get(2), TC.COGNITO.get(4), TC.ORDO.get(1));
 //				Items.noteBook = ST.make(this, 1, 0);
 				
 //				CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
 				
 //XXX				gregapi.data.CS.BooksGT.BOOK_REGISTER.add(Items.noteBook, (byte)53);
 			}
+			
+			@Override public int getDefaultStackLimit(ItemStack aStack) {return 4;}
 		};
 		
 		Items.mBoxes = new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospector.samplebag") {
+			@Override public int getDefaultStackLimit(ItemStack aStack) {return 1;}
 			private static final String TIP_BAG_1 = "Collects Rocks.";
 			int i = 0;
-			@Override public void addItems() {
+			@Override 
+			public void addItems() {
 				addItem(i++, "Rock Sample Bag (Fabric)", TIP_BAG_1, new SampleBoxBehaviour(MT.Rubber, 6, 48), TC.VACUOS.get(1), TC.INSTRUMENTUM.get(1));
 				addItem(i++, "Rock Sample Bag (Leather)", TIP_BAG_1, new SampleBoxBehaviour(MT.Leather, 6), TC.VACUOS.get(2), TC.INSTRUMENTUM.get(1));
 				makeBox(ANY.WoodNormal,	8);
@@ -137,10 +141,11 @@ public class Items {
 	}
 
 	public static void RegisterRecipes() {
-		CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
+		CR.shaped(Items.mBook.make(0), CR.NONE, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
 		// fabric / cloth  / wool / silk are not odm
+		CR.shaped(Items.mBoxes.make(0), CR.BUF, " WT", "W W", " W ", 'W', ST.make(net.minecraft.init.Blocks.wool, 1, CS.W), 'T', ST.make(net.minecraft.init.Items.string, 1, 0));
 		short i = 1;
-		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " LS", "LbL", " L ", 'L', OD.itemLeather, 'S', OP.stick.dat(ANY.Wood));
+		CR.shaped(Items.mBoxes.make(i++), CR.NONE, " LS", "LbL", " L ", 'L', OD.itemLeather, 'S', OP.stick.dat(ANY.Wood));
 		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "P P", " P ", 'P', OD.plankAnyWood, 'S', OP.stick.dat(ANY.WoodNormal));
 		woodBoxRecipe(i++, MT.WoodSealed);
 		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "P P", " P ", 'P', OD.plankSkyroot, 'S', OP.stick.dat(MT.Skyroot));
@@ -151,7 +156,7 @@ public class Items {
 		woodBoxRecipe(i++, MT.IronWood);
 		woodBoxRecipe(i++, MT.Greatwood);
 		woodBoxRecipe(i++, MT.Silverwood);
-		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "PbP", " P ", 'P', OP.plate.dat(MT.Plastic), 'S', OP.stick.dat(MT.Plastic));
+		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "PkP", " P ", 'P', OP.plate.dat(MT.Plastic), 'S', OP.stick.dat(MT.Plastic));
 		metalBoxRecipe(i++, MT.Pb);
 		metalBoxRecipe(i++, MT.Bi);
 		metalBoxRecipe(i++, MT.Sb);

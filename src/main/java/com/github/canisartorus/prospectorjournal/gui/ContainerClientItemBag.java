@@ -21,7 +21,7 @@ public class ContainerClientItemBag extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
 		int l =(width - xSize) /2, t = (height - ySize)/2;
-		drawRect( l, t, l+xSize, t+ySize, 0xEEFFDD);	// default is -2130706433
+		drawRect( l, t, l+xSize, t+ySize, 0xFFEEFFDD);	// default is -2130706433
 		
 		/* @author Vazkii
 		 * adapted from vazkii.botania.client.gui.bag.GuiFlowerBag
@@ -36,7 +36,7 @@ public class ContainerClientItemBag extends GuiContainer {
 					net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
 					net.minecraft.client.renderer.entity.RenderItem.getInstance().renderItemIntoGUI(fontRendererObj, mc.renderEngine, fSlot.getEmptyItem(), x, y);
 					net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
-					fontRendererObj.drawStringWithShadow("0", x+11, y+9, 0xFF6666);
+					fontRendererObj.drawStringWithShadow("0", x+11, y+9, 0xFFFF6666);
 				}
 			}
 		}
