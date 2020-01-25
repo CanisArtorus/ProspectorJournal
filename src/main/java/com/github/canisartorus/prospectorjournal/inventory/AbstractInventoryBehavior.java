@@ -7,6 +7,7 @@ import com.github.canisartorus.prospectorjournal.gui.ContainerClientItemBag;
 
 import gregapi.data.CS;
 import gregapi.data.CS.SFX;
+import gregapi.data.LH;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.util.ST;
 import gregapi.util.UT;
@@ -16,6 +17,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault {
@@ -43,7 +46,10 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 	public AbstractInventoryBehavior(Number aSize) {					this(aSize, 64		, Integer.MAX_VALUE);}
 
 	@Override public List<String> getAdditionalToolTips(MultiItem aItem, List<String> aList, ItemStack aStack) {
-		//XXX
+		aList.add(StatCollector.translateToLocal("tooltip.itemhasinventory.name"));
+		if(willDeposit()) aList.add(LH.Chat.GRAY + StatCollector.translateToLocal("tooltip.putinbox.name"));
+		if(!isEasyToUse()) aList.add(StatCollector.translateToLocal("tooltip.openontable.name"));
+		aList.add(LH.Chat.GRAY + StatCollector.translateToLocal("tooltip.defrag.name"));
 		return aList;
 	}
 	
@@ -52,7 +58,7 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 		if(willDeposit() && tTile != null && tTile instanceof IInventory) {
 			int[] tSlots = CS.ZL_INTEGER;
 			// Prefer to get the right drawer as if by hand, not by pipe
-			if(tTile instanceof MultiTileEntityDrawerQuad) {
+			if(tTile instanceof MultiTileEntityDrawerQuad) {	//XXX dependency
 				if(aSide == ((gregapi.tileentity.base.TileEntityBase09FacingSingle)tTile).mFacing) {
 					float[] tCoords = UT.Code.getFacingCoordsClicked(aSide, aHitX, aHitY, aHitZ);
 					int quad = (tCoords[0] > 0.5 ? 1 : 0) + (tCoords[1] > 0.5 ? 2 : 0);

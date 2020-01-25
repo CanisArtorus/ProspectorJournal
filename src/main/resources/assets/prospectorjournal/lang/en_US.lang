@@ -40,3 +40,9 @@ str.value.name=worth
 
 sym.inf.name=inf
 sym.x.name=x
+
+tooltip.collectrock.name=Right-Click collects sample Rocks directly
+tooltip.defrag.name=Shift-Right-Click on air to defragement across your inventory and similar items' inventories.
+tooltip.itemhasinventory.name=This Item stores an Inventory
+tooltip.openontable.name=Can only be opened on a shelf or floor
+tooltip.putinbox.name=R-Click to dump into an inventory tile

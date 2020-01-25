@@ -14,24 +14,24 @@ package com.github.canisartorus.prospectorjournal;
  *  Built primarily off of TCNodeTracker at https://github.com/Dyonovan/TCNodeTracker
  *  and thus remains under Creative Commons CC-BY-NC-SA4.0 (attribution, non-commercial, share-alike)
  */
- 
- import cpw.mods.fml.common.Mod.EventHandler;
- import cpw.mods.fml.common.event.*;
+
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.*;
 import gregapi.network.NetworkHandler;
 
 import com.github.canisartorus.prospectorjournal.gui.GuiPointer;
 import com.github.canisartorus.prospectorjournal.network.*;
 import java.util.ArrayList;
- import java.util.List;
+import java.util.List;
   
-@cpw.mods.fml.common.Mod(modid=ProspectorJournal.MOD_ID, name=ProspectorJournal.MOD_NAME, version=ProspectorJournal.VERSION, dependencies="required-after:gregapi_post; required-after:gregtech; required-after:immersiveengineering")
+@cpw.mods.fml.common.Mod(modid=ProspectorJournal.MOD_ID, name=ProspectorJournal.MOD_NAME, version=ProspectorJournal.VERSION, dependencies="required-after:gregapi_post; required-after:gregtech; required-after:ImmersiveEngineering")
 public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** Your Mod-ID has to be LOWERCASE and without Spaces. Uppercase Chars and Spaces can create problems with Resource Packs. This is a vanilla forge "Issue". */
 	public static final String MOD_ID = "prospectorjournal"; 
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.7.2"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.7.3"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 

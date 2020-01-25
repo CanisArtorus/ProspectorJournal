@@ -4,20 +4,27 @@ import static gregapi.data.CS.RNGSUS;
 
 import java.util.List;
 
+import com.github.canisartorus.prospectorjournal.ConfigHandler;
 import com.github.canisartorus.prospectorjournal.JournalBehaviour;
+import com.github.canisartorus.prospectorjournal.gui.ContainerClientItemBag;
 
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetDrops;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.code.ObjectStack;
 import gregapi.data.CS.SFX;
+import gregapi.data.LH;
+import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.oredict.OreDictMaterial;
+import gregapi.oredict.OreDictMaterialStack;
+import gregapi.util.OM;
 import gregapi.util.UT;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 /**
@@ -36,19 +43,21 @@ public class SampleBoxBehaviour  extends FilteredBoxBehavior {
 		super(aSize, Math.min(64, aStackSize.intValue()), aCapacity);
 
 		int tFortune = 0, tFire = 0;
-		final int iFortune = (2 + aMaterial.mToolQuality) / 2;
 		boolean tSilky = false;
-		for( ObjectStack<Enchantment> tEnch : aMaterial.mEnchantmentTools) {
-			if( tEnch.mObject.effectId == Enchantment.fortune.effectId) {
-				tFortune = tEnch.amountInt();
-			} else if (tEnch.mObject.effectId == Enchantment.silkTouch.effectId) {
-				tSilky = true;
-			} else if (tEnch.mObject.effectId == Enchantment.fireAspect.effectId) {
-				tFire = tEnch.amountInt();
+		final int iFortune = (2 + aMaterial.mToolQuality) / 2;
+		if( ConfigHandler.fortunateBoxes || ConfigHandler.smeltBoxes) {
+			for( ObjectStack<Enchantment> tEnch : aMaterial.mEnchantmentTools) {
+				if( tEnch.mObject.effectId == Enchantment.fortune.effectId) {
+					tFortune = tEnch.amountInt();
+				} else if (tEnch.mObject.effectId == Enchantment.silkTouch.effectId) {
+					tSilky = true;
+				} else if (tEnch.mObject.effectId == Enchantment.fireAspect.effectId) {
+					tFire = tEnch.amountInt();
+				}
 			}
 		}
-		mFortune = (byte) (tFortune == iFortune ? iFortune +1 : Math.max(iFortune, tFortune));
-		mFire = (byte) (tSilky ? 0 : tFire);
+		mFortune = (byte) (ConfigHandler.fortunateBoxes ? (tFortune == iFortune ? iFortune +1 : Math.max(iFortune, tFortune) ): 0);
+		mFire = (byte) (tSilky ? 0 : ConfigHandler.smeltBoxes ? tFire : 0);
 		NAME_TAGS.put("gt.meta.rockGt", new String[] {"ca.rockList", "ca.rockCnt"});
 		if(mFire != 0) NAME_TAGS.put("gt.meta.chunkGt", new String[]{"ca.pigList", "ca.pigCnt"});
 	}
@@ -86,21 +95,38 @@ public class SampleBoxBehaviour  extends FilteredBoxBehavior {
 		return false;
 	}
 	
+	// Not checked for item validity, internal use only.
 	protected ItemStack autoSmelt(ItemStack aThing) {
 		if(mFire != 0 && OP.rockGt.contains(aThing)) {
-			//TODO scaling melt point
-			return OP.chunkGt.mat(OreDictMaterial.MATERIAL_ARRAY[aThing.getItemDamage()], aThing.stackSize);
+			if(OM.association(aThing).hasValidPrefixMaterialData()) {
+				OreDictMaterialStack tMat = OM.association(aThing).mMaterial;
+				long tFuse = tMat.mMaterial.mMeltingPoint;
+				if(tFuse < mFire * 300 +300 )
+					return OM.dustOrSolid(tMat);	// Not everything has a chunk, so they give a small dust instead
+//					return OP.chunkGt.mat(tMat, aThing.stackSize);
+//			return OP.chunkGt.mat(OreDictMaterial.MATERIAL_ARRAY[aThing.getItemDamage()], aThing.stackSize);
+			}
 		}			
 		return aThing;
 	}
 
 	@Override
 	public List<String> getAdditionalToolTips(MultiItem aItem, List<String> aList, ItemStack aStack) {
-		List<String> rList =  super.getAdditionalToolTips(aItem, aList, aStack);
-		//TODO stub
-		return rList;
+		aList.add(LH.Chat.ITALIC + LH.Chat.BLUE + Enchantment.fortune.getTranslatedName(mFortune) + (mFire ==0 ? "" : StatCollector.translateToLocal("enchantment.autosmelt.name")));
+		super.getAdditionalToolTips(aItem, aList, aStack);
+		aList.add(LH.Chat.GRAY + StatCollector.translateToLocal("tooltip.collectrock.name"));
+		return aList;
 	}
 
 //	@Override	public IInventory getInventory(ItemStack aStack, EntityPlayer aPlayer) {return new BoxInventory(aStack, aPlayer);}
+	@Override
+	public void openGUI(ItemStack aStack, EntityPlayer aPlayer) {
+		net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new ContainerClientItemBag(new ContainerCommonItemBag(
+				getInventory(aStack, aPlayer), aPlayer, aPlayer.inventory.currentItem) {
+					@Override 	protected void addSlotAt(int aIndex, int aX, int aY) {
+						addSlotToContainer(new SlotGhost(mInventory, aIndex, aX, aY, OP.rockGt.mat(MT.Steel, 0)));
+					}
+		} ));
+	}
 
 }
