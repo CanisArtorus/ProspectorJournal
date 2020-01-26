@@ -8,7 +8,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
+//import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
 import gregapi.network.INetworkHandler;
 import gregapi.network.IPacket;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -24,7 +24,7 @@ import net.minecraft.world.IBlockAccess;
 public class PacketVoidVein implements IPacket {
 	public int mX;
 	public int mZ;
-	private byte mDecoderType = 0;
+	private final byte mDecoderType;
 	public String mName;
 	
 	/** @param aDecoderType has to be a Number between [0 and 3] */
@@ -70,8 +70,9 @@ public class PacketVoidVein implements IPacket {
 		final int mDim = mPlayer.getEntityWorld().provider.dimensionId;
 		for(VoidMine t : ProspectorJournal.voidVeins) {
 			if(t.dim == mDim && t.cx() == mX && t.cz() == mZ) {
-				// chunk entries overwrite
-				if(t.oreSet.name == mName) {
+				// chunk entries overwrite, b/c only one vein can exist per chunk
+//				if(t.oreSet.name == mName) {
+				if(t.getOreName() == mName) {
 					Utils.chatAt(mPlayer, Utils.ChatString.DUPE);// "Still more vein to mine.");
 					return;
 				} else if(mName == IEHandler.DEPLETED) {
@@ -86,9 +87,11 @@ public class PacketVoidVein implements IPacket {
 				}
 			}
 		}
-		final MineralMix mMix = IEHandler.getByName(mName);
-		if (mMix != null) {
-			ProspectorJournal.voidVeins.add(new VoidMine(mDim, mX*16 + 8, mZ*16 + 8, mMix));
+//		final MineralMix mMix = IEHandler.getByName(mName);
+//		if (mMix != null) {
+		final VoidMine tDat = new VoidMine((short)mDim, mX*16 + 8, mZ*16 + 8, mName);
+		if (tDat.isValid()) {
+			ProspectorJournal.voidVeins.add(tDat);
 			Utils.writeJson(Utils.IE_VOID_FILE);
 		}
 	}

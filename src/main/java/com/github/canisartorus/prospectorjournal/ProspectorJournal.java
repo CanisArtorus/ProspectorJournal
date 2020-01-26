@@ -1,7 +1,8 @@
 package com.github.canisartorus.prospectorjournal;
 
 /**
- * @author Max Mustermann
+ * @author Alexander James
+ * @author Gregorious Techneticies
  * @author Dyonovan
  * @author Alexander James
  * 
@@ -24,14 +25,14 @@ import com.github.canisartorus.prospectorjournal.network.*;
 import java.util.ArrayList;
 import java.util.List;
   
-@cpw.mods.fml.common.Mod(modid=ProspectorJournal.MOD_ID, name=ProspectorJournal.MOD_NAME, version=ProspectorJournal.VERSION, dependencies="required-after:gregapi_post; required-after:gregtech; required-after:ImmersiveEngineering")
+@cpw.mods.fml.common.Mod(modid=ProspectorJournal.MOD_ID, name=ProspectorJournal.MOD_NAME, version=ProspectorJournal.VERSION, dependencies="required-after:gregapi_post; required-after:gregtech; after:ImmersiveEngineering")
 public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** Your Mod-ID has to be LOWERCASE and without Spaces. Uppercase Chars and Spaces can create problems with Resource Packs. This is a vanilla forge "Issue". */
 	public static final String MOD_ID = "prospectorjournal"; 
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.7.3"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.8.0"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 

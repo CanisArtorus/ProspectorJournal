@@ -185,7 +185,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			case Utils.EXCAVATOR:
 				final VoidMine q = zonesIE.get(low + (button.id/2)).datum;
 				for(VoidMine e : ProspectorJournal.voidVeins) {
-					if(e.dim == q.dim && e.x == q.x && e.z == q.z && e.oreSet == q.oreSet) {
+					if(e.dim == q.dim && e.x == q.x && e.z == q.z && 
+//							e.oreSet == q.oreSet) {
+							e.getOreName().equalsIgnoreCase(q.getOreName()) ) {
 						if(ProspectorJournal.doGui && ProspectorJournal.xMarker == q.x && ProspectorJournal.yMarker == 255 && ProspectorJournal.zMarker == q.z) {
 							ProspectorJournal.doGui = false;
 							ProspectorJournal.yMarker = -1;
@@ -300,7 +302,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 					zonesIE.add(new Display<VoidMine>(r, aX, aZ));
 			}
 			if(zonesIE.isEmpty()) {
-				zonesIE.add(new Display<VoidMine>(new VoidMine(dimID, aX, aZ, new blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralWorldInfo()), aX, aZ));
+//				zonesIE.add(new Display<VoidMine>(new VoidMine(dimID, aX, aZ, new blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralWorldInfo()), aX, aZ));
+				zonesIE.add(new Display<VoidMine>(new VoidMine((short) dimID, aX, aZ, ""), aX, aZ));
 				break;
 			}
 			Collections.sort(zonesIE, sortBy == Utils.DISTANCE ? zonesIE.get(0).getCloseComparator() : zonesIE.get(0).getQualityComparator(sortBy));
@@ -417,9 +420,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 //           		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
            		ts = Utils.approx(blusunrize.immersiveengineering.api.tool.ExcavatorHandler.mineralVeinCapacity) + StatCollector.translateToLocal("sym.x.name");
            		this.fontRendererObj.drawString(ts, start + (145 -(this.fontRendererObj.getStringWidth(ts)/2)), l, colour);
-    			ts = lastSort == Utils.DISTANCE ? (p.datum.oreSet!=null ? p.datum.oreSet.name : "Nil") : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEHandler.Dwarf.singOf(p.datum.oreSet).get(lastSort));
+    			ts = lastSort == Utils.DISTANCE ? p.datum.isValid() ? p.datum.getOreName() : "Nil" : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEDwarf.singOf(p.datum.getOreName()).get(lastSort));
     			this.fontRendererObj.drawString(ts, start + 190, l, colour);
-    			this.drawTexturedModelRectFromIcon(start + 172, l, IEHandler.Dwarf.getIcon(p.datum.oreSet), 16, 16);
+    			this.drawTexturedModelRectFromIcon(start + 172, l, IEDwarf.getIcon(p.datum.getOreName()), 16, 16);
     			break;
 			default:
 				e = new Display<RockMatter>(new RockMatter(0, dimID, 0, 255, 0, true), 0, 0);
@@ -455,7 +458,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         			longChant = Dwarf.singOf(rockSpots.get(i).datum.ore);
         			break;
         		case Utils.EXCAVATOR:
-        			longChant = IEHandler.Dwarf.singOf(zonesIE.get(i).datum.oreSet);
+        			longChant = IEDwarf.singOf(zonesIE.get(i).datum.getOreName());
         			break;
         		default:
         			longChant = new java.util.HashMap<>(0);
@@ -564,7 +567,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 					sorted(lastData, rockSpots.get(low + k).datum.ore);
 					break;
 				case Utils.EXCAVATOR:
-					sorted(lastData, IEHandler.Dwarf.getMajor(zonesIE.get(low + k).datum.oreSet));
+					sorted(lastData, IEDwarf.getMajor(zonesIE.get(low + k).datum.getOreName()));
 					break;
 				}
 				

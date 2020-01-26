@@ -1,162 +1,108 @@
 package com.github.canisartorus.prospectorjournal.compat;
 
-import java.util.Map;
-
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.lib.Utils;
+import com.github.canisartorus.prospectorjournal.lib.Utils.ChatString;
+import com.github.canisartorus.prospectorjournal.network.PacketVoidVein;
 
+import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
-import gregapi.data.OP;
+import blusunrize.immersiveengineering.common.blocks.metal.TileEntityExcavator;
+import blusunrize.immersiveengineering.common.blocks.metal.TileEntitySampleDrill;
+import gregapi.data.MD;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.World;
 
 public class IEHandler {
 
-	public static final String DEPLETED = "*Nil";
+	public static final String DEPLETED = "";
 	
 	public static MineralMix getByName(String sMineral) {
 		if (sMineral.equals(DEPLETED))
 			return null;
-		for (MineralMix variant : blusunrize.immersiveengineering.api.tool.ExcavatorHandler.mineralList.keySet()) {
+		for (MineralMix variant : ExcavatorHandler.mineralList.keySet()) {
 			if(variant.name.equalsIgnoreCase(sMineral))
 				return variant;
 		}
 		System.out.println(ProspectorJournal.MOD_NAME+"[WARNING] Failed to identify MineralMix: "+sMineral);
 		return null;
 	}
-	
-	public static class Dwarf extends com.github.canisartorus.prospectorjournal.lib.Dwarf {
 
-		static Map<String, Map<Short, Integer>> mCache = new java.util.HashMap<>();
-		static Map<String, net.minecraft.util.IIcon> faces = new java.util.HashMap<>();
-		static Map<String, Short> characters = new java.util.HashMap<>();
-		
-//		public static int getFractionIn(MineralMix oreSet, short material) {
-//		}
-
-		/**
-		 * Cached search of the weighted list of drops for a vein type, 
-		 * cross-referenced with all those geochemistry for the ultimate list of byproducts
-		 * @param oreSet to be checked
-		 * @return map of oremat ids to proportional amounts
-		 */
-		public static Map<Short, Integer> singOf(MineralMix oreSet) {
-			Map<Short, Integer> sBy;
-			if(oreSet == null)
-				return new java.util.HashMap<>(0);
-			if(mCache.containsKey(oreSet.name)) {
-				sBy = mCache.get(oreSet.name);
-			} else { 
-				sBy = readManual(oreSet);
-				mCache.put(oreSet.name, sBy);
-			}
-			return sBy;
-		}
-
-		/**
-		 * Searches the weighted list of drops for a vein type, 
-		 * and cross-references all the geochemistry for the ultimate list of byproducts
-		 * Spawn weights rounded to parts per thousand
-		 * 
-		 * Also stores characteristic ore icon in 'faces' Map
-		 * @param oreSet to be checked
-		 * @return map of oremat ids to proportional amounts
-		 */
-		@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
-		static Map<Short, Integer> readManual(MineralMix oreSet) {
-			Map<Short, Integer> mProcess = new java.util.HashMap<>();
-			if(oreSet == null)
-				return mProcess;
-			oreSet.recalculateChances();
-			if(oreSet.oreOutput.length == 0)
-				return mProcess;
-			float total =0.0f;
-			double iMax = 0.0D;
-			short best = 0;
-			Map<Short, Double> mContent = new java.util.HashMap<>();
-			for(int i =0; i < oreSet.oreOutput.length; i++) {
-				total += oreSet.recalculatedChances[i];
-				net.minecraft.item.ItemStack realStuff = oreSet.oreOutput[i];
-				gregapi.oredict.OreDictItemData matType = gregapi.oredict.OreDictManager.INSTANCE.getItemData(realStuff);
-				if(matType != null && matType.hasValidMaterialData()) {
-					for (gregapi.oredict.OreDictMaterialStack part : matType.getAllMaterialStacks()) {
-						final double iWeigh = part.mAmount * oreSet.recalculatedChances[i];
-						if (iWeigh > iMax && ! part.mMaterial.contains(gregapi.data.TD.Properties.STONE) && part.mMaterial.contains(gregapi.data.TD.ItemGenerator.ORES)) {
-							iMax = iWeigh;
-							best = part.mMaterial.mID;
-						}
-						mContent.put(part.mMaterial.mID, mContent.getOrDefault(part.mMaterial.mID, 0.0D) + iWeigh);
-					}
-				}
-			}
-			if(mContent.isEmpty()) {
-				int better = 0;
-				for(int i = 0; i < oreSet.oreOutput.length; i++) {
-					if(oreSet.recalculatedChances[i] > iMax) {
-						iMax = oreSet.recalculatedChances[i];
-						better = i;
-					}
-				}
-				faces.put(oreSet.name, oreSet.oreOutput[better].getIconIndex());
-				characters.put(oreSet.name, best);
-				return mProcess;
-			}
-			if(best != 0) {
-				faces.put(oreSet.name, ((net.minecraft.item.Item)OP.crushed.mRegisteredPrefixItems.get(0)).getIconFromDamage(best));
-				characters.put(oreSet.name, best);
-			}
-			for(java.util.Map.Entry<Short, Double> piece : mContent.entrySet()) {
-				if(! faces.containsKey(oreSet.name) && piece.getValue() > iMax) {
-					iMax = piece.getValue();
-					best = piece.getKey();
-				}
-				final int pAmt = (int) Math.round(piece.getValue() * 1000 / total / gregapi.data.CS.U);
-				if(gregapi.oredict.OreDictMaterial.MATERIAL_ARRAY[piece.getKey()].contains(gregapi.data.TD.ItemGenerator.ORES)) {
-					for(java.util.Map.Entry<Short, Integer> byProd : Dwarf.read(piece.getKey()).mByBy.entrySet()) {
-						mProcess.put(byProd.getKey(), mProcess.getOrDefault(byProd.getKey(), 0) + byProd.getValue() * pAmt);
-					}
+	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
+	public static boolean takeExcavatorSample(World aWorld, int x, int y, int z, EntityPlayer aPlayer, final net.minecraft.tileentity.TileEntity i) {
+		if( ! MD.IE.mLoaded )	return false;
+		if(i instanceof TileEntityExcavator) {
+			TileEntityExcavator ti = ((TileEntityExcavator) i).master();
+			if(ti == null) ti = (TileEntityExcavator) i;
+			if(!ti.formed) return false;
+			final int[] wheelAxis = {ti.xCoord+(ti.facing==5?-4:ti.facing==4?4:0),ti.yCoord,ti.zCoord+(ti.facing==3?-4:ti.facing==2?4:0)};
+			// server-side-only info, again
+			final ExcavatorHandler.MineralWorldInfo mineral = ExcavatorHandler.getMineralWorldInfo(aWorld, wheelAxis[0]>>4, wheelAxis[2]>>4);
+			takeSampleServer(aWorld, aPlayer, mineral, x>>4, z>>4);
+			return true;
+		} else if(i instanceof TileEntitySampleDrill) {
+			TileEntitySampleDrill ti = (TileEntitySampleDrill) i;
+			// Only the core has progress
+			if(ti.pos != 0) {
+				net.minecraft.tileentity.TileEntity t2 = aWorld.getTileEntity(x, y-ti.pos, z);
+				if(t2 instanceof TileEntitySampleDrill) {
+					ti = (TileEntitySampleDrill) t2;
 				} else {
-					mProcess.put(piece.getKey(), mProcess.getOrDefault(piece.getKey(), 0) + pAmt * Dwarf.UNIT);
+//					System.out.println
+					Utils.chatAt(aPlayer, ChatString.DRILL_FAIL);// "Incorrect search for sample drill core. Report this error!");
+					return false;
 				}
 			}
-			faces.putIfAbsent(oreSet.name, ((net.minecraft.item.Item)OP.dust.mRegisteredPrefixItems.get(0)).getIconFromDamage(best));
-			characters.putIfAbsent(oreSet.name, best);
-			return mProcess;
-		}
-
-		/**
-		 * Selects a mineral icon for the vein based on the name and weighted drop list.
-		 * @param mix The blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix looking for an icon
-		 * @return icon of the characteristic drop from that vein type
-		 */
-		public static net.minecraft.util.IIcon getIcon(MineralMix mix) {
-			net.minecraft.util.IIcon fId = null;
-			if(mix == null)
-				return null;
-			if(faces.containsKey(mix.name)) {
-				fId = faces.get(mix.name);
-			} else {
-				readManual(mix);
-				fId = faces.getOrDefault(mix.name, null);
+			if(ti.isSamplingFinished()) {
+//				final ExcavatorHandler.MineralMix mineral = ExcavatorHandler.getRandomMineral(aWorld, (ti.xCoord>>4), (ti.zCoord>>4));
+				final ExcavatorHandler.MineralWorldInfo info = ExcavatorHandler.getMineralWorldInfo(aWorld, (ti.xCoord>>4), (ti.zCoord>>4));
+				takeSampleServer(aWorld, aPlayer, info, x>>4, z>>4);
+				return true;
 			}
-			return fId;
+			Utils.chatAt(aPlayer, ChatString.CORE_WAIT);// "Wait for the core sample to be extracted.");
+			return true;
 		}
-
-		/**
-		 * Attempts to find the closest ore type to the content of this MineralMix.
-		 * @param oreSet to search for similarities
-		 * @return the gregapi OreDictMaterialID most characteristic of this ore vein
-		 */
-		public static short getMajor(MineralMix oreSet) {
-			short sBest;
-			if(oreSet == null)
-				return 0;
-			if(characters.containsKey(oreSet.name)) {
-				sBest = characters.get(oreSet.name);
-			} else { 
-				readManual(oreSet);
-				sBest = characters.getOrDefault(oreSet.name, (short) 0);
-			}
-			return sBest;
-		}
-		
+		return false;
 	}
 
+	//NB: always server-side
+	protected static void takeSampleServer(final World aWorld, final EntityPlayer aPlayer, final ExcavatorHandler.MineralWorldInfo mInfo, int cx, int cz) {
+		if(mInfo == null) return;
+		ExcavatorHandler.MineralMix mineral = mInfo.mineralOverride;
+		if(mineral == null) mineral = mInfo.mineral;
+		if(mineral == null) return;
+		PacketVoidVein msg;
+		if(ExcavatorHandler.mineralVeinCapacity != -1 && mInfo.depletion > ExcavatorHandler.mineralVeinCapacity) {
+			msg = new PacketVoidVein(cx/16,cz/16, DEPLETED);
+		} else
+			msg = new PacketVoidVein(cx/16,cz/16, mineral.name);
+		
+		Utils.NW_PJ.sendToPlayer(msg, (EntityPlayerMP) aPlayer);
+	}
+
+//	public class VoidMineActive extends VoidMine {
+//		protected final ExcavatorHandler.MineralMix oreSet;
+////		public final String oreName;
+//
+//		public VoidMineActive(int dim, int x, int z, ExcavatorHandler.MineralMix vSample) {
+//			super((short)dim, x, z, vSample == null ? DEPLETED : vSample.name);
+//			oreSet = vSample;
+////			oreName = oreSet == null ? IEHandler.DEPLETED : oreSet.name;
+//		}
+//		
+//		@Override
+//		public int getFraction(short material) {
+//			int f = IEDwarf.singOf(oreSet).getOrDefault(material, 0);
+//			return f == 0 ? 0 : Integer.max(f / 1000 , 1);
+//		}
+//
+//		@Override
+//		public boolean isValid() {
+//			return oreSet != null;
+////			return ! oreName.isEmpty();
+//		}
+//	}
+
+	
 }

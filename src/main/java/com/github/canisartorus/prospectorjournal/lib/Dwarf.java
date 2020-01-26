@@ -5,7 +5,6 @@ import gregapi.oredict.OreDictMaterial;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import com.github.canisartorus.prospectorjournal.ClientConnectionEvent;
@@ -166,10 +165,10 @@ public class Dwarf implements Runnable {
 	/**
 	 * A Comparator for sorting byproduct list entries.
 	 */
-	public static java.util.Comparator<java.util.Map.Entry<Short, Integer>> FractionSorter =
-		new java.util.Comparator<java.util.Map.Entry<Short, Integer>>() {
+	public static java.util.Comparator<Map.Entry<Short, Integer>> FractionSorter =
+		new java.util.Comparator<Map.Entry<Short, Integer>>() {
 			@Override
-			public int compare(java.util.Map.Entry<Short, Integer> o1, java.util.Map.Entry<Short, Integer> o2) {
+			public int compare(Map.Entry<Short, Integer> o1, Map.Entry<Short, Integer> o2) {
 				return Integer.compare(o2.getValue(), o1.getValue());
 			}
 	};
@@ -212,7 +211,7 @@ public class Dwarf implements Runnable {
 		Map<Short, Integer> rMap = new HashMap<>();
 		final Set<Short> allByprod = Dwarf.read(ore).mBy.keySet();
 		for(short tID : allByprod) {
-			for(Entry<Short, Integer> tPair : Dwarf.read(tID).mByBy.entrySet()) {
+			for(Map.Entry<Short, Integer> tPair : Dwarf.read(tID).mByBy.entrySet()) {
 				int tI = rMap.getOrDefault(tPair.getKey(), 0);
 				if(tID == ore) {
 					if(allByprod.size() ==1)

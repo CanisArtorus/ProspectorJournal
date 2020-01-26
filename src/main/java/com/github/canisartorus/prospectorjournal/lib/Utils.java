@@ -4,12 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import com.github.canisartorus.prospectorjournal.ProspectorJournal;
-import com.github.canisartorus.prospectorjournal.network.ChatPacket;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.network.ChatPacket;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
