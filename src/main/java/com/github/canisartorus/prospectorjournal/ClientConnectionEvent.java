@@ -51,6 +51,8 @@ public class ClientConnectionEvent {
         Utils.readJson(Utils.GT_FILE);
         Utils.readJson(Utils.GT_BED_FILE);
 		Utils.readJson(Utils.IE_VOID_FILE);
+		if ( ! ProspectorJournal.voidVeins.isEmpty() && ! gregapi.data.MD.IE.mLoaded)
+			ProspectorJournal.AVAILABLE_TRACKERS.add(new com.github.canisartorus.prospectorjournal.gui.ExcavatorMenuData());
 
     }
     
@@ -87,6 +89,8 @@ public class ClientConnectionEvent {
             Utils.readJson(Utils.GT_FILE);
             Utils.readJson(Utils.GT_BED_FILE);
     		Utils.readJson(Utils.IE_VOID_FILE);
+    		if ( ! ProspectorJournal.voidVeins.isEmpty() && ! gregapi.data.MD.IE.mLoaded)
+    			ProspectorJournal.AVAILABLE_TRACKERS.add(new com.github.canisartorus.prospectorjournal.gui.ExcavatorMenuData());
     	}
     }
 

@@ -20,7 +20,8 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.*;
 import gregapi.network.NetworkHandler;
 
-import com.github.canisartorus.prospectorjournal.gui.GuiPointer;
+import com.github.canisartorus.prospectorjournal.gui.*;
+import com.github.canisartorus.prospectorjournal.lib.*;
 import com.github.canisartorus.prospectorjournal.network.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.8.0"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.8.1"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 
@@ -47,10 +48,11 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	public static String hostName = "ProspectorJournal";
 	public static boolean doGui = false;
 	public static int xMarker, yMarker, zMarker;
-	public static List<com.github.canisartorus.prospectorjournal.lib.DimTag> dims 			= new ArrayList<>();
-	public static List<com.github.canisartorus.prospectorjournal.lib.RockMatter> rockSurvey = new ArrayList<>();
-	public static List<com.github.canisartorus.prospectorjournal.lib.GeoTag> bedrockFault 	= new ArrayList<>();
-	public static List<com.github.canisartorus.prospectorjournal.lib.VoidMine> voidVeins	= new ArrayList<>(); 
+	public static List<DimTag> dims 			= new ArrayList<>();
+	public static List<RockMatter> rockSurvey = new ArrayList<>();
+	public static List<GeoTag> bedrockFault 	= new ArrayList<>();
+	public static List<VoidMine> voidVeins	= new ArrayList<>();
+	public static List<AbstractMenuData> AVAILABLE_TRACKERS	= new ArrayList<>(4);
 
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
@@ -75,7 +77,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 //		if(ConfigHandler.makeBook)
 			Items.RegisterItems();
 		
-		com.github.canisartorus.prospectorjournal.lib.Utils.NW_PJ = new NetworkHandler(MOD_ID, "CAPJ", 
+		Utils.NW_PJ = new NetworkHandler(MOD_ID, "CAPJ", 
 				new ChatPacket(0), new ChatPacket(1), new ChatPacket(2),
 				new PacketOreSurvey(0), new PacketOreSurvey(1), new PacketOreSurvey(2), new PacketOreSurvey(3), new PacketOreSurvey(4), new PacketOreSurvey(5), new PacketOreSurvey(6), new PacketOreSurvey(7), 
 				new PacketVoidVein(0), new PacketVoidVein(1), new PacketVoidVein(2), new PacketVoidVein(3));
@@ -83,12 +85,17 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new RightClickEvent());
         cpw.mods.fml.common.FMLCommonHandler.instance().bus().register(new ClientConnectionEvent());
         cpw.mods.fml.common.FMLCommonHandler.instance().bus().register(new KeyBindings());
+        
+        AVAILABLE_TRACKERS.add(new OreMenuData());
+        AVAILABLE_TRACKERS.add(new BedrockMenuData());
+//        if (gregapi.data.MD.IE.mLoaded)	//XXX until switching menu is implemented, absence goes poorly
+        	AVAILABLE_TRACKERS.add(new ExcavatorMenuData());
 	}
 
 	@Override
 	public void onModInit2(FMLInitializationEvent aEvent) {
 		// Init gets the recipes that took oredict entries, or otherwise things from other mods to build.
-		new com.github.canisartorus.prospectorjournal.lib.Dwarf().run();
+		new Dwarf().run();
 		
 //		if(ConfigHandler.makeBook)
 			Items.RegisterRecipes();
