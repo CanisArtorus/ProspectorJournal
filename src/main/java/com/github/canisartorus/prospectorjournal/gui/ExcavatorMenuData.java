@@ -13,6 +13,7 @@ import com.github.canisartorus.prospectorjournal.lib.VoidMine;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
 public final class ExcavatorMenuData extends AbstractMenuData {
@@ -39,8 +40,9 @@ public final class ExcavatorMenuData extends AbstractMenuData {
 		}
 		if(zonesIE.isEmpty()) {
 //			zonesIE.add(new Display<VoidMine>(new VoidMine(dimID, aX, aZ, new blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralWorldInfo()), aX, aZ));
-			zonesIE.add(new Display<VoidMine>(new VoidMine( dimID, aX, aZ, ""), aX, aZ));
-			return 1;
+//			zonesIE.add(new Display<VoidMine>(new VoidMine( dimID, aX, aZ, ""), aX, aZ));
+//			return 1;
+			return 0;
 		}
 		Collections.sort(zonesIE, sortBy == Utils.DISTANCE ? zonesIE.get(0).getCloseComparator() : zonesIE.get(0).getQualityComparator(sortBy));
 		return zonesIE.size() ;
@@ -95,7 +97,9 @@ public final class ExcavatorMenuData extends AbstractMenuData {
    		FRO.drawString(ts, aStart + (145 -(FRO.getStringWidth(ts)/2)), l, colour);
 		ts = lastSort == Utils.DISTANCE ? p.datum.isValid() ? p.datum.getOreName() : "Nil" : StatCollector.translateToLocal("str.value.name") + " " + Utils.approx(IEDwarf.singOf(p.datum.getOreName()).get(lastSort));
 		FRO.drawString(ts, aStart + 190, l, colour);
-		aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, IEDwarf.getIcon(p.datum.getOreName()), 16, 16);
+		final IIcon tIcon = IEDwarf.getIcon(p.datum.getOreName());
+		if(tIcon != null)
+			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, tIcon, 16, 16);
 
     	ts = Integer.toString(p.dist);
     	FRO.drawString(ts, aStart + (11 -(FRO.getStringWidth(ts)/2)), l, colour);

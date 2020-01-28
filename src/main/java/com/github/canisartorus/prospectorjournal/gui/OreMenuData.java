@@ -12,6 +12,7 @@ import com.github.canisartorus.prospectorjournal.lib.RockMatter;
 import com.github.canisartorus.prospectorjournal.lib.Utils;
 
 import gregapi.data.OP;
+import gregapi.old.Textures;
 import gregapi.oredict.OreDictMaterial;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -39,8 +40,9 @@ public class OreMenuData extends AbstractMenuData {
 				oreVeins.add(new Display<RockMatter>(r, aX, aZ));
 		}
 		if(oreVeins.isEmpty()) {
-			oreVeins.add(new Display<RockMatter>(new RockMatter(0, dimID, aX, 255, aZ, true), aX, aZ));
-			return 1;
+//			oreVeins.add(new Display<RockMatter>(new RockMatter(0, dimID, aX, 255, aZ, true), aX, aZ));
+//			return 1;
+			return 0;
 		}
 		Collections.sort(oreVeins, sortBy == Utils.DISTANCE ? oreVeins.get(0).getCloseComparator() : oreVeins.get(0).getQualityComparator(sortBy));
 		return oreVeins.size() ;
@@ -101,8 +103,14 @@ public class OreMenuData extends AbstractMenuData {
 		final short tOre = r.datum.ore;
 		ts = lastSort == Utils.DISTANCE ? Dwarf.name(tOre) : StatCollector.translateToLocal("str.value.name") + " " + Integer.toString(Dwarf.getFractionIn(tOre, lastSort));
 		FRO.drawString(ts, aStart + 190, l, colour);
-		if(lastSort == Utils.DISTANCE || lastSort == tOre) {
+		if(tOre == 0)	{	;
+		} else if(lastSort == Utils.DISTANCE || lastSort == tOre) {
+			try {
 			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l,  OP.blockDust.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 16).getIconIndex(), 16, 16);
+			} catch (Throwable e) {
+				aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, Textures.ItemIcons.RENDERING_ERROR.getIcon(0), 16, 16);
+				e.printStackTrace();
+			}
 		} else {
 			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.crushedPurified.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 1).getIconIndex(), 16, 16);
 		}
