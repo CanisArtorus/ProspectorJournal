@@ -117,7 +117,9 @@ public final class ExcavatorMenuData extends AbstractMenuData {
 
 	@Override
 	short getMajor(int aEntry) {
+		if(aEntry<zonesIE.size())
 		return IEDwarf.getMajor(zonesIE.get(aEntry).datum.getOreName());
+		return 0;
 	}
 
 }

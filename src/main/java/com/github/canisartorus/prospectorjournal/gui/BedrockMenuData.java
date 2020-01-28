@@ -123,7 +123,9 @@ public class BedrockMenuData extends AbstractMenuData {
 
 	@Override
 	short getMajor(int aEntry) {
+		if(aEntry < rockSpots.size())
 		return rockSpots.get(aEntry).datum.ore;
+		return 0;
 	}
 
 }

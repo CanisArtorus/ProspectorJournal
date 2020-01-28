@@ -131,7 +131,9 @@ public class OreMenuData extends AbstractMenuData {
 
 	@Override
 	short getMajor(int aEntry) {
+		if(aEntry < oreVeins.size())
 		return oreVeins.get(aEntry).datum.ore;
+		return 0;
 	}
 
 }

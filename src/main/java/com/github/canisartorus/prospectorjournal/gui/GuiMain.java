@@ -606,8 +606,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 				sorted(lastSort);
 			} else if(Utils.inBounds(mouseX, start, start +40) &&Utils.inBounds(mouseY, 35, 205) ) {
 				sorted(CurrentData.mType, Utils.DISTANCE);
-			} else if(Utils.inBounds(mouseX, 170, 186) && Utils.inBounds(mouseY, 50, 210) ){
+			} else if(max != 0 && Utils.inBounds(mouseX, 170, 186) && Utils.inBounds(mouseY, 50, 210)){
 				int k = (mouseY - 50) / 16;
+				if (low + k <= max)
 				sorted(CurrentData.mType, CurrentData.getMajor(low + k));
 //				switch(lastData) {
 //				case Utils.ORE_VEIN:
