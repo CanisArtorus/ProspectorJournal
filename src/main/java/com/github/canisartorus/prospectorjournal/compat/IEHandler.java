@@ -29,9 +29,9 @@ public class IEHandler {
 		return null;
 	}
 
-	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
+//	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
 	public static boolean takeExcavatorSample(World aWorld, int x, int y, int z, EntityPlayer aPlayer, final net.minecraft.tileentity.TileEntity i) {
-		if( ! MD.IE.mLoaded )	return false;
+		if( ! MD.IE.mLoaded || aWorld.isRemote )	return false;
 		if(i instanceof TileEntityExcavator) {
 			TileEntityExcavator ti = ((TileEntityExcavator) i).master();
 			if(ti == null) ti = (TileEntityExcavator) i;

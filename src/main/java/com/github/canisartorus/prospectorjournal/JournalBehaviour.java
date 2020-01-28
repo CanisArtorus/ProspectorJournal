@@ -1,5 +1,6 @@
 package com.github.canisartorus.prospectorjournal;
 
+import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 import com.github.canisartorus.prospectorjournal.lib.GeoTag;
 import com.github.canisartorus.prospectorjournal.lib.RockMatter;
 import com.github.canisartorus.prospectorjournal.lib.Utils;
@@ -72,9 +73,9 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);
 				return true;
 			} return false;
-		} 
-		return com.github.canisartorus.prospectorjournal.compat.IEHandler.takeExcavatorSample(aWorld, x, y, z, aPlayer, i);
-		} // else {
+		} else if (gregapi.data.MD.IE.mLoaded)
+			return IEHandler.takeExcavatorSample(aWorld, x, y, z, aPlayer, i);
+		} else {
 			// works client-side, since it's based only on block meta-id
 		net.minecraft.block.Block b = aWorld.getBlock(x, y, z);
 
@@ -142,7 +143,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		} else if(ConfigHandler.trackRock &&  b instanceof BlockStones && b.getDamageValue(aWorld, x, y, z) == BlockStones.STONE) {
 			TakeSample(aWorld, x, y, z, ((BlockStones) b).mMaterial.mID, Utils.ORE_VEIN, aPlayer);
 		}
-//		}
+		}
 		return false;
 	}
 	

@@ -7,8 +7,8 @@ btn.mark.name=Mark
 btn.oreveins.name=Ore Veins
 btn.stoptrack.name=Clear tracker
 
-key.cat.prospectorjournal.name=Prospector's Journal
-key.geoSurveyMenu.name=Open geological survey screen
+key.cat.prospectorjournal=Prospector's Journal
+key.geoSurveyMenu=Open geological survey screen
 
 msg.rock.name=Just a normal Rock
 msg.iesamplefail.name=Incorrect search for sample drill core. Report this error!
