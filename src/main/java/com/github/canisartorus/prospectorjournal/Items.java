@@ -45,6 +45,7 @@ public class Items {
 			@Override public int getDefaultStackLimit(ItemStack aStack) {return 4;}
 		};
 		
+		if (ConfigHandler.makeBoxes)
 		Items.mBoxes = new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospector.samplebag") {
 			@Override public int getDefaultStackLimit(ItemStack aStack) {return 1;}
 			private static final String TIP_BAG_1 = "Collects Rocks.";
@@ -142,6 +143,8 @@ public class Items {
 
 	public static void RegisterRecipes() {
 		CR.shaped(Items.mBook.make(0), CR.NONE, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
+		
+		if(ConfigHandler.makeBoxes) {
 		// fabric / cloth  / wool / silk are not odm
 		CR.shaped(Items.mBoxes.make(0), CR.BUF, " WT", "W W", " W ", 'W', ST.make(net.minecraft.init.Blocks.wool, 1, CS.W), 'T', ST.make(net.minecraft.init.Items.string, 1, 0));
 		short i = 1;
@@ -209,6 +212,7 @@ public class Items {
 		metalBoxRecipe(i++, MT.Bedrock_HSLA_Alloy);
 		metalBoxRecipe(i++, MT.DraconiumAwakened);
 		metalBoxRecipe(i++, MT.Infinity);
+		}
 		/*
 		gregapi.block.multitileentity.MultiTileEntityRegistry caMTEReg = gregapi.block.multitileentity.MultiTileEntityRegistry.getRegistry("ca.pj.multitileentity");
 		// Block Textures have to be at: "/assets/gregtech/textures/blocks/machines/basicmachines/$NBT_TEXTURE/..." Yes that is not a Typo, it is actually the GregTech Mod-ID in that path. I noticed that flaw way too late to fix it. And look at how GT has the Textures for its Oven for Details.

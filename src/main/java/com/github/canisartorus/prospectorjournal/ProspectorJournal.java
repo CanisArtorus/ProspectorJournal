@@ -33,7 +33,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.8.3"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.8.4"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 
@@ -88,7 +88,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
         
         AVAILABLE_TRACKERS.add(new OreMenuData());
         AVAILABLE_TRACKERS.add(new BedrockMenuData());
-//        if (gregapi.data.MD.IE.mLoaded)	//XXX until switching menu is implemented, absence goes poorly
+//        if (gregapi.data.MD.IE.mLoaded)	// until switching menu is implemented, absence goes poorly
         	AVAILABLE_TRACKERS.add(new ExcavatorMenuData());
 	}
 

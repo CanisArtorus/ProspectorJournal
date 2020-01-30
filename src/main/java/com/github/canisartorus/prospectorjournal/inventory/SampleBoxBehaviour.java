@@ -112,7 +112,8 @@ public class SampleBoxBehaviour  extends FilteredBoxBehavior {
 
 	@Override
 	public List<String> getAdditionalToolTips(MultiItem aItem, List<String> aList, ItemStack aStack) {
-		aList.add(LH.Chat.ITALIC + LH.Chat.BLUE + Enchantment.fortune.getTranslatedName(mFortune) + (mFire ==0 ? "" : StatCollector.translateToLocal("enchantment.autosmelt.name")));
+		if( mFortune > 0)
+			aList.add( LH.Chat.BLUE + LH.Chat.ITALIC + Enchantment.fortune.getTranslatedName(mFortune) + (mFire ==0 ? "" : "  " + StatCollector.translateToLocal("enchantment.autosmelt.name")));
 		super.getAdditionalToolTips(aItem, aList, aStack);
 		aList.add(LH.Chat.GRAY + StatCollector.translateToLocal("tooltip.collectrock.name"));
 		return aList;

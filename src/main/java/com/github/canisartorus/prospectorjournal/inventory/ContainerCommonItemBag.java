@@ -36,7 +36,7 @@ public class ContainerCommonItemBag extends Container implements IOversizeContai
 		detectAndSendChanges();
 	}
 
-	protected int[] addSlots(IInventory mInventory2) {
+	protected int[] addSlots(IInventory aInventory) {
 		int i = 0;
 		if(useDefaultSlots()) switch(mSlotCount) {
 		case  1:
@@ -640,7 +640,7 @@ public class ContainerCommonItemBag extends Container implements IOversizeContai
 			addSlotToContainer(new Slot(aInventoryPlayer, j + i * 9 + 9, aOffset[1] + 8 + j * 18, aOffset[0] + i * 18));
 		}
 		for (int i = 0; i < 9; i++) {
-			if(i == currentItem) addSlotToContainer(new SlotLocked(mInvPlayer, i, aOffset[1] + 8 + i * 18, aOffset[0] + 58));
+			if(i == currentItem) addSlotToContainer(new SlotLocked(aInventoryPlayer, i, aOffset[1] + 8 + i * 18, aOffset[0] + 58));
 			else addSlotToContainer(new Slot(aInventoryPlayer, i, aOffset[1] + 8 + i * 18, aOffset[0] + 58));
 		}
 	}
@@ -909,11 +909,11 @@ public class ContainerCommonItemBag extends Container implements IOversizeContai
 		}
 	}
 
-	@Override
-	protected Slot addSlotToContainer(Slot aSlot) {
-		if (aSlot == null) return null;
-		return super.addSlotToContainer(aSlot);
-	}
+//	@Override
+//	protected Slot addSlotToContainer(Slot aSlot) {
+//		if (aSlot == null) return null;
+//		return super.addSlotToContainer(aSlot);
+//	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer p_75145_1_) {	return mInventory.isUseableByPlayer(p_75145_1_);	}

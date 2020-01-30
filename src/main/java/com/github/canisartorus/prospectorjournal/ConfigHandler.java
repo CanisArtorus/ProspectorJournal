@@ -13,7 +13,7 @@ public class ConfigHandler {
 		trackRock, fortunateBoxes, smeltBoxes,
 		allowSmelt, exportDwarf,
 		applyPatches, patchHazMat, generateArmour,
-		debug
+		debug, makeBoxes
 		;
 	public static double arrowSize
 		;
@@ -34,8 +34,9 @@ public class ConfigHandler {
 		ConfigHandler.needHUD = tMainConfig.getBoolean("HelmetHUD_false", GENERAL, false, "If the tracking arrow should only be visible when wearing headgear with an integrated HUD, instead of when carrying the notebook.");
 		ConfigHandler.HUDsList = tMainConfig.getStringList("Available HUDs", GENERAL, new String[] {"glasses", "item.BiblioGlasses", "sonicglasses", "item.logisticHUDGlasses", "reactorcraft_item_goggles", "rotarycraft_item_iogoggles", "armor.goggles", "ItemGoggles", "magitechGoggles", "pneumaticHelmet", "naturalistHelmet"}, "The internal names of every piece of headgear that is considered have a HUD.");
 		ConfigHandler.trackRock = tMainConfig.getBoolean("TrackStoneRocks_false", GENERAL, false, "Should indicator rocks for stone layer types be tracked? Normally non-ore rock data is discarded.");
+		ConfigHandler.makeBoxes = tMainConfig.getBoolean("CreateSampleBags_true", GENERAL, false, "Register the sample bag and Smaple Box items to hold lots of Rocks. \n ACHTUNG! Currently very buggy.");
 		ConfigHandler.fortunateBoxes = tMainConfig.getBoolean("FortuneHarvestRocks_true", GENERAL, true, "If the sample box and sample bag items should have built-in enchantments like a GT Tool.");
-		ConfigHandler.smeltBoxes = tMainConfig.getBoolean("AutoSmeltRocks_true", GENERAL, true, "Will smaple boxes made of hot metals bake the rocks they contain?");
+		ConfigHandler.smeltBoxes = tMainConfig.getBoolean("AutoSmeltRocks_false", GENERAL, false, "Will smaple boxes made of hot metals bake the rocks they contain?");
 		
 		ConfigHandler.allowSmelt = tMainConfig.getBoolean("Include smelting transform_true", "Ore Helper", true, "Chose if it should detect melting in a crucible as an allowed method to get a product from the ore. Disable to get only sluice / sifter / centrifuge by products.");
 		ConfigHandler.exportDwarf = tMainConfig.getBoolean("ExportFile_false", "Ore Helper", false, "Set to true to export ore by product data to $instance$/ProspectorJournal/GT6_Geochemistry.json. \n I suggest excluding Smelting transforms for this.");

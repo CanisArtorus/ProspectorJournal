@@ -52,7 +52,10 @@ public class FilteredBoxBehavior extends AbstractInventoryBehavior<MultiItem> {
 	@Override
 	public boolean isAcceptableItem(ItemStack aStack, ItemStack aTest) {
 //		return aTest.getUnlocalizedName().equalsIgnoreCase("gt.meta.rockGt") || (mFire != 0 && aTest.getUnlocalizedName().equalsIgnoreCase("gt.meta.chunkGt"));
-		return NAME_TAGS.containsKey(aTest.getUnlocalizedName());
+		final String unlocName = aTest.getUnlocalizedName();
+		if(unlocName.startsWith("item."))
+			return NAME_TAGS.containsKey(unlocName.substring(5));
+		return NAME_TAGS.containsKey(unlocName);
 	}
 	
 	/**
@@ -81,8 +84,10 @@ public class FilteredBoxBehavior extends AbstractInventoryBehavior<MultiItem> {
 			if ( oCapacity >= mCapacity) return aThingToAdd;
 			byte oStacks = oTag.hasKey(TAG_STACKS) ? oTag.getByte(TAG_STACKS) : 0;
 			int[] oAmounts = CS.ZL_INTEGER, oTypes = CS.ZL_INTEGER;
-			final String type_tag = NAME_TAGS.get(aThingToAdd.getUnlocalizedName())[0];
-			final String num_tag = NAME_TAGS.get(aThingToAdd.getUnlocalizedName())[1];
+			final String unlocName = aThingToAdd.getUnlocalizedName().startsWith("item.") ?
+					aThingToAdd.getUnlocalizedName().substring(5)	:	aThingToAdd.getUnlocalizedName();
+			final String type_tag = NAME_TAGS.get(unlocName)[0];
+			final String num_tag = NAME_TAGS.get(unlocName)[1];
 	//		if (aThingToAdd.getUnlocalizedName().equalsIgnoreCase("gt.meta.rockGt") ) {
 	//			oTypes = oTag.hasKey(TAG_ROCKS) ? oTag.getIntArray(TAG_ROCKS) : CS.ZL_INTEGER;
 	//			oAmounts = oTag.hasKey(TAG_ROCKS_N) ? oTag.getIntArray(TAG_ROCKS_N) : CS.ZL_INTEGER;
@@ -166,8 +171,10 @@ public class FilteredBoxBehavior extends AbstractInventoryBehavior<MultiItem> {
 			byte oStacks = oTag.hasKey(TAG_STACKS) ? oTag.getByte(TAG_STACKS) : 0;
 			if(oStacks == 0) return CS.NI;
 			int[] oAmounts = CS.ZL_INTEGER, oTypes = CS.ZL_INTEGER;
-			final String type_tag = NAME_TAGS.get(aRequest.getUnlocalizedName())[0];
-			final String num_tag = NAME_TAGS.get(aRequest.getUnlocalizedName())[1];
+			final String unlocName = aRequest.getUnlocalizedName().startsWith("item.") ?
+					aRequest.getUnlocalizedName().substring(5)	:	aRequest.getUnlocalizedName();
+			final String type_tag = NAME_TAGS.get(unlocName)[0];
+			final String num_tag = NAME_TAGS.get(unlocName)[1];
 	//		if (aRequest.getUnlocalizedName().equalsIgnoreCase("gt.meta.rockGt") ) {
 				oTypes = oTag.hasKey(type_tag) ? oTag.getIntArray(type_tag) : CS.ZL_INTEGER;
 				oAmounts = oTag.hasKey(num_tag) ? oTag.getIntArray(num_tag) : CS.ZL_INTEGER;
@@ -198,6 +205,7 @@ public class FilteredBoxBehavior extends AbstractInventoryBehavior<MultiItem> {
 					}
 				}
 			}
+			if(rNum == 0)	return CS.NI;
 			oTag.setInteger(TAG_CAPACITY, oCapacity);
 			oTag.setByte(TAG_STACKS, oStacks);
 	//		if (aRequest.getUnlocalizedName().equalsIgnoreCase("gt.meta.rockGt") ) {
@@ -235,6 +243,7 @@ public class FilteredBoxBehavior extends AbstractInventoryBehavior<MultiItem> {
 			if(aVerify) {
 				oTag.setByte(TAG_STACKS, (byte) rInv.size());
 				oTag.setInteger(TAG_CAPACITY, tCap);
+				UT.NBT.set(aStack, oTag);
 			}
 			return (ItemStack[]) rInv.toArray();
 		}
