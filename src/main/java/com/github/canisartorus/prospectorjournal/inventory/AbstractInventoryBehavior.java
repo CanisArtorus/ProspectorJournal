@@ -8,6 +8,7 @@ import com.github.canisartorus.prospectorjournal.gui.ContainerClientItemBag;
 import gregapi.data.CS;
 import gregapi.data.CS.SFX;
 import gregapi.data.LH;
+import gregapi.data.MD;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.util.ST;
 import gregapi.util.UT;
@@ -32,6 +33,7 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 	
 	public boolean willCollectFromInventory() {return true;}
 	public boolean willCollectFromWorld() {return false;}
+	protected boolean canCollect(ItemStack aStack, World aWorld, int aX, int aY, int aZ) {	return willCollectFromWorld();	}
 	protected boolean isEasyToUse() {return false;}
 	protected boolean willDeposit() {return true;}
 	protected boolean willDepositAll()	{return true;}
@@ -58,7 +60,7 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 		if(willDeposit() && tTile != null && tTile instanceof IInventory) {
 			int[] tSlots = CS.ZL_INTEGER;
 			// Prefer to get the right drawer as if by hand, not by pipe
-			if(tTile instanceof MultiTileEntityDrawerQuad) {	//XXX dependency
+			if(MD.GT.mLoaded && tTile instanceof MultiTileEntityDrawerQuad) {	//XXX dependency
 				if(aSide == ((gregapi.tileentity.base.TileEntityBase09FacingSingle)tTile).mFacing) {
 					float[] tCoords = UT.Code.getFacingCoordsClicked(aSide, aHitX, aHitY, aHitZ);
 					int quad = (tCoords[0] > 0.5 ? 1 : 0) + (tCoords[1] > 0.5 ? 2 : 0);
@@ -78,24 +80,25 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 	
 	@Override public boolean onItemUseFirst(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, byte aSide, float hitX, float hitY, float hitZ) {
 		if ( aPlayer.isSneaking()) return false;
-		if(aSide == CS.SIDE_TOP) {
-			if(aWorld.isRemote)	openGUI(aStack, aPlayer);
+		if (willCollectFromWorld() && canCollect(aStack, aWorld, aX, aY, aZ)) {
+			if(!aWorld.isRemote) collectBlock(aStack, aPlayer, aWorld, aX, aY, aZ);
 			return true;
 		}
-		if (willCollectFromWorld()) {
-			if(!aWorld.isRemote) collectBlock(aStack, aPlayer, aWorld, aX, aY, aZ);
+		if(aSide == CS.SIDE_TOP) {
+			if(aWorld.isRemote)	openGUI(aStack, aPlayer);
 			return true;
 		}
 		return false;
 	}
 	
 	@Override public ItemStack onItemRightClick(MultiItem aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer) {
-		if(!aPlayer.isSneaking() || aWorld.isRemote) {
-			if(aWorld.isRemote && isEasyToUse()) openGUI(aStack, aPlayer);
-			return aStack;
+		if(aPlayer.isSneaking()) {
+			if( ! aWorld.isRemote)	defragment(aStack, aPlayer);
+		} else if(isEasyToUse()) {
+			if(aWorld.isRemote) openGUI(aStack, aPlayer);
+//			return aStack;
 		}
 //		ItemStack rStack = aStack.copy();
-		defragment(aItem, aStack, aPlayer);
 		return aStack;
 	}
 	
@@ -165,15 +168,15 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 		return drainInto(aPlayer, aStack, tTile, UT.Code.getAscendingArray(tTile.getSizeInventory()));
 	}
 
-	public boolean defragment(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer) {
+	public boolean defragment(ItemStack aStack, EntityPlayer aPlayer) {
 		long tTime = System.nanoTime();
 		if(aStack != aPlayer.getCurrentEquippedItem()) return false;
 		boolean rChange = false;
 		for( int i = oDefragPoint.getOrDefault(aPlayer, 0); i<36; i++) {
-			if ((System.nanoTime() - tTime) >= 1000){
+			if ((System.nanoTime() - tTime) >= 50000){
 				oDefragPoint.put(aPlayer, i);
 				UT.Sounds.send(SFX.MC_DIG_GRAVEL, aPlayer);
-				if(ConfigHandler.debug) System.out.println(new StringBuilder("InventoryBehavior defragement paused after ").append(System.nanoTime() - tTime));
+				if(ConfigHandler.debug) System.out.println(new StringBuilder("InventoryBehavior defragment paused after ").append(System.nanoTime() - tTime).append(aPlayer).append(i));
 				return rChange;
 			}
 			if(i == aPlayer.inventory.currentItem) continue;
@@ -203,16 +206,18 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 							if(ST.equal(tYours, tThing) && tYours.stackSize < tOtherInv.mStackSize) {
 								ItemStack iOut = this.remove(aStack, ST.make(tThing.getItem(), Math.min(tOtherInv.mStackSize - tYours.stackSize, tThing.stackSize), tThing.getItemDamage()));
 								if(iOut == null || iOut == CS.NI) break;
-								int tNum = iOut.stackSize;
+								final int tNum = iOut.stackSize;
 								if(tNum == 0) break;
-								ItemStack iExtra = tOtherInv.insert(tThere, iOut);
+								final ItemStack iExtra = tOtherInv.insert(tThere, iOut);
 								if(iExtra == null || iExtra == CS.NI || iExtra.stackSize == 0) {
 									rChange = true;
 									continue;
 								}
 								if(iExtra.stackSize == tNum) {
+									// false positive, destination not changed, put it all back.
 									rChange |= 0 == CS.GarbageGT.trash( this.insert(aStack, iExtra) );
 								} else {
+									// capacity confusion, try to put the spare back.
 									CS.GarbageGT.trash( this.insert(aStack, iExtra) );
 									rChange = true;
 								}
@@ -227,7 +232,7 @@ public abstract class AbstractInventoryBehavior<E extends MultiItem> extends gre
 		}
 		UT.Sounds.send(SFX.MC_CLICK, aPlayer);
 		oDefragPoint.put(aPlayer, 0);
-		if(ConfigHandler.debug) System.out.println(new StringBuilder("InventoryBehavior defragment complete in ").append(System.nanoTime() - tTime));
+		if(ConfigHandler.debug) System.out.println(new StringBuilder("InventoryBehavior defragment complete in ").append(System.nanoTime() - tTime).append(aPlayer));
 		return rChange;
 	}
 	

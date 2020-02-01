@@ -117,6 +117,11 @@ public class Items {
 				makeBox(MT.Bedrock_HSLA_Alloy,	60);
 				makeBox(MT.DraconiumAwakened,	60);
 				makeBox(MT.Infinity,	60);	//id = 64
+				
+				if(ConfigHandler.debugBag) {
+					addItem(32700, "Inventory Item (Testing)", "", new com.github.canisartorus.prospectorjournal.inventory.BackpackBehaviour(36));
+					addItem(32701, "Small Inventory Item (Testing)", "", new com.github.canisartorus.prospectorjournal.inventory.BackpackBehaviour(9));
+				}
 			}
 			
 			ItemStack makeBox(OreDictMaterial aMat, Number aSize) {

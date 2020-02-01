@@ -15,6 +15,8 @@ import com.github.canisartorus.prospectorjournal.lib.Utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.DimensionManager;
@@ -95,7 +97,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	public void initGui() {
 //		display = 425;
 		start = (this.width - display) /2;
-		wCol = this.fontRendererObj.getStringWidth("Charged Certus Quartz: 8.88M");	// 150pixels, in screen units
+//		wCol = this.fontRendererObj.getStringWidth("Charged Certus Quartz: 8.88M");	// 150pixels, in screen units
+		wCol = this.fontRendererObj.getStringWidth("Certus Quartz: 8.88M");
 		
 		CurrentData = ProspectorJournal.AVAILABLE_TRACKERS.get(0);
 		
@@ -550,14 +553,41 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         }
         
         this.mc.getTextureManager().bindTexture(smallArrow);
+
+        RenderHelper.enableGUIStandardItemLighting();
+	    GL11.glDisable(GL11.GL_LIGHTING);
+	    GL11.glEnable(GL11.GL_ALPHA_TEST);
+	    GL11.glEnable(GL11.GL_BLEND);
+	    
         if(low > 0) 
         	this.drawTexturedModalRect((this.width -50)/2, 210, 1, 1, 15, 17);
         if(high < max)
         	this.drawTexturedModalRect((this.width +32) /2, 210,  17, 1, 32, 17);
         this.drawTexturedModalRect(start     , 210, 91, 41, 17, 17);
         this.drawTexturedModalRect(start +102, 210, 91, 25, 17, 17);
+
+        GL11.glEnable(GL11.GL_LIGHTING);
+	    GL11.glDisable(GL11.GL_ALPHA_TEST);
+	    GL11.glDisable(GL11.GL_BLEND);
+        RenderHelper.disableStandardItemLighting();
         
         super.drawScreen(x, y, f);
+	}
+	
+	@Override
+	public void drawTexturedModelRectFromIcon(int aX, int aY, IIcon aIcon, int aWide, int aHeight) {
+        RenderHelper.enableGUIStandardItemLighting();
+	    GL11.glDisable(GL11.GL_LIGHTING);
+	    GL11.glEnable(GL11.GL_ALPHA_TEST);
+	    GL11.glEnable(GL11.GL_BLEND);
+	
+//	    net.minecraft.client.renderer.entity.RenderItem.getInstance().renderIcon(aX, aY, aIcon, 16, 16);
+	    super.drawTexturedModelRectFromIcon(aX, aY, aIcon, aWide, aHeight);
+	
+	    GL11.glEnable(GL11.GL_LIGHTING);
+	    GL11.glDisable(GL11.GL_ALPHA_TEST);
+	    GL11.glDisable(GL11.GL_BLEND);
+        RenderHelper.disableStandardItemLighting();
 	}
 	
 	@Override
@@ -606,7 +636,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 				sorted(lastSort);
 			} else if(Utils.inBounds(mouseX, start, start +40) &&Utils.inBounds(mouseY, 35, 205) ) {
 				sorted(CurrentData.mType, Utils.DISTANCE);
-			} else if(max != 0 && Utils.inBounds(mouseX, 170, 186) && Utils.inBounds(mouseY, 50, 210)){
+//			} else if(max != 0 && Utils.inBounds(mouseX, 170, 186) && Utils.inBounds(mouseY, 50, 210)){
+			} else if(max != 0 && Utils.inBounds(mouseX, start + 170, start + 190) && Utils.inBounds(mouseY, 50, 210)){
 				int k = (mouseY - 50) / 16;
 				if (low + k <= max)
 				sorted(CurrentData.mType, CurrentData.getMajor(low + k));

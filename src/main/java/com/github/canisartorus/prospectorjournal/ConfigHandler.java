@@ -13,7 +13,7 @@ public class ConfigHandler {
 		trackRock, fortunateBoxes, smeltBoxes,
 		allowSmelt, exportDwarf,
 		applyPatches, patchHazMat, generateArmour,
-		debug, makeBoxes
+		debug, debugBag, makeBoxes
 		;
 	public static double arrowSize
 		;
@@ -49,6 +49,7 @@ public class ConfigHandler {
 		ConfigHandler.patchHazMat = tMainConfig.getBoolean("More_HazMat_Suits_true", PATCHES, true, "Register additional armour pieces as HazMat protection.");
 		
 		ConfigHandler.debug = tMainConfig.getBoolean("debug_logs_false", "Dbug", false, "");
+		ConfigHandler.debugBag = tMainConfig.getBoolean("debugItems", "Dbug", false, "");
 		
 		// XXX additional configs go inside here
 

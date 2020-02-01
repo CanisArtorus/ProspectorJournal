@@ -66,6 +66,18 @@ public class SampleBoxBehaviour  extends FilteredBoxBehavior {
 
 	@Override public boolean willCollectFromWorld() {return true;}
 	
+	@Override protected boolean canCollect(ItemStack aStack, World aWorld, int aX, int aY, int aZ) {
+		net.minecraft.tileentity.TileEntity tTile = aWorld.getTileEntity(aX, aY, aZ);
+		if(tTile instanceof IMTE_GetDrops) {
+			ArrayListNoNulls<ItemStack> tDrops = ((IMTE_GetDrops)tTile).getDrops(mFortune, true);
+			for (ItemStack tThing : tDrops) {
+				if ( ! isAcceptableItem(aStack, tThing)) return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	protected boolean collectBlock(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ) {
 		net.minecraft.tileentity.TileEntity tTile = aWorld.getTileEntity(aX, aY, aZ);

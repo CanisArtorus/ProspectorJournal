@@ -27,7 +27,8 @@ public class Utils {
 	public final static byte ROCK = 0, FLOWER = 1, ORE_VEIN = 2, BEDROCK = 3, EXCAVATOR = 4
 			;
 	
-	public final static int WHITE = 0xFFFFFF, RED = 0xCA1E04, GREEN = 0x26AA30, GRAY = 0xAAAA99
+	public final static int WHITE = 0xFFFFFF, RED = 0xCA1E04, GREEN = 0x26AA30, GRAY = 0xAAAA99,
+			NBT_TYPE_LIST = 9, NBT_TYPE_COMPOUND = 10
 			;
 	public static final short DISTANCE = -1; 
 
