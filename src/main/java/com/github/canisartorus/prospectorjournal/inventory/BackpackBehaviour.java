@@ -61,6 +61,7 @@ public class BackpackBehaviour extends AbstractInventoryBehavior<gregapi.item.mu
 
 	@Override
 	protected ItemStack remove(ItemStack aStack, ItemStack aRequest) {
+		if(ST.invalid(aRequest))	return CS.NI;
 		final NBTTagCompound aNBT = UT.NBT.getOrCreate(aStack);
 		final NBTTagList aInvTag = aNBT.getTagList(TAG_INVENTORY, Utils.NBT_TYPE_COMPOUND);
 		int rOut = 0;

@@ -269,10 +269,10 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	@Override
 	public void drawDefaultBackground() {
 		super.drawDefaultBackground();
-//		this.mc.getTextureManager().bindTexture(nodesBg);
-//		this.drawTexturedModalRect((this.width - 204) /2, 1, 0 , 0, 204, 35);
 		drawRect(start + 20, 210, start + 100, 225, -9408400);
-		drawRect(start + 256, 210, start +410, 225, -9408400);
+		drawRect(start + 24, 212, start +  96, 223, 0xFF000000);
+//		drawRect(start + 256, 210, start +410, 225, -9408400);
+//		drawRect(start + 255, 211, start +409, 223, 0xFF000000);
 	}
 	
 	/**
@@ -570,6 +570,13 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	    GL11.glDisable(GL11.GL_ALPHA_TEST);
 	    GL11.glDisable(GL11.GL_BLEND);
         RenderHelper.disableStandardItemLighting();
+        
+        if(com.github.canisartorus.prospectorjournal.ConfigHandler.backupTextArrows) {
+        	if (low > 0)	this.fontRendererObj.drawString("^", (this.width -50) /2, 225, Utils.WHITE);
+        	if( high < max)	this.fontRendererObj.drawString("v", (this.width +32) /2, 225, Utils.WHITE);
+        	this.fontRendererObj.drawString("<", start, 225, Utils.WHITE);
+        	this.fontRendererObj.drawString(">", start +102, 225, Utils.WHITE);
+        }
         
         super.drawScreen(x, y, f);
 	}
