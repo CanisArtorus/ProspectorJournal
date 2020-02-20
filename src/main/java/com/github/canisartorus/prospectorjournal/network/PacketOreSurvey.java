@@ -26,11 +26,12 @@ public class PacketOreSurvey extends PacketCoordinates implements IPacket {
 	}
 
 	@Override
+	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	public void process(IBlockAccess aWorld, INetworkHandler aNetworkHandler) {
-		if(null == aWorld) {
-			//Server-side
-			return;
-		}
+//		if(null == aWorld) {
+//			//Server-side
+//			return;
+//		}
 		try {
 			com.github.canisartorus.prospectorjournal.JournalBehaviour.TakeSample((net.minecraft.world.World)aWorld, mX, mY, mZ, meta, type, net.minecraft.client.Minecraft.getMinecraft().thePlayer);
 		} catch (Exception e) {

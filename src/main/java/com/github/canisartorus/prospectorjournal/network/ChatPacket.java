@@ -65,13 +65,14 @@ public class ChatPacket implements IPacket {
 		return new ChatPacket(Utils.ChatString.values()[i]);
 	}
 
+	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	@Override
 	public void process(IBlockAccess aWorld, INetworkHandler aNetworkHandler) {
-		if (aWorld != null) {
+//		if (aWorld != null) {
 			// client-side
 			net.minecraft.client.Minecraft.getMinecraft().thePlayer.addChatMessage(new net.minecraft.util.ChatComponentText(
 					msg.toString()));
-		}
-		// server-side no-op
+//		}
+		// server-side no-op	need non-compile server side
 	}
 }

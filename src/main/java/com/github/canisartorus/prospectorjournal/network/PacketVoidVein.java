@@ -11,7 +11,7 @@ import com.google.common.io.ByteStreams;
 //import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
 import gregapi.network.INetworkHandler;
 import gregapi.network.IPacket;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+//import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.world.IBlockAccess;
 
 /**
@@ -61,12 +61,13 @@ public class PacketVoidVein implements IPacket {
 	}
 
 	@Override
+	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	public void process(IBlockAccess aWorld, INetworkHandler aNetworkHandler) {
-		if(null == aWorld) {
-			//server-side
-			return;
-		}
-		final EntityClientPlayerMP mPlayer = net.minecraft.client.Minecraft.getMinecraft().thePlayer;
+//		if(null == aWorld) {
+//			//server-side
+//			return;
+//		}
+		final net.minecraft.client.entity.EntityClientPlayerMP mPlayer = net.minecraft.client.Minecraft.getMinecraft().thePlayer;
 		final int mDim = mPlayer.getEntityWorld().provider.dimensionId;
 		for(VoidMine t : ProspectorJournal.voidVeins) {
 			if(t.dim == mDim && t.cx() == mX && t.cz() == mZ) {
