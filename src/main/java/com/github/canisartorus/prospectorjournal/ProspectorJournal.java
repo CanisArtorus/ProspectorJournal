@@ -19,7 +19,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.*;
 import gregapi.network.NetworkHandler;
 
-import com.github.canisartorus.prospectorjournal.gui.*;
+//import com.github.canisartorus.prospectorjournal.gui.*;
 import com.github.canisartorus.prospectorjournal.lib.*;
 import com.github.canisartorus.prospectorjournal.network.*;
 import java.util.ArrayList;
@@ -32,12 +32,12 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal"; 
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.9.0"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.9.1"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 
 	@cpw.mods.fml.common.SidedProxy(modId = MOD_ID, clientSide = "com.github.canisartorus.prospectorjournal.ProxyClient", serverSide = "com.github.canisartorus.prospectorjournal.ProxyServer")
-    public static gregapi.api.Abstract_Proxy PROXY;
+    public static ProxyServer PROXY;
 	
 	/*
 	@cpw.mods.fml.common.Mod.Instance(MOD_ID)
@@ -56,7 +56,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
 	@Override public String getModNameForLog() {return "Prospector_Journal";}
-	@Override public ProxyServer getProxy() {return (ProxyServer)PROXY;}
+	@Override public ProxyServer getProxy() {return PROXY;}
 
 	// Do not change these 7 Functions. Just keep them this way.
 	@EventHandler public final void onPreLoad           (FMLPreInitializationEvent    aEvent) {onModPreInit(aEvent);}
@@ -87,7 +87,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
         
         AVAILABLE_TRACKERS.add(new OreMenuData());
         AVAILABLE_TRACKERS.add(new BedrockMenuData());
-        if (gregapi.data.MD.IE.mLoaded)	// until switching menu is implemented, absence goes poorly
+        if (gregapi.data.MD.IE.mLoaded)
         	AVAILABLE_TRACKERS.add(new ExcavatorMenuData());
 	}
 
@@ -100,20 +100,13 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 			Items.RegisterRecipes();
 		if(ConfigHandler.applyPatches)
 			com.github.canisartorus.prospectorjournal.compat.GtPatches.onInit();
-		getProxy().initKeyBinds();
-//		KeyBindings.init();
-//		com.github.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
+		getProxy().initKeybinds();
 	}
 	
 	@Override
 	public void onModPostInit2(FMLPostInitializationEvent aEvent) {
 		// Insert your PostInit Code here and not above
 		getProxy().registerPointer();
-	// @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
-	// @EventHandler
-	// public void postInit(FMLPostInitializationEvent event) {
-		// if(aEvent.getSide() == cpw.mods.fml.relauncher.Side.CLIENT)
-			// net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
 	}
 	
 	@Override

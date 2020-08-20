@@ -1,6 +1,6 @@
 package com.github.canisartorus.prospectorjournal;
 
-import com.github.canisartorus.prospectorjournal.gui.GuiMain;
+import com.github.canisartorus.prospectorjournal.gui.*;
 
 import gregapi.oredict.OreDictMaterial;
 import gregapi.data.OP;
