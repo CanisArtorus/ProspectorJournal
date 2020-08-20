@@ -40,15 +40,9 @@ public class GtPatches {
 
 			}
 			if(MD.ARS.mLoaded) {
-				// ArmorsGT.HAZMATS_BIO.add(ST.make(MD.ARS, "lifeWard", 1, W));
-				
 				ArmorsGT.HAZMATS_CHEM.add(ST.make(MD.ARS, "water_orbs", 1, W));
 				
-				// ArmorsGT.HAZMATS_GAS.add(ST.make(MD.ARS, "air_sled", 1, W));
-				
 				ArmorsGT.HAZMATS_HEAT.add(ST.make(MD.ARS, "fire_ears", 1, W));
-				
-				// ArmorsGT.HAZMATS_LIGHTNING.add(ST.make(MD.ARS, "lightningCharm", 1, W));
 				
 				ArmorsGT.HAZMATS_RADIOACTIVE.add(ST.make(MD.ARS, "enderBoots", 1, W));
 				ArmorsGT.HAZMATS_RADIOACTIVE.add(ST.make(MD.ARS, "earth_armor", 1, W));

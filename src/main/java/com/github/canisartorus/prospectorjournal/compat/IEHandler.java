@@ -29,7 +29,6 @@ public class IEHandler {
 		return null;
 	}
 
-//	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
 	public static boolean takeExcavatorSample(World aWorld, int x, int y, int z, EntityPlayer aPlayer, final net.minecraft.tileentity.TileEntity i) {
 		if( ! MD.IE.mLoaded || aWorld.isRemote )	return false;
 		if(i instanceof TileEntityExcavator) {
@@ -49,13 +48,11 @@ public class IEHandler {
 				if(t2 instanceof TileEntitySampleDrill) {
 					ti = (TileEntitySampleDrill) t2;
 				} else {
-//					System.out.println
 					Utils.chatAt(aPlayer, ChatString.DRILL_FAIL);// "Incorrect search for sample drill core. Report this error!");
 					return false;
 				}
 			}
 			if(ti.isSamplingFinished()) {
-//				final ExcavatorHandler.MineralMix mineral = ExcavatorHandler.getRandomMineral(aWorld, (ti.xCoord>>4), (ti.zCoord>>4));
 				final ExcavatorHandler.MineralWorldInfo info = ExcavatorHandler.getMineralWorldInfo(aWorld, (ti.xCoord>>4), (ti.zCoord>>4));
 				takeSampleServer(aWorld, aPlayer, info, x>>4, z>>4);
 				return true;
@@ -80,29 +77,5 @@ public class IEHandler {
 		
 		Utils.NW_PJ.sendToPlayer(msg, (EntityPlayerMP) aPlayer);
 	}
-
-//	public class VoidMineActive extends VoidMine {
-//		protected final ExcavatorHandler.MineralMix oreSet;
-////		public final String oreName;
-//
-//		public VoidMineActive(int dim, int x, int z, ExcavatorHandler.MineralMix vSample) {
-//			super((short)dim, x, z, vSample == null ? DEPLETED : vSample.name);
-//			oreSet = vSample;
-////			oreName = oreSet == null ? IEHandler.DEPLETED : oreSet.name;
-//		}
-//		
-//		@Override
-//		public int getFraction(short material) {
-//			int f = IEDwarf.singOf(oreSet).getOrDefault(material, 0);
-//			return f == 0 ? 0 : Integer.max(f / 1000 , 1);
-//		}
-//
-//		@Override
-//		public boolean isValid() {
-//			return oreSet != null;
-////			return ! oreName.isEmpty();
-//		}
-//	}
-
 	
 }

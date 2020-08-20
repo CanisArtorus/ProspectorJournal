@@ -24,20 +24,18 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 	@Override 
 	public boolean onItemUse(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, byte aSide, float hitX, float hitY, float hitZ) {
 		if(ConfigHandler.bookOnly) {
-			if(//aWorld.isRemote && 
-					lookForSample(aWorld, aX, aY, aZ, aPlayer))
+			if(lookForSample(aWorld, aX, aY, aZ, aPlayer))
 				return true;
 		} 
-		if(aWorld.isRemote && aPlayer.isSneaking() ) {
-		    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.gui.GuiMain());
+		if(aPlayer.isSneaking() ) {
+		    ProspectorJournal.PROXY.openGuiMain();
 		}
 		return false;
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(MultiItem aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer) {
-		if(aWorld.isRemote)
-			net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.gui.GuiMain());
+		ProspectorJournal.PROXY.openGuiMain();
 		return aStack;
 	}
 	
@@ -52,7 +50,6 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 	 */
 	public static boolean lookForSample(World aWorld, int x, int y, int z, EntityPlayer aPlayer) {
 		if(!aWorld.isRemote) {
-//			return false;
 			// stuff that needs server-side data
 		final net.minecraft.tileentity.TileEntity i = aWorld.getTileEntity(x, y, z);
 
@@ -149,10 +146,6 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 	
 //	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
 	static void TakeSampleServer(final World aWorld, int x, int y, int z, short meta, byte sourceType, final EntityPlayer aPlayer) {
-//		if(meta == 8002) {
-//			Utils.chatAt(aPlayer, ChatString.FLINT);// "Just a chip of Flint.");
-//			return;
-//		} else 
 		if (sourceType == Utils.ROCK && ( meta == 8649 || meta == 8757) ) {
 			Utils.chatAt(aPlayer, ChatString.METEOR);// "It fell from the sky. Not related to an ore vein.");
 //			return;
