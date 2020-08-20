@@ -20,25 +20,25 @@ import java.util.HashMap;
  */
 public final class ProxyClient extends ProxyServer {
 	// Insert your Clientside-only implementation of Stuff here
-    Map<String, IIcon> faces = new HashMap<>();
+    public Map<String, IIcon> faces = new HashMap<>();
 
 	@Override
-    void openGuiMain(){
+    public void openGuiMain(){
         Minecraft.getMinecraft().displayGuiScreen(new GuiMain());
     }
 
 	@Override
-	void faces3(String oreName, short best) {
+	public void faces3(String oreName, short best) {
 		faces.putIfAbsent(oreName, OP.dust.mat(OreDictMaterial.MATERIAL_ARRAY[best], 1).getIconIndex());
 	}
 	
 	@Override
-	void faces2(String oreName, short iMat) {
+	public void faces2(String oreName, short iMat) {
 		faces.put(oreName, OP.crushed.mat(OreDictMaterial.MATERIAL_ARRAY[iMat], 1).getIconIndex());
 	}
 	
 	@Override
-	void faces1(String oreName, ItemStack oreOutput) {
+	public void faces1(String oreName, ItemStack oreOutput) {
 		faces.put(oreName, oreOutput.getIconIndex());
 	}
 
