@@ -154,23 +154,24 @@ public class IEDwarf  {
 		public static IIcon getIcon(String aMix) {
 			if(aMix == null | aMix.isEmpty())
 				return Textures.ItemIcons.VOID.getIcon(0);
+			com.github.canisartorus.prospectorjournal.ProxyClient ProxC = (com.github.canisartorus.prospectorjournal.ProxyClient)ProspectorJournal.PROXY;
 			if(MD.IE.mLoaded) {
-				if(PROXY.faces.containsKey(aMix)) 
-					return PROXY.faces.get(aMix);
+				if(ProxC.faces.containsKey(aMix)) 
+					return ProxC.faces.get(aMix);
 				MineralMix tMix = IEHandler.getByName(aMix);
 				if(tMix == null) return Textures.ItemIcons.RENDERING_ERROR.getIcon(0);
 				readManual(tMix);
 			} else {
 				OreDictMaterial tODM = OreDictMaterial.get(aMix);
 				if (tODM == null | tODM.mID < 0) {
-					PROXY.faces.put(aMix, Textures.ItemIcons.VOID.getIcon(0));
+					ProxC.faces.put(aMix, Textures.ItemIcons.VOID.getIcon(0));
 				} else if (! tODM.contains(TD.Properties.STONE) && tODM.contains(TD.ItemGenerator.ORES)) {
-					PROXY.faces2(aMix, tODM.mID);
+					ProxC.faces2(aMix, tODM.mID);
 				} else {
-					PROXY.faces3(aMix, tODM.mID);
+					ProxC.faces3(aMix, tODM.mID);
 				}
 			}
-			return PROXY.faces.getOrDefault(aMix, Textures.ItemIcons.RENDERING_ERROR.getIcon(0));
+			return ProxC.faces.getOrDefault(aMix, Textures.ItemIcons.RENDERING_ERROR.getIcon(0));
 		}
 //		@Deprecated
 //		@SideOnly(Side.CLIENT)
