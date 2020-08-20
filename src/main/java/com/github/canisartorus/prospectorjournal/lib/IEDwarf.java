@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.canisartorus.prospectorjournal.compat.IEHandler;
+import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
 import cpw.mods.fml.relauncher.Side;
@@ -13,7 +14,7 @@ import gregapi.data.OP;
 import gregapi.data.TD;
 import gregapi.old.Textures;
 import gregapi.oredict.OreDictMaterial;
-import net.minecraft.util.IIcon;
+//import net.minecraft.util.IIcon;
 
 public class IEDwarf  {
 
@@ -152,7 +153,7 @@ public class IEDwarf  {
 				return Textures.ItemIcons.VOID.getIcon(0);
 			if(MD.IE.mLoaded) {
 				if(ProspectorJournal.PROXY.faces.containsKey(aMix)) 
-					return faces.get(aMix);
+					return ProspectorJournal.PROXY.faces.get(aMix);
 				MineralMix tMix = IEHandler.getByName(aMix);
 				if(tMix == null) return Textures.ItemIcons.RENDERING_ERROR.getIcon(0);
 				readManual(tMix);

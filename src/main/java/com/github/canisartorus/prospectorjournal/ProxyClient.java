@@ -1,6 +1,16 @@
 package com.github.canisartorus.prospectorjournal;
 
-import gregapi.api.Abstract_Proxy;
+import com.github.canisartorus.prospectorjournal.gui.GuiMain;
+
+import gregapi.oredict.OreDictMaterial;
+import gregapi.data.OP;
+
+import net.minecraft.util.IIcon;
+import net.minecraft.item.ItemStack;
+import net.minecraft.client.Minecraft;
+
+import java.util.Map;
+import java.util.HashMap;
 
 
 /**
@@ -8,23 +18,27 @@ import gregapi.api.Abstract_Proxy;
  * 
  * An example implementation for a Clientside Proxy using my System.
  */
-public final class ProxyClient extends Abstract_Proxy {
+public final class ProxyClient extends ProxyServer {
 	// Insert your Clientside-only implementation of Stuff here
-    static Map<String, IIcon> faces = new HashMap<>();
+    Map<String, IIcon> faces = new HashMap<>();
 
-    static void openGuiMain(){
-        net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new com.github.canisartorus.prospectorjournal.gui.GuiMain());
+	@Override
+    void openGuiMain(){
+        Minecraft.getMinecraft().displayGuiScreen(new GuiMain());
     }
 
-	static void faces3(String oreName, short best) {
+	@Override
+	void faces3(String oreName, short best) {
 		faces.putIfAbsent(oreName, OP.dust.mat(OreDictMaterial.MATERIAL_ARRAY[best], 1).getIconIndex());
 	}
 	
-	static void faces2(String oreName, short iMat) {
+	@Override
+	void faces2(String oreName, short iMat) {
 		faces.put(oreName, OP.crushed.mat(OreDictMaterial.MATERIAL_ARRAY[iMat], 1).getIconIndex());
 	}
 	
-	static void faces1(String oreName, net.minecraft.item.ItemStack oreOutput) {
+	@Override
+	void faces1(String oreName, ItemStack oreOutput) {
 		faces.put(oreName, oreOutput.getIconIndex());
 	}
 

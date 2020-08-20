@@ -10,10 +10,10 @@ import gregapi.api.Abstract_Proxy;
  */
 public final class ProxyServer extends Abstract_Proxy {
 	// placeholders for client-side only references
-    static void openGuiMain(){;}
-    static void faces3(String oreName, short best) {;}
-	static void faces2(String oreName, short iMat) {;}
-	static void faces1(String oreName, net.minecraft.item.ItemStack oreOutput) {;}
+    void openGuiMain(){;}
+    void faces3(String oreName, short best) {;}
+	void faces2(String oreName, short iMat) {;}
+	void faces1(String oreName, net.minecraft.item.ItemStack oreOutput) {;}
 
     // Insert your Serverside-only implementation of Stuff here
     
