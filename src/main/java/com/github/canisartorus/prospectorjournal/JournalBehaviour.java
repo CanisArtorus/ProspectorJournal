@@ -6,11 +6,7 @@ import com.github.canisartorus.prospectorjournal.lib.RockMatter;
 import com.github.canisartorus.prospectorjournal.lib.Utils;
 import com.github.canisartorus.prospectorjournal.lib.Utils.ChatString;
 import com.github.canisartorus.prospectorjournal.network.PacketOreSurvey;
-//import com.github.canisartorus.prospectorjournal.network.PacketVoidVein;
 
-//import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
-//import blusunrize.immersiveengineering.common.blocks.metal.TileEntityExcavator;
-//import blusunrize.immersiveengineering.common.blocks.metal.TileEntitySampleDrill;
 import gregapi.block.metatype.BlockStones;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.tileentity.notick.TileEntityBase03MultiTileEntities;
@@ -28,14 +24,14 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				return true;
 		} 
 		if(aPlayer.isSneaking() ) {
-		    ProspectorJournal.PROXY.openGuiMain();
+		    ((ProxyServer)ProspectorJournal.PROXY).openGuiMain();
 		}
 		return false;
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(MultiItem aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer) {
-		ProspectorJournal.PROXY.openGuiMain();
+		((ProxyServer)ProspectorJournal.PROXY).openGuiMain();
 		return aStack;
 	}
 	

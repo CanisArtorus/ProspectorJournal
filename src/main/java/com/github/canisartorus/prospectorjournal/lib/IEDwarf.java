@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.ProxyServer;
 
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
 import cpw.mods.fml.relauncher.Side;
@@ -21,6 +22,8 @@ public class IEDwarf  {
 		static Map<String, Map<Short, Integer>> mCache = new HashMap<>();
 //		static Map<String, IIcon> faces = new HashMap<>();
 		static Map<String, Short> characters = new HashMap<>();
+
+		private final ProxyServer PROXY = (ProxyServer)ProspectorJournal.PROXY;
 		
 //		public static int getFractionIn(MineralMix oreSet, short material) {
 //		}
@@ -102,12 +105,12 @@ public class IEDwarf  {
 						better = i;
 					}
 				}
-				ProspectorJournal.PROXY.faces1(oreSet.name, oreSet.oreOutput[better]);
+				PROXY.faces1(oreSet.name, oreSet.oreOutput[better]);
 //				characters.put(oreSet.name, best);
 				return mProcess;
 			}
 			if(best != 0) {
-				ProspectorJournal.PROXY.faces2(oreSet.name, best);
+				PROXY.faces2(oreSet.name, best);
 				characters.put(oreSet.name, best);
 			}
 			for(Map.Entry<Short, Double> piece : mContent.entrySet()) {
@@ -124,7 +127,7 @@ public class IEDwarf  {
 					mProcess.put(piece.getKey(), mProcess.getOrDefault(piece.getKey(), 0) + pAmt * Dwarf.UNIT);
 				}
 			}
-			ProspectorJournal.PROXY.faces3(oreSet.name, best);
+			PROXY.faces3(oreSet.name, best);
 			characters.putIfAbsent(oreSet.name, best);
 			return mProcess;
 		}
@@ -152,22 +155,22 @@ public class IEDwarf  {
 			if(aMix == null | aMix.isEmpty())
 				return Textures.ItemIcons.VOID.getIcon(0);
 			if(MD.IE.mLoaded) {
-				if(ProspectorJournal.PROXY.faces.containsKey(aMix)) 
-					return ProspectorJournal.PROXY.faces.get(aMix);
+				if(PROXY.faces.containsKey(aMix)) 
+					return PROXY.faces.get(aMix);
 				MineralMix tMix = IEHandler.getByName(aMix);
 				if(tMix == null) return Textures.ItemIcons.RENDERING_ERROR.getIcon(0);
 				readManual(tMix);
 			} else {
 				OreDictMaterial tODM = OreDictMaterial.get(aMix);
 				if (tODM == null | tODM.mID < 0) {
-					ProspectorJournal.PROXY.faces.put(aMix, Textures.ItemIcons.VOID.getIcon(0));
+					PROXY.faces.put(aMix, Textures.ItemIcons.VOID.getIcon(0));
 				} else if (! tODM.contains(TD.Properties.STONE) && tODM.contains(TD.ItemGenerator.ORES)) {
-					ProspectorJournal.PROXY.faces2(aMix, tODM.mID);
+					PROXY.faces2(aMix, tODM.mID);
 				} else {
-					ProspectorJournal.PROXY.faces3(aMix, tODM.mID);
+					PROXY.faces3(aMix, tODM.mID);
 				}
 			}
-			return ProspectorJournal.PROXY.faces.getOrDefault(aMix, Textures.ItemIcons.RENDERING_ERROR.getIcon(0));
+			return PROXY.faces.getOrDefault(aMix, Textures.ItemIcons.RENDERING_ERROR.getIcon(0));
 		}
 //		@Deprecated
 //		@SideOnly(Side.CLIENT)
