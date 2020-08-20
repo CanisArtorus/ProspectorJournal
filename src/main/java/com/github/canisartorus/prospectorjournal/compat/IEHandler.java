@@ -18,7 +18,7 @@ public class IEHandler {
 
 	public static final String DEPLETED = "";
 	
-	public static Number MAXCAPACITY = ExcavatorHandler.mineralVeinCapacity;
+	public static int MAXCAPACITY = ExcavatorHandler.mineralVeinCapacity;
 	
 	public static MineralMix getByName(String sMineral) {
 		if (sMineral.equals(DEPLETED))
