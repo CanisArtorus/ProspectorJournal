@@ -8,7 +8,7 @@ import gregapi.api.Abstract_Proxy;
  * 
  * An example implementation for a Serverside Proxy using my System.
  */
-public final class ProxyServer extends Abstract_Proxy {
+public class ProxyServer extends Abstract_Proxy {
 	// placeholders for client-side only references
     void openGuiMain(){;}
     void faces3(String oreName, short best) {;}

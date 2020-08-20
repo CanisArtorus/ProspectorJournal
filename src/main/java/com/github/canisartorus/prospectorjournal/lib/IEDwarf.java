@@ -14,7 +14,7 @@ import gregapi.data.OP;
 import gregapi.data.TD;
 import gregapi.old.Textures;
 import gregapi.oredict.OreDictMaterial;
-//import net.minecraft.util.IIcon;
+import net.minecraft.util.IIcon;
 
 public class IEDwarf  {
 
