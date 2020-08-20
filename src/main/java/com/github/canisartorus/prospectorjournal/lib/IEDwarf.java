@@ -23,7 +23,7 @@ public class IEDwarf  {
 //		static Map<String, IIcon> faces = new HashMap<>();
 		static Map<String, Short> characters = new HashMap<>();
 
-		private final ProxyServer PROXY = (ProxyServer)ProspectorJournal.PROXY;
+		static final ProxyServer PROXY = (ProxyServer)ProspectorJournal.PROXY;
 		
 //		public static int getFractionIn(MineralMix oreSet, short material) {
 //		}
