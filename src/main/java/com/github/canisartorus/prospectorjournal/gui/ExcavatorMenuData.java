@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 import com.github.canisartorus.prospectorjournal.lib.Display;
 import com.github.canisartorus.prospectorjournal.lib.IEDwarf;
 import com.github.canisartorus.prospectorjournal.lib.Utils;
@@ -90,7 +91,7 @@ public final class ExcavatorMenuData extends AbstractMenuData {
    		FRO.drawString(ts, aStart + (83 -(FRO.getStringWidth(ts)/2)), l, colour);
 //   		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
    		if (gregapi.data.MD.IE.mLoaded) {
-   			ts = Utils.approx(blusunrize.immersiveengineering.api.tool.ExcavatorHandler.mineralVeinCapacity) + StatCollector.translateToLocal("sym.x.name");
+   			ts = Utils.approx(IEHandler.MAXCAPACITY) + StatCollector.translateToLocal("sym.x.name");
    		} else {
    			ts = Utils.approx(Integer.MAX_VALUE) + StatCollector.translateToLocal("sym.x.name");
    		}

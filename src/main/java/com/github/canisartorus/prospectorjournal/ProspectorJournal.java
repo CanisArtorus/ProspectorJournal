@@ -19,7 +19,10 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.*;
 import gregapi.network.NetworkHandler;
 
-//import com.github.canisartorus.prospectorjournal.gui.*;
+import com.github.canisartorus.prospectorjournal.gui.AbstractMenuData;
+import com.github.canisartorus.prospectorjournal.gui.OreMenuData;
+import com.github.canisartorus.prospectorjournal.gui.BedrockMenuData;
+import com.github.canisartorus.prospectorjournal.gui.ExcavatorMenuData;
 import com.github.canisartorus.prospectorjournal.lib.*;
 import com.github.canisartorus.prospectorjournal.network.*;
 import java.util.ArrayList;
