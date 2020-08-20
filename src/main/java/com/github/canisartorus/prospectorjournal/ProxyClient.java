@@ -41,5 +41,19 @@ public final class ProxyClient extends ProxyServer {
 	public void faces1(String oreName, ItemStack oreOutput) {
 		faces.put(oreName, oreOutput.getIconIndex());
 	}
+	
+	@Override
+	public void registerKeybindings(){
+		cpw.mods.fml.common.FMLCommonHandler.instance().bus().register(new KeyBindings());
+	}
 
+	@Override
+	public void initKeybinds(){ KeyBindings.init(); }
+	
+	@Override
+	public void registerPointer(){
+		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(
+			new GuiPointer(net.minecraft.client.Minecraft.getMinecraft())
+		);
+	}
 }

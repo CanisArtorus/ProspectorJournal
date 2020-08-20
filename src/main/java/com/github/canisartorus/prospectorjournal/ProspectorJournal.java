@@ -56,7 +56,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
 	@Override public String getModNameForLog() {return "Prospector_Journal";}
-	@Override public gregapi.api.Abstract_Proxy getProxy() {return PROXY;}
+	@Override public ProxyServer getProxy() {return (ProxyServer)PROXY;}
 
 	// Do not change these 7 Functions. Just keep them this way.
 	@EventHandler public final void onPreLoad           (FMLPreInitializationEvent    aEvent) {onModPreInit(aEvent);}
@@ -83,7 +83,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 				
 		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new RightClickEvent());
         cpw.mods.fml.common.FMLCommonHandler.instance().bus().register(new ClientConnectionEvent());
-        cpw.mods.fml.common.FMLCommonHandler.instance().bus().register(new KeyBindings());
+        getProxy().registerKeybindings();
         
         AVAILABLE_TRACKERS.add(new OreMenuData());
         AVAILABLE_TRACKERS.add(new BedrockMenuData());
@@ -100,20 +100,20 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 			Items.RegisterRecipes();
 		if(ConfigHandler.applyPatches)
 			com.github.canisartorus.prospectorjournal.compat.GtPatches.onInit();
-		KeyBindings.init();
+		getProxy().initKeyBinds();
+//		KeyBindings.init();
 //		com.github.canisartorus.prospectorjournal.lib.Dwarf.readTheStones();
 	}
 	
 	@Override
 	public void onModPostInit2(FMLPostInitializationEvent aEvent) {
 		// Insert your PostInit Code here and not above
-	// }
-	
+		getProxy().registerPointer();
 	// @cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	// @EventHandler
 	// public void postInit(FMLPostInitializationEvent event) {
-		if(aEvent.getSide() == cpw.mods.fml.relauncher.Side.CLIENT)
-			net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
+		// if(aEvent.getSide() == cpw.mods.fml.relauncher.Side.CLIENT)
+			// net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new GuiPointer(net.minecraft.client.Minecraft.getMinecraft()));
 	}
 	
 	@Override

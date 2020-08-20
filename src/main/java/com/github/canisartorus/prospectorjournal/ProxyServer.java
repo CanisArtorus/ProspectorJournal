@@ -17,6 +17,9 @@ public class ProxyServer extends Abstract_Proxy {
     public void faces3(String oreName, short best) {;}
 	public void faces2(String oreName, short iMat) {;}
 	public void faces1(String oreName, net.minecraft.item.ItemStack oreOutput) {;}
+	public void registerKeybindings(){;}
+	public void initKeybinds(){;}
+	public void registerPointer(){;}
 
     // Insert your Serverside-only implementation of Stuff here
     
