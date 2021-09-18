@@ -43,7 +43,7 @@ public class ConfigHandler {
 		ConfigHandler.arrowX = tMainConfig.getInt("Arrow X Coord_0", POINTER, 0, -512, 512, "Horizontal offset from screen centre of the navigation pointer.");
 		ConfigHandler.arrowY = tMainConfig.getInt("Arrow Y Coord_0", POINTER, 0, -512, 512, "Vertical offset from screen centre of the navigation pointer.");
 		ConfigHandler.arrowSize = tMainConfig.get(POINTER, "Arrow Scale_1", 1.0D, "Relative size of the navigation overlay pointer.", 0.01D, 4.0D).getDouble(1.0D);
-		ConfigHandler.backupTextArrows = tMainConfig.getBoolean("ASCII_Arrows", POINTER, true, "Uses character arrows where the arrow icons are supposed to be. \n Disable if the real icons actually draw.");
+		ConfigHandler.backupTextArrows = tMainConfig.getBoolean("ASCII_Arrows_false", POINTER, true, "Uses character arrows where the arrow icons are supposed to be. \n Disable if the real icons actually draw.");
 		
 		ConfigHandler.applyPatches = tMainConfig.getBoolean("ChangeGT_false", PATCHES, false, "Master switch for the section. Should any of the listed extensions to GT6 code be applied?");
 		ConfigHandler.patchHazMat = tMainConfig.getBoolean("More_HazMat_Suits_true", PATCHES, true, "Register additional armour pieces as HazMat protection.");

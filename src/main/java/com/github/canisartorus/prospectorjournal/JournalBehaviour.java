@@ -24,14 +24,14 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				return true;
 		} 
 		if(aPlayer.isSneaking() ) {
-		    ((ProxyServer)ProspectorJournal.PROXY).openGuiMain();
+		    ProspectorJournal.PROXY.openGuiMain();
 		}
 		return false;
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(MultiItem aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer) {
-		((ProxyServer)ProspectorJournal.PROXY).openGuiMain();
+		ProspectorJournal.PROXY.openGuiMain();
 		return aStack;
 	}
 	

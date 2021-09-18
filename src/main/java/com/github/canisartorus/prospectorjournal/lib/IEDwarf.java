@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
-import com.github.canisartorus.prospectorjournal.ProxyServer;
 
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler.MineralMix;
 import cpw.mods.fml.relauncher.Side;
@@ -23,7 +22,6 @@ public class IEDwarf  {
 //		static Map<String, IIcon> faces = new HashMap<>();
 		static Map<String, Short> characters = new HashMap<>();
 
-		static final ProxyServer PROXY = (ProxyServer)ProspectorJournal.PROXY;
 		
 //		public static int getFractionIn(MineralMix oreSet, short material) {
 //		}
@@ -105,12 +103,12 @@ public class IEDwarf  {
 						better = i;
 					}
 				}
-				PROXY.faces1(oreSet.name, oreSet.oreOutput[better]);
+				ProspectorJournal.PROXY.faces1(oreSet.name, oreSet.oreOutput[better]);
 //				characters.put(oreSet.name, best);
 				return mProcess;
 			}
 			if(best != 0) {
-				PROXY.faces2(oreSet.name, best);
+				ProspectorJournal.PROXY.faces2(oreSet.name, best);
 				characters.put(oreSet.name, best);
 			}
 			for(Map.Entry<Short, Double> piece : mContent.entrySet()) {
@@ -127,7 +125,7 @@ public class IEDwarf  {
 					mProcess.put(piece.getKey(), mProcess.getOrDefault(piece.getKey(), 0) + pAmt * Dwarf.UNIT);
 				}
 			}
-			PROXY.faces3(oreSet.name, best);
+			ProspectorJournal.PROXY.faces3(oreSet.name, best);
 			characters.putIfAbsent(oreSet.name, best);
 			return mProcess;
 		}
@@ -164,11 +162,11 @@ public class IEDwarf  {
 			} else {
 				OreDictMaterial tODM = OreDictMaterial.get(aMix);
 				if (tODM == null | tODM.mID < 0) {
-					ProxC.faces.put(aMix, Textures.ItemIcons.VOID.getIcon(0));
+					ProspectorJournal.PROXY.faces.put(aMix, Textures.ItemIcons.VOID.getIcon(0));
 				} else if (! tODM.contains(TD.Properties.STONE) && tODM.contains(TD.ItemGenerator.ORES)) {
-					ProxC.faces2(aMix, tODM.mID);
+					ProspectorJournal.PROXY.faces2(aMix, tODM.mID);
 				} else {
-					ProxC.faces3(aMix, tODM.mID);
+					ProspectorJournal.PROXY.faces3(aMix, tODM.mID);
 				}
 			}
 			return ProxC.faces.getOrDefault(aMix, Textures.ItemIcons.RENDERING_ERROR.getIcon(0));

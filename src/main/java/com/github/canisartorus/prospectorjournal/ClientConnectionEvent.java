@@ -82,15 +82,14 @@ public class ClientConnectionEvent {
 
             ProspectorJournal.hostName = hostname;
 
-//            ProspectorJournal.rockSurvey.clear();
-//            ProspectorJournal.bedrockFault.clear();
-//    		ProspectorJournal.voidVeins.clear();
-
             Utils.readJson(Utils.GT_FILE);
             Utils.readJson(Utils.GT_BED_FILE);
-    		Utils.readJson(Utils.IE_VOID_FILE);
-    		if ( ! ProspectorJournal.voidVeins.isEmpty() && ! gregapi.data.MD.IE.mLoaded)
-    			ProspectorJournal.AVAILABLE_TRACKERS.add(new com.github.canisartorus.prospectorjournal.gui.ExcavatorMenuData());
+    		// Utils.readJson(Utils.IE_VOID_FILE);
+    		// if ( ! ProspectorJournal.voidVeins.isEmpty() && ! gregapi.data.MD.IE.mLoaded)
+    			// ProspectorJournal.AVAILABLE_TRACKERS.add(new com.github.canisartorus.prospectorjournal.gui.ExcavatorMenuData());
+			if(gregapi.data.MD.IE.mLoaded){
+				Utils.readJson(Utils.IE_VOID_FILE);
+			}
     	}
     }
 
