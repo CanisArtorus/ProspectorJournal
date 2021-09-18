@@ -16,7 +16,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.StatCollector;
 
 public class Utils {
-	
+
 	public static gregapi.network.INetworkHandler NW_PJ;
 
 	public final static String GT_FILE = "GT6OreVeins.json",
@@ -26,14 +26,14 @@ public class Utils {
 			;
 	public final static byte ROCK = 0, FLOWER = 1, ORE_VEIN = 2, BEDROCK = 3, EXCAVATOR = 4
 			;
-	
+
 	public final static int WHITE = 0xFFFFFF, RED = 0xCA1E04, GREEN = 0x26AA30, GRAY = 0xAAAA99,
 			NBT_TYPE_LIST = 9, NBT_TYPE_COMPOUND = 10
 			;
-	public static final short DISTANCE = -1; 
+	public static final short DISTANCE = -1;
 
 	public final static java.util.regex.Pattern patternInvalidChars = java.util.regex.Pattern.compile("[^a-zA-Z0-9_]");
-	
+
 	public static String invalidChars(String s) {
 		return patternInvalidChars.matcher(s).replaceAll("_");
 	}
@@ -93,7 +93,7 @@ public class Utils {
         }
 
     }
-    
+
     public static boolean inBounds(int t, int a, int b) {
     	return t <= b && t >= a;
     }
@@ -105,6 +105,8 @@ public class Utils {
 		String rNum = Integer.toString(multiple);
 		if(rNum.length() > 3) {
 			String[] prefix = new String[] {"", "k", "M", "G", "T"};
+			if(rNum.length() > 3 * prefix.length() )
+				return rNum.charAt(0) + "." + rNum.substring(1,3) + "e" + Integer.toString(rNum.length() -1);
 			switch(rNum.length() % 3) {
 			case 0:
 				return rNum.substring(0, 3) + prefix[(rNum.length() / 3)-1];
@@ -125,7 +127,7 @@ public class Utils {
 			Utils.NW_PJ.sendToPlayer(new ChatPacket(rock2), (EntityPlayerMP) aPlayer);
 		}
 	}
-	
+
 	public static enum ChatString {
 		ROCK("msg.rock.name"),
 		DRILL_FAIL("msg.iesamplefail.name"),
@@ -144,7 +146,7 @@ public class Utils {
 			mKey = key;
 		}
 		String mKey;
-		
+
 		@Override
 		public String toString(){
 			return StatCollector.translateToLocal(mKey);

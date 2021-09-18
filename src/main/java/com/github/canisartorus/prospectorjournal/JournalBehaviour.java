@@ -17,24 +17,24 @@ import net.minecraft.world.World;
 
 public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault {
 	public static JournalBehaviour INSTANCE = new JournalBehaviour();
-	@Override 
+	@Override
 	public boolean onItemUse(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, byte aSide, float hitX, float hitY, float hitZ) {
 		if(ConfigHandler.bookOnly) {
 			if(lookForSample(aWorld, aX, aY, aZ, aPlayer))
 				return true;
-		} 
+		}
 		if(aPlayer.isSneaking() ) {
 		    ProspectorJournal.PROXY.openGuiMain();
 		}
 		return false;
 	}
-	
+
 	@Override
 	public ItemStack onItemRightClick(MultiItem aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer) {
 		ProspectorJournal.PROXY.openGuiMain();
 		return aStack;
 	}
-	
+
 	/**
 	 * Determines if an ore sample can be generated from this location, then calls TakeSample to do so.
 	 * @param aWorld
@@ -55,14 +55,14 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				final ItemStack sample = ((gregtech.tileentity.misc.MultiTileEntityRock)i).mRock;	//XXX GT
 				if(sample == null) {
 					// is default rock.
-					if(ConfigHandler.trackRock) TakeSampleServer(aWorld, x, y, z, 
+					if(ConfigHandler.trackRock) TakeSampleServer(aWorld, x, y, z,
 							(short)((TileEntityBase03MultiTileEntities) i).getDrops(0, false).get(0).getItemDamage(), Utils.ROCK, aPlayer);
 					else Utils.chatAt(aPlayer, ChatString.ROCK);	//"Just normal rock");
 				} else if(gregapi.util.OM.is(gregapi.data.OD.itemFlint, sample)) {
 					Utils.chatAt(aPlayer, ChatString.FLINT);
 				} else if( ! ConfigHandler.trackRock && gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
 					Utils.chatAt(aPlayer, ChatString.ROCK);
-				} else 
+				} else
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);
 				return true;
 			} return false;
@@ -79,7 +79,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.BEDROCK, aPlayer);
 			} else if (tName.startsWith("gt.meta.ore.normal.")) {
 				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.ORE_VEIN, aPlayer);
-			} else 
+			} else
 				Utils.chatAt(aPlayer, ChatString.SMALL);// "Small ore, not worth recording");
 			return true;
 		} else if( b instanceof gregapi.block.misc.BlockBaseFlower) {
@@ -139,16 +139,16 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		}
 		return false;
 	}
-	
+
 //	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
 	static void TakeSampleServer(final World aWorld, int x, int y, int z, short meta, byte sourceType, final EntityPlayer aPlayer) {
 		if (sourceType == Utils.ROCK && ( meta == 8649 || meta == 8757) ) {
 			Utils.chatAt(aPlayer, ChatString.METEOR);// "It fell from the sky. Not related to an ore vein.");
 //			return;
-		} else 
+		} else
 			Utils.NW_PJ.sendToPlayer(new PacketOreSurvey(x, y, z, meta, sourceType), (EntityPlayerMP) aPlayer);
 	}
-	
+
 	/**
 	 * Generates an ore sample knowledge for this location.
 	 * @param aWorld
@@ -165,14 +165,13 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		if(ConfigHandler.debug)
 			System.out.println(ProspectorJournal.MOD_NAME+"[Info] Sampling "+meta+" at "+ x +","+y+","+z+" on world "+dim);
 	    if(sourceType == Utils.FLOWER || sourceType == Utils.BEDROCK) {
-//	    	if(!aWorld.isRemote) return; // handled client-side 
+//	    	if(!aWorld.isRemote) return; // handled client-side
 	    	boolean match = false;
 	    	if(ProspectorJournal.bedrockFault.size() != 0) {
 		    	for (GeoTag m : ProspectorJournal.bedrockFault) {
-		    		// flower could be non-specific - match any
 		    		if(dim == m.dim && meta == m.ore) {
 		    			// include adjacent chunks as same unit.
-		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
+		    			if(m.x >= x - 30 && m.x <= x + 30 && m.z >= z - 30 && m.z <= z + 30) {
 		    				match = true;
 		    				if(sourceType == Utils.BEDROCK) {
 								m.x = x;
@@ -189,10 +188,10 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		    			// found a vein under non-specific flowers
 		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
 		    				ProspectorJournal.bedrockFault.remove(m);
-//	    					match = false;
+	    					match = false;
 	    					break;
 		    			}
-    		
+
 		    		} else if(m.dim == dim && meta == 0 && ! m.sample) {
 		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
 		    				match = true;
@@ -209,6 +208,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 	    	}
 	    }
 	    if(meta == 0) return;
+				// ignore non-specific rocks and empty ores
         if (ProspectorJournal.rockSurvey.size() != 0) {
             for (RockMatter n : ProspectorJournal.rockSurvey) {
                 if (meta == n.ore && dim == n.dim && (x / 16) == n.cx() && (z /16) == n.cz()) {
@@ -222,7 +222,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
                 					n.multiple = 1;
                 				}
                 				n.y = (short) y;
-                			} else 
+                			} else
                 				continue;
                 		} else {
             				n.multiple += 1;
