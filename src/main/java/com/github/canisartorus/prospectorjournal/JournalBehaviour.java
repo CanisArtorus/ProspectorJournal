@@ -17,6 +17,9 @@ import net.minecraft.world.World;
 
 public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault {
 	public static JournalBehaviour INSTANCE = new JournalBehaviour();
+
+	static final short[] multiFlowers = [9130, 9211, 9133, 9194, 9217, 9193, 9128, 9195, 9196, 9197];
+
 	@Override
 	public boolean onItemUse(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, byte aSide, float hitX, float hitY, float hitZ) {
 		if(ConfigHandler.bookOnly) {
@@ -62,6 +65,9 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 					Utils.chatAt(aPlayer, ChatString.FLINT);
 				} else if( ! ConfigHandler.trackRock && gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
 					Utils.chatAt(aPlayer, ChatString.ROCK);
+				} else if ( OP.oreRaw.contains(sample) ){
+					// the rawOre 'rocks' that specifically indicate a bedrock vein
+					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.FLOWER, aPlayer);
 				} else
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);
 				return true;
@@ -89,44 +95,54 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 				case 0:	// Gold
 					type = 790;
 					break;
+				case 1:	// Galena
+					type = 9117;
+					break;
+				case 2:	// Chalcopyrite
+					type = 9111;
+					break;
+				case 3: // Sphalerite & Smithsonite
+					type = 0;	// either 9130 or 9211
+					break;
+				case 4:	// Pentlandite
+					type = 9145;
+					break;
 				case 5:	// Uraninite
 					type = 9134;
 					break;
 				case 6:	// Cooperite
 					type = 9116;
 					break;
-				case 1:	// Galena
-					type = 9117;
-					break;
-				case 4:	// Pentlandite
-					type = 9145;
-					break;
-				case 2:	// Chalcopyrite
-					type = 9111;
-					break;
+				case 8: // any Hexorium
+				case 7: // generic Orechid
 				default:
 					// unspecified Orechid vein.
 				}
 			} else if(b.getUnlocalizedName().equalsIgnoreCase("gt.block.flower.b")) {
 				switch(aWorld.getBlockMetadata(x, y, z)) {
-				case 5:	// Pitchblende
-					type = 9155;
-					break;
-				case 3:	// Copper
-					type = 290;
-					break;
-				case 2:	// Gold
-					type = 790;
-					break;
 				case 0:	// Arsenopyrite
 					type = 9216;
-					break;
-				case 4:	// Redstone
-					type = 8333;
 					break;
 				case 1:	// Stibnite
 					type = 9131;
 					break;
+				case 2:	// Gold
+					type = 790;
+					break;
+				case 3:	// Copper
+					type = 290;
+					break;
+				case 4:	// Redstone
+					type = 8333;
+					break;
+				case 5:	// Pitchblende
+					type = 9155;
+					break;
+				case 6: // Diamonds
+					type = 8300;
+					break;
+				case 7: // any W
+					type = 0;	// any of 9133, 9194, 9217, 9193, 9128, 9195, 9196, 9197
 				default:
 					// something new
 				}
@@ -171,7 +187,8 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		    	for (GeoTag m : ProspectorJournal.bedrockFault) {
 		    		if(dim == m.dim && meta == m.ore) {
 		    			// include adjacent chunks as same unit.
-		    			if(m.x >= x - 30 && m.x <= x + 30 && m.z >= z - 30 && m.z <= z + 30) {
+							// generates a 32 pattern of indicators, and a 6 spread of ores.
+		    			if(m.x >= x - 32 && m.x <= x + 32 && m.z >= z - 32 && m.z <= z + 32) {
 		    				match = true;
 		    				if(sourceType == Utils.BEDROCK) {
 								m.x = x;
@@ -184,21 +201,38 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		    				}
 		    				break;
 		    			}
-		    		} else if (m.dim == dim && m.ore == 0 && sourceType == Utils.BEDROCK) {
-		    			// found a vein under non-specific flowers
-		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
+		    		} else if (m.dim == dim && m.ore == 0) {
+							// find a vein under non-specific flowers
+							boolean tSpecify = ( sourceType == Utils.BEDROCK );
+							// allow the confusing Sphalerite / Smithsonite flower to be specified by the raw ore chunk
+							// and the various tungsten ores too
+							for (int i = 0, j = multiFlowers.size(); i < j && !tSpecify; i++) {
+								if (m.ore == multiFlowers[i]) {
+									tSpecify = true;
+								}
+							}
+							if ( tSpecify && m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
 		    				ProspectorJournal.bedrockFault.remove(m);
 	    					match = false;
 	    					break;
 		    			}
-
-		    		} else if(m.dim == dim && meta == 0 && ! m.sample) {
+		    		} else if(m.dim == dim && meta == 0) {
 		    			if(m.x >= x - 40 && m.x <= x + 40 && m.z >= z - 40 && m.z <= z + 40) {
-		    				match = true;
-		    				Utils.chatAt(aPlayer, ChatString.BEDFLOWER);// "I expected to find these Orechids here.");
-		    				break;
-		    			}
+								if (! m.sample) {
+			    				match = true;
+			    				Utils.chatAt(aPlayer, ChatString.BEDFLOWER);// "I expected to find these Orechids here.");
+			    				break;
+								}
+								for (int i = 0, j = multiFlowers.size(); i < j; i++) {
+									if (m.ore == multiFlowers[i]) {
+										match = true;
+										Utils.chatAt(aPlayer, ChatString.FLOWERS);
+										break;
+									}
+								}
+							}
 		    		}
+						if (match) break;
 		    	}
 	    	}
 	    	if (!match) {

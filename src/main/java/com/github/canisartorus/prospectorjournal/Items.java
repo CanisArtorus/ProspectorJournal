@@ -29,28 +29,28 @@ public class Items {
 		// invent a Block for the TileEntities to Have-A
 //		MultiTileEntityBlock.getOrCreate(ProspectorJournal.MOD_ID, "machine", gregapi.block.MaterialMachines.instance, Block.soundTypeMetal, CS.TOOL_pickaxe, -2, -1, 5, false, false);
 //		MultiTileEntityBlock.getOrCreate(ProspectorJournal.MOD_ID, "wood", Material.wood, Block.soundTypeWood, CS.TOOL_axe, -2, -1, 5, false, false);
-		
+
 		// makes a bunch of items to the same ID and name
-		mBook = new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook") {
+		Items.mBook = new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospectorjournal.notebook") {
 			@Override
 			public void addItems() {
 				addItem(0, "Prospector's Journal", "Cross-referencing all the rocks.", JournalBehaviour.INSTANCE, TC.PERFODIO.get(2), TC.COGNITO.get(4), TC.ORDO.get(1));
 //				Items.noteBook = ST.make(this, 1, 0);
-				
+
 //				CR.shaped(Items.noteBook, CR.DEF, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
-				
+
 //XXX				gregapi.data.CS.BooksGT.BOOK_REGISTER.add(Items.noteBook, (byte)53);
 			}
-			
+
 			@Override public int getDefaultStackLimit(ItemStack aStack) {return 4;}
 		};
-		
+
 		if (ConfigHandler.makeBoxes)
 		Items.mBoxes = new gregapi.item.multiitem.MultiItemRandom(ProspectorJournal.MOD_ID, "ca.prospector.samplebag") {
 			@Override public int getDefaultStackLimit(ItemStack aStack) {return 1;}
 			private static final String TIP_BAG_1 = "Collects Rocks.";
 			int i = 0;
-			@Override 
+			@Override
 			public void addItems() {
 				addItem(i++, "Rock Sample Bag (Fabric)", TIP_BAG_1, new SampleBoxBehaviour(MT.Rubber, 6, 48), TC.VACUOS.get(1), TC.INSTRUMENTUM.get(1));
 				addItem(i++, "Rock Sample Bag (Leather)", TIP_BAG_1, new SampleBoxBehaviour(MT.Leather, 6), TC.VACUOS.get(2), TC.INSTRUMENTUM.get(1));
@@ -117,19 +117,19 @@ public class Items {
 				makeBox(MT.Bedrock_HSLA_Alloy,	60);
 				makeBox(MT.DraconiumAwakened,	60);
 				makeBox(MT.Infinity,	60);	//id = 64
-				
+
 				if(ConfigHandler.debugBag) {
 					addItem(32700, "Inventory Item (Testing)", "", new com.github.canisartorus.prospectorjournal.inventory.BackpackBehaviour(36));
 					addItem(32701, "Small Inventory Item (Testing)", "", new com.github.canisartorus.prospectorjournal.inventory.BackpackBehaviour(9));
 				}
 			}
-			
+
 			ItemStack makeBox(OreDictMaterial aMat, Number aSize) {
 				return addItem(i++, "Rock Sample Box (" + aMat.getLocal() + ")", TIP_BAG_1, new SampleBoxBehaviour(aMat, aSize.byteValue()),
 						TC.VACUOS.get(aSize.intValue()/5), TC.INSTRUMENTUM.get(1));
 			}
 		};
-		
+
 		// No Problem, you can add single Items too, if you just need those.
 		// Assets go into "/assets/insert_your_modid_here/textures/items/$name/..."
 		// The Textures themselves are just the IDs you insert down there. So "0.png" for the Tiny Pile of Examplium Dust.
@@ -138,7 +138,7 @@ public class Items {
 //		}	};
 //		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new BoxBehaviour(mBoxes));
 	}
-	
+
 	private static void woodBoxRecipe(Number iId, OreDictMaterial aMat) {
 		CR.shaped(Items.mBoxes.make(iId.shortValue()), CR.DEF, " PS", "P P", " P ", 'P', OP.plate.dat(aMat), 'S', OP.stick.dat(aMat));
 	}
@@ -148,7 +148,7 @@ public class Items {
 
 	public static void RegisterRecipes() {
 		CR.shaped(Items.mBook.make(0), CR.NONE, "PRP", "RDR", "PRP", 'D', OP.dye, 'P', ST.make(net.minecraft.init.Items.paper, 1, 0), 'R', OP.rockGt);
-		
+
 		if(ConfigHandler.makeBoxes) {
 		// fabric / cloth  / wool / silk are not odm
 		CR.shaped(Items.mBoxes.make(0), CR.BUF, " WT", "W W", " W ", 'W', ST.make(net.minecraft.init.Blocks.wool, 1, CS.W), 'T', ST.make(net.minecraft.init.Items.string, 1, 0));
@@ -224,7 +224,7 @@ public class Items {
 		MultiTileEntityBlock tBox = MultiTileEntityBlock.getOrCreate(ProspectorJournal.MOD_ID, "machine", gregapi.block.MaterialMachines.instance, Block.soundTypeMetal, CS.TOOL_pickaxe, -2, -1, 5, false, false);
 		MultiTileEntityBlock tCrate	= MultiTileEntityBlock.getOrCreate(ProspectorJournal.MOD_ID, "wood", Material.wood, Block.soundTypeWood, CS.TOOL_axe, -2, -1, 5, false, false);
 		MultiTileEntityBlock tBag	= MultiTileEntityBlock.getOrCreate(ProspectorJournal.MOD_ID, "cloth", Material.cloth, Block.soundTypeCloth, CS.TOOL_axe, -1, -1, 5, false, false);
-				
+
 		caMTEReg.add("Rock Sample Box (Wood)", CTAB_BOXES, 		0, 0, SampleCrateTile.class,	0, 1, tCrate,
 				UT.NBT.make(CS.NBT_MATERIAL, ANY.WoodNormal, CS.NBT_COLOR, UT.Code.getRGBaInt(MT.Wood.fRGBaSolid), CS.NBT_HARDNESS, 3.0f, CS.NBT_RESISTANCE, 3.0f, CS.NBT_FLAMMABILITY, 100, CS.NBT_TEXTURE, "woodchest", CS.INV_SIZE, 8),
 				" PS", "P P", " P ", 'P', OD.plankAnyWood, 'S', OP.stick.dat(ANY.WoodNormal));
@@ -294,22 +294,22 @@ public class Items {
 		makeBoxes(MT.DraconiumAwakened, 60, 100.0f, 60, tBox);
 		makeBoxes(	MT.Infinity,		61, 100.0f, 60, tBox);
 		makeBoxes(	MT.Plastic,			62, 3.0f, 16, tCrate);
-		caMTEReg.add("Rock Sample Bag (leather)", CTAB_BOXES, 63, 0, SampleCrateTile.class, 0, 1, tBag, 
+		caMTEReg.add("Rock Sample Bag (leather)", CTAB_BOXES, 63, 0, SampleCrateTile.class, 0, 1, tBag,
 				gregapi.util.UT.NBT.make(CS.NBT_MATERIAL, MT.Leather, CS.NBT_HARDNESS, 0.5f, CS.NBT_RESISTANCE, 2.0f, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Leather.fRGBaSolid), CS.NBT_TEXTURE, "woodchest", CS.NBT_INV_SIZE, 6, CS.NBT_FLAMMABILITY, 100),
 				" LS", "LbL", " L ", 'L', OD.itemLeather, 'S', OP.stick.dat(ANY.Wood));
-		caMTEReg.add("Rock Sample Bag (fabric)", CTAB_BOXES, 64, 0, SampleCrateTile.class, 0, 1, tBag, 
+		caMTEReg.add("Rock Sample Bag (fabric)", CTAB_BOXES, 64, 0, SampleCrateTile.class, 0, 1, tBag,
 				gregapi.util.UT.NBT.make(CS.NBT_MATERIAL, MT.Empty, CS.NBT_HARDNESS, 0.5f, CS.NBT_RESISTANCE, 1.0f, CS.NBT_COLOR, UT.Code.getRGBInt(MT.White.fRGBaSolid), CS.NBT_TEXTURE, "woodchest", CS.NBT_INV_SIZE, 6, CS.NBT_FLAMMABILITY, 100));
 				*/
 	}
 	/*
 	private static void makeBoxes(OreDictMaterial odm, int iId, float fHard, int iSize, MultiTileEntityBlock tBox) {
 //		if(odm.contains(gregapi.data.TD.ItemGenerator.CONTAINERS) && odm.mID > 0) {
-			caMTEReg.add("Rock Sample Box ("+odm.getLocal()+")", CTAB_BOXES, iId, 0, SampleCrateTile.class, odm.mToolQuality, 1, tBox, 
+			caMTEReg.add("Rock Sample Box ("+odm.getLocal()+")", CTAB_BOXES, iId, 0, SampleCrateTile.class, odm.mToolQuality, 1, tBox,
 					gregapi.util.UT.NBT.make(CS.NBT_MATERIAL, odm, CS.NBT_HARDNESS, fHard, CS.NBT_RESISTANCE, fHard, CS.NBT_COLOR, UT.Code.getRGBInt(odm.fRGBaSolid), CS.NBT_TEXTURE, "metalchest", CS.NBT_INV_SIZE, iSize),
 					" PS", "PhP", " P ", 'P', OP.plate.dat(odm), 'S', OP.stick.dat(odm));
 //		}
 	}
-	
+
 	private static void makeWoodBox(OreDictMaterial odm, int iId, float fHard, int iSize, boolean bFlam, MultiTileEntityBlock tCrate) {
 		caMTEReg.add("Rock Sample Box ("+odm.getLocal()+")", CTAB_BOXES, iId, 0, SampleCrateTile.class,	odm.mToolQuality, 1, tCrate,
 				bFlam ? UT.NBT.make(CS.NBT_MATERIAL, odm, CS.NBT_COLOR, UT.Code.getRGBaInt(odm.fRGBaSolid), CS.NBT_HARDNESS, fHard, CS.NBT_RESISTANCE, fHard, CS.NBT_FLAMMABILITY, 100, CS.NBT_TEXTURE, "woodchest", CS.INV_SIZE, iSize)

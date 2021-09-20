@@ -12,7 +12,7 @@ import com.github.canisartorus.prospectorjournal.ConfigHandler;
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
 
 /**
- * 
+ *
  * @author Alexander James
  *
  * Derived data regarding ore availability and byproducts.
@@ -28,14 +28,14 @@ public class Dwarf implements Runnable {
 		N_MINOR = 1,		N_MAJOR = 2,		C_MAJOR = 1;
 	protected static final int UNIT = N_PURE*C_PURE;
 	protected static java.util.Collection<GeoChemistry> knowledge = new java.util.ArrayList<>();
-	
+
 	public static GeoChemistry read(int material) {
 		for( GeoChemistry gc : knowledge) {
 			if(gc.mID == material) return gc;
 		}
 		return new GeoChemistry((short) material);
 	}
-	
+
 	/**
 	 * Returns the proportion of one material that can be retrieved from an ore.
 	 * @param material the matID for the ore being checked
@@ -44,11 +44,11 @@ public class Dwarf implements Runnable {
 	 */
 	public static int getFractionIn(short material, short ore) {
 		GeoChemistry gc = read(material);
-		if(gc.mByBy.size() != 0) 
+		if(gc.mByBy.size() != 0)
 			return gc.mByBy.getOrDefault(ore, 0);
 		if (gc.mBy.size() != 0)
 			return C_PURE * gc.mBy.getOrDefault(ore,  0);
-		if(material == ore)	
+		if(material == ore)
 			return N_SELF * C_SELF;
 		return 0;
 	}
@@ -60,7 +60,7 @@ public class Dwarf implements Runnable {
 //		return 0;
 //	}
 
-	
+
 	/**
 	 *  Reads the list of materials and byproducts to build a data table
 	 */
@@ -69,6 +69,19 @@ public class Dwarf implements Runnable {
 		for (OreDictMaterial odm : OreDictMaterial.MATERIAL_MAP.values()) {
 			if(odm.contains(gregapi.data.TD.ItemGenerator.ORES) && odm.mID > 0) {
 				GeoChemistry gc = new GeoChemistry(odm.mID);
+				final int j = odm.mByProducts.size();
+				for(int i = 0; i < j; i++) {
+					gc.mBy.put(odm.mByProducts.get(i).mID, 1);
+					if (i < 3)
+						gc.mBy2.put(odm.mByProducts.get(i).mID, 1);
+				}
+				gc.mBy.put(odm.mID, N_PURE + 8 - j);
+				if ( j > 2 ) {
+					gc.mBy2.put(odm.mID, C_PURE);
+				} else {
+					gc.mBy2.put(odm.mID, C_PURE + 3 - j);
+				}
+				/*
 				switch (odm.mByProducts.size()) {
 				case 0:
 					gc.mBy.put(odm.mID, N_SELF);
@@ -121,12 +134,13 @@ public class Dwarf implements Runnable {
 				}
 				gc.mBy.putIfAbsent(odm.mID, N_PURE);
 				gc.mBy2.putIfAbsent(odm.mID, C_PURE);
+				*/
 				if(ConfigHandler.allowSmelt) {
 //					if(ConfigHandler.debug)
 //						System.out.println("smelting "+odm.mID);
 					final short tID = odm.mTargetSmelting.mMaterial.mID;
 					final int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U9);
-					if (purity > gc.mBy2.getOrDefault(tID, 0)) 
+					if (purity > gc.mBy2.getOrDefault(tID, 0))
 						gc.mBy2.put(tID,  purity);
 				}
 				knowledge.add(gc);
@@ -152,16 +166,16 @@ public class Dwarf implements Runnable {
 			Utils.writeJson(Utils.DWARF_FILE);
 		}
 	}
-		
+
 	/**
-	 * 
+	 *
 	 * @param mat	a Greg material System ID number
 	 * @return The localized display name
 	 */
 	public static String name(short mat) {
 		return OreDictMaterial.MATERIAL_ARRAY[mat].mNameLocal;
 	}
-	
+
 	/**
 	 * A Comparator for sorting byproduct list entries.
 	 */
@@ -172,9 +186,9 @@ public class Dwarf implements Runnable {
 				return Integer.compare(o2.getValue(), o1.getValue());
 			}
 	};
-	
+
 	/**
-	 * 
+	 *
 	 * @author Alexander James
 	 *
 	 * Data structure holding the byproducts table for a material.
@@ -187,17 +201,17 @@ public class Dwarf implements Runnable {
 		public final Map<Short, Integer> mBy2 = new HashMap<>(6, 0.99f);
 		// Total, including indirect, byproducts
 		public final Map<Short, Integer> mByBy = new HashMap<>(15, 0.9f);
-		
+
 		public GeoChemistry(short aID) {
 			mID = aID;
 		}
-		
+
 		public void add(short mat, int amount) {
 			int old = mByBy.getOrDefault(mat, 0);
 			mByBy.put(mat, old + amount);
 		}
 	}
-	
+
 	static final int[] weightsMeasure = new int[] {
 			8*3*5*7, 0, 24*35, 12*35, 8*35, 6*35, 24*7, 4*35, 24*5, 3*35
 	};
@@ -228,7 +242,7 @@ public class Dwarf implements Runnable {
 
 	@Override
 	public void run() {
-		Dwarf.readTheStones();		
+		Dwarf.readTheStones();
 	}
 
 }

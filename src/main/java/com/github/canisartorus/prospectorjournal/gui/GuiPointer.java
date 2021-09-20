@@ -37,9 +37,8 @@ public class GuiPointer extends Gui {
     if (event.isCancelable() || event.type != net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.EXPERIENCE || !ProspectorJournal.doGui) {
     	return;
     }
-  	boolean wrong=true;
-    if (ConfigHandler.needHUD) {
-    	if(this.mc.thePlayer.inventory.armorItemInSlot(3) != null) {
+  	boolean wrong = ConfigHandler.needHUD || ConfigHandler.needBook ;
+    if (ConfigHandler.needHUD && this.mc.thePlayer.inventory.armorItemInSlot(3) != null) {
 				final String headpiece = this.mc.thePlayer.inventory.armorItemInSlot(3).getItem().getUnlocalizedName();
       	for(String test : ConfigHandler.HUDsList) {
       		if( test.equalsIgnoreCase(headpiece) ) {
@@ -47,9 +46,9 @@ public class GuiPointer extends Gui {
       			break;
       		}
       	}
-    	}
-    } else if(this.mc.thePlayer.getCurrentEquippedItem() != null)
-			if(this.mc.thePlayer.getCurrentEquippedItem().getUnlocalizedName().equalsIgnoreCase("ca.prospectorjournal.notebook"))
+    }
+		if(ConfigHandler.needBook && this.mc.thePlayer.getCurrentEquippedItem() != null &&
+			this.mc.thePlayer.getCurrentEquippedItem().getUnlocalizedName().equalsIgnoreCase("ca.prospectorjournal.notebook"))
 				wrong =false;
 		if(wrong) return;
 
