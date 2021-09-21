@@ -11,6 +11,6 @@
   "credits": "Dyonovan, for TCNodeTracker doing basically the same thing. GregoriousT for GregTech6 in which this matters. OvermindDL1 for providing a gradle workspace that works.",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": ["gregtech@[6.09.00,)"]
+  "dependencies": ["gregtech@[6.14.00,)"]
 }
 ]
