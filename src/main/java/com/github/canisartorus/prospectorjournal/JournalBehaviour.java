@@ -65,7 +65,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 					Utils.chatAt(aPlayer, ChatString.FLINT);
 				} else if( ! ConfigHandler.trackRock && gregapi.util.OM.materialcontains(sample, gregapi.data.TD.Properties.STONE)) {
 					Utils.chatAt(aPlayer, ChatString.ROCK);
-				} else if ( OP.oreRaw.contains(sample) ){
+				} else if ( gregapi.data.OP.oreRaw.contains(sample) ){
 					// the rawOre 'rocks' that specifically indicate a bedrock vein
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.FLOWER, aPlayer);
 				} else
@@ -206,7 +206,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 							boolean tSpecify = ( sourceType == Utils.BEDROCK );
 							// allow the confusing Sphalerite / Smithsonite flower to be specified by the raw ore chunk
 							// and the various tungsten ores too
-							for (int i = 0, j = multiFlowers.size(); i < j && !tSpecify; i++) {
+							for (int i = 0, j = multiFlowers.length; i < j && !tSpecify; i++) {
 								if (m.ore == multiFlowers[i]) {
 									tSpecify = true;
 								}
@@ -223,7 +223,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 			    				Utils.chatAt(aPlayer, ChatString.BEDFLOWER);// "I expected to find these Orechids here.");
 			    				break;
 								}
-								for (int i = 0, j = multiFlowers.size(); i < j; i++) {
+								for (int i = 0, j = multiFlowers.length; i < j; i++) {
 									if (m.ore == multiFlowers[i]) {
 										match = true;
 										Utils.chatAt(aPlayer, ChatString.FLOWERS);

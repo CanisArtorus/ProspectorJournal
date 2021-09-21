@@ -105,7 +105,7 @@ public class Utils {
 		String rNum = Integer.toString(multiple);
 		if(rNum.length() > 3) {
 			String[] prefix = new String[] {"", "k", "M", "G", "T"};
-			if(rNum.length() > 3 * prefix.length() )
+			if(rNum.length() > 3 * prefix.length )
 				return rNum.charAt(0) + "." + rNum.substring(1,3) + "e" + Integer.toString(rNum.length() -1);
 			switch(rNum.length() % 3) {
 			case 0:
