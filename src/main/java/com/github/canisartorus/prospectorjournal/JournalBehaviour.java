@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault {
 	public static JournalBehaviour INSTANCE = new JournalBehaviour();
 
-	static final short[] multiFlowers = [9130, 9211, 9133, 9194, 9217, 9193, 9128, 9195, 9196, 9197];
+	static final short[] multiFlowers = {9130, 9211, 9133, 9194, 9217, 9193, 9128, 9195, 9196, 9197};
 
 	@Override
 	public boolean onItemUse(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, byte aSide, float hitX, float hitY, float hitZ) {
