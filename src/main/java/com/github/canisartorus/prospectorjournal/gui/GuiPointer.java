@@ -81,10 +81,11 @@ public class GuiPointer extends Gui {
     int distancePL = (int) Math.round(this.mc.thePlayer.getDistance(ProspectorJournal.xMarker, mc.thePlayer.posY, ProspectorJournal.zMarker));
     String dirY;
 		int color;
-		if(mc.thePlayer.posY > ProspectorJournal.yMarker + 2) {
+		// thePlayer.posY is at head height, not feet
+		if(mc.thePlayer.posY > ProspectorJournal.yMarker + 4) {
 			dirY = StatCollector.translateToLocal("str.below.name");
 			color = Utils.RED;
-		} else if(mc.thePlayer.posY < ProspectorJournal.yMarker - 2) {
+		} else if(mc.thePlayer.posY < ProspectorJournal.yMarker ) {
 			dirY = StatCollector.translateToLocal("str.above.name");
 			color = Utils.GREEN;
 		} else {

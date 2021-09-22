@@ -41,7 +41,7 @@ public class ConfigHandler {
 		ConfigHandler.exportDwarf = tMainConfig.getBoolean("ExportFile_false", DWARF, false, "Set to true to export ore by product data to $instance$/ProspectorJournal/GT6_Geochemistry.json. \n I suggest excluding Smelting transforms for this.");
 
 		ConfigHandler.arrowX = tMainConfig.getInt("Arrow X Coord_0", POINTER, 0, -512, 512, "Horizontal offset from screen centre of the navigation pointer.");
-		ConfigHandler.arrowY = tMainConfig.getInt("Arrow Y Coord_0", POINTER, 0, -512, 512, "Vertical offset from screen centre of the navigation pointer.");
+		ConfigHandler.arrowY = tMainConfig.getInt("Arrow Y Coord_48", POINTER, 48, 0, 512, "Vertical offset from screen top of the navigation pointer.");
 		ConfigHandler.arrowSize = tMainConfig.get(POINTER, "Arrow Scale_1", 1.0D, "Relative size of the navigation overlay pointer.", 0.01D, 4.0D).getDouble(1.0D);
 		ConfigHandler.backupTextArrows = tMainConfig.getBoolean("ASCII_Arrows_false", POINTER, true, "Uses character arrows where the arrow icons are supposed to be. \n Disable if the real icons actually draw.");
 

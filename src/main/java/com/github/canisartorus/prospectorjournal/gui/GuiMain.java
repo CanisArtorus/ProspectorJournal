@@ -28,12 +28,12 @@ import net.minecraftforge.common.DimensionManager;
 public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	private static final ResourceLocation smallArrow = new ResourceLocation("prospectorjournal:textures/gui/arrows_small.png");
 	protected static final int NUM_ROWS = 10;
-	
+
 //	private List<Display<RockMatter>> oreVeins =	new ArrayList<>();
 //	private List<Display<GeoTag>> rockSpots =	new ArrayList<>();
 //	private List<Display<VoidMine>> zonesIE =	new ArrayList<>();
-	
-	private int display = 425, start, 
+
+	private int display = 425, start,
 		low = 0, high, max,
 		dimID = 0, dimIndex,
 		wCol
@@ -43,11 +43,11 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	private static AbstractMenuData CurrentData;
 	private String dimName;
 	private SearchBox oSearchBox;
-	
+
 	public GuiMain() {
 		oSearchBox = new SearchBox(this);
 	}
-	
+
 	private static void allClear() {
 //		oreVeins.clear();
 //		rockSpots.clear();
@@ -57,9 +57,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 //			aMenu.forget();
 //		}
 	}
-	
+
 	/**
-	 * Switches dimensions 
+	 * Switches dimensions
 	 */
 	public void portal() {
 		if(ProspectorJournal.dims.size() == 0) astralSearch();
@@ -75,7 +75,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		astralSearch();
 		this.mc.displayGuiScreen(null);
 	}
-	
+
 	/**
 	 * Discovers dimensions that exist in the world
 	 */
@@ -92,21 +92,21 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		}
 		Collections.sort(ProspectorJournal.dims, DimTag.astralOrder);
 	}
-	
+
 	@Override
 	public void initGui() {
 //		display = 425;
 		start = (this.width - display) /2;
 //		wCol = this.fontRendererObj.getStringWidth("Charged Certus Quartz: 8.88M");	// 150pixels, in screen units
 		wCol = this.fontRendererObj.getStringWidth("Certus Quartz: 8.88M");
-		
+
 		CurrentData = ProspectorJournal.AVAILABLE_TRACKERS.get(0);
-		
+
 		dimID = Minecraft.getMinecraft().theWorld.provider.dimensionId;
 		portal();
 //		guiButtons();
 	}
-	
+
 	/**
 	 * Makes all the button widgets for this screen configuration
 	 */
@@ -127,7 +127,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 
 		this.updateScreen();
 	}
-	
+
 	/**
 	 * Handles the buttons actually doing things.
 	 */
@@ -166,7 +166,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			allClear();
 		}
 	}
-	
+
 	@Override
 	protected void keyTyped(char key, int i) {
 		// searchbox stuff
@@ -184,10 +184,10 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			allClear();
 		}
 	}
-	
+
 	@Override
 	public boolean doesGuiPauseGame() {return false;}
-	
+
 	@Override
 	public void drawDefaultBackground() {
 		super.drawDefaultBackground();
@@ -196,7 +196,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 //		drawRect(start + 256, 210, start +410, 225, -9408400);
 //		drawRect(start + 255, 211, start +409, 223, 0xFF000000);
 	}
-	
+
 	/**
 	 * Sorts the list of Display<> objects,
 	 * and populates it from the master database if necessary.
@@ -207,7 +207,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		final int aX = (int) this.mc.thePlayer.posX, aZ = (int) this.mc.thePlayer.posZ;
 		if (dataSet == CurrentData.mType) {
 			if(sortBy != lastSort)
-				max = CurrentData.sortBy(sortBy, (short) dimID, aX, aZ); 
+				max = CurrentData.sortBy(sortBy, (short) dimID, aX, aZ);
 		} else {
 			CurrentData.forget();
 			max = 0;
@@ -224,7 +224,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		lastSort = sortBy;
 		guiButtons();
 	}
-	
+
 	private void sorted(short sortBy){
 		final int aX = (int) this.mc.thePlayer.posX, aZ = (int) this.mc.thePlayer.posZ;
 		max = CurrentData.sortBy(sortBy, (short) dimID, aX, aZ);
@@ -233,7 +233,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		lastSort = sortBy;
 		guiButtons();
 	}
-	
+
 	@Override
 //	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	public void drawScreen(int x, int y, float f) {
@@ -248,16 +248,16 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 
 		int l = 50;
 		drawDefaultBackground();
-		
+
 //		drawRect(start + 20, 210, start + 100, 225, -9408400);
-		
+
 		this.fontRendererObj.drawString(dimName, start + 20 + (80-this.fontRendererObj.getStringWidth(dimName))/2, 214, Utils.WHITE);
-		
+
 		oSearchBox.draw(this.fontRendererObj);
-		
+
 		drawRect(start, 30, start+display, 32, -9408400);	// 0xff707070
 		drawRect(start, 44, start+display, 46, -9408400);
-		
+
 		this.fontRendererObj.drawString(StatCollector.translateToLocal("str.distance.name"), start + 2, 35, Utils.WHITE);
         this.fontRendererObj.drawString("X", start + 50, 35, Utils.WHITE);
         this.fontRendererObj.drawString("Y", start + 80, 35, Utils.WHITE);
@@ -276,17 +276,17 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         	GL11.glColor3f(1, 1, 1);
         	drawRect(start, l+11, start + display, l + 12, -9408400);
         	GL11.glPopMatrix();
-        	
+
         	// would be z-layered by lower lines here
         	l += 16;
 		}
         // gets z-layered by the buttons here
-		
+
         if(com.github.canisartorus.prospectorjournal.ConfigHandler.backupTextArrows) {
-        	if (low > 0)	this.fontRendererObj.drawString("^", (this.width -50) /2, 210, Utils.WHITE);
-        	if( high < max)	this.fontRendererObj.drawString("v", (this.width +32) /2, 210, Utils.WHITE);
-        	this.fontRendererObj.drawString("<", start, 210, Utils.WHITE);
-        	this.fontRendererObj.drawString(">", start +102, 210, Utils.WHITE);
+        	if (low > 0)	this.fontRendererObj.drawString("^ ^", (this.width -50) /2, 210, Utils.WHITE);
+        	if( high < max)	this.fontRendererObj.drawString("v v", (this.width +32) /2, 210, Utils.WHITE);
+        	this.fontRendererObj.drawString("<<<", start, 210, Utils.WHITE);
+        	this.fontRendererObj.drawString(">>>", start +102, 210, Utils.WHITE);
         }
 
         this.mc.getTextureManager().bindTexture(smallArrow);
@@ -295,8 +295,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	    GL11.glDisable(GL11.GL_LIGHTING);
 	    GL11.glEnable(GL11.GL_ALPHA_TEST);
 	    GL11.glEnable(GL11.GL_BLEND);
-	    
-        if(low > 0) 
+
+        if(low > 0)
         	this.drawTexturedModalRect((this.width -50)/2, 210, 1, 1, 15, 17);
         if(high < max)
         	this.drawTexturedModalRect((this.width +32) /2, 210,  17, 1, 32, 17);
@@ -307,9 +307,9 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	    GL11.glDisable(GL11.GL_ALPHA_TEST);
 	    GL11.glDisable(GL11.GL_BLEND);
         RenderHelper.disableStandardItemLighting();
-        
+
         super.drawScreen(x, y, f);
-		
+
 		/// Tooltip display of composition
 		l = 50;
 		for(int i = low; i<high; i++) {
@@ -323,13 +323,13 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         		for (int g = 0; g < 22 && g < verses.size(); g++) {
         			toolTip.add(Dwarf.name(verses.get(g).getKey())+ ": "+ Utils.approx(verses.get(g).getValue()));
         		}
-        		drawHoveringText(toolTip, x, y, fontRendererObj);
+        		drawHoveringText(toolTip, x - wcol, y, fontRendererObj);
         		if(verses.size() > 22) {
         			toolTip.clear();
             		for (int g = 0; g < 22 && g < (verses.size() - 22); g++) {
             			toolTip.add(Dwarf.name(verses.get(g+22).getKey())+ ": "+ Utils.approx(verses.get(g+22).getValue()));
             		}
-            		drawHoveringText(toolTip, x + 10 + wCol, y, fontRendererObj);
+            		drawHoveringText(toolTip, x + 10, y, fontRendererObj);
         			if(verses.size() > 44) {
         				toolTip.clear();
                 		for (int g = 0; g < 21 && g < (verses.size() - 44); g++) {
@@ -344,31 +344,31 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
                 			}
                 			toolTip.add(StatCollector.translateToLocal("str.trace.name") + ": " + Utils.approx(u));
                 		}
-                		drawHoveringText(toolTip, x + 20 + 2 * wCol, y, fontRendererObj);
+                		drawHoveringText(toolTip, x + 20 + wCol, y, fontRendererObj);
         			}
         		}
         	}
-        	
+
         	l += 16;
         }
 	}
-	
+
 	@Override
 	public void drawTexturedModelRectFromIcon(int aX, int aY, IIcon aIcon, int aWide, int aHeight) {
         RenderHelper.enableGUIStandardItemLighting();
 	    GL11.glDisable(GL11.GL_LIGHTING);
 	    GL11.glEnable(GL11.GL_ALPHA_TEST);
 	    GL11.glEnable(GL11.GL_BLEND);
-	
+
 //	    net.minecraft.client.renderer.entity.RenderItem.getInstance().renderIcon(aX, aY, aIcon, 16, 16);
 	    super.drawTexturedModelRectFromIcon(aX, aY, aIcon, aWide, aHeight);
-	
+
 	    GL11.glEnable(GL11.GL_LIGHTING);
 	    GL11.glDisable(GL11.GL_ALPHA_TEST);
 	    GL11.glDisable(GL11.GL_BLEND);
         RenderHelper.disableStandardItemLighting();
 	}
-	
+
 	@Override
 	public void mouseMovedOrUp(int mouseX, int mouseY, int button) {
 		// For click on areas
@@ -404,7 +404,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			} else if(max != 0 && Utils.inBounds(mouseX, start + 170, start + 190) && Utils.inBounds(mouseY, 50, 210)){
 				int k = (mouseY - 50) / 16;
 				if (low + k <= max)
-				sorted(CurrentData.mType, CurrentData.getMajor(low + k));				
+				sorted(CurrentData.mType, CurrentData.getMajor(low + k));
 			} else if(Utils.inBounds(mouseX, start + 260, start + 410) && Utils.inBounds(mouseY, 210, 225)) {
 				oSearchBox.activate();
 				updateScreen();
@@ -413,24 +413,24 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			}
 		}
 	}
-	
+
 	class SearchBox {
 		boolean hasFocus = false;
 		private java.util.List<Character> request = new ArrayList<>();
 		private String suggestion = StatCollector.translateToLocal("str.search.name");
 		private net.minecraft.client.gui.GuiScreen mParent;
-		
+
 		SearchBox(net.minecraft.client.gui.GuiScreen aParent){
 			mParent = aParent;
 		}
-		
+
 		void activate() {
 			if(hasFocus){
 				suggestion = StatCollector.translateToLocal("str.search.name");
 				request.clear();
 			} else hasFocus = true;
 		}
-		
+
 		void confirm(GuiMain gm) {
 			if(hasFocus) {
 				hasFocus = false;
@@ -443,7 +443,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 				gm.updateScreen();
 			}
 		}
-		
+
 		void draw(net.minecraft.client.gui.FontRenderer fr) {
 			// TODO
 		}
