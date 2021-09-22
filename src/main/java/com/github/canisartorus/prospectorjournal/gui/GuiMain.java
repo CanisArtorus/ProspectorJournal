@@ -323,7 +323,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
         		for (int g = 0; g < 22 && g < verses.size(); g++) {
         			toolTip.add(Dwarf.name(verses.get(g).getKey())+ ": "+ Utils.approx(verses.get(g).getValue()));
         		}
-        		drawHoveringText(toolTip, x - wcol, y, fontRendererObj);
+        		drawHoveringText(toolTip, x - wCol, y, fontRendererObj);
         		if(verses.size() > 22) {
         			toolTip.clear();
             		for (int g = 0; g < 22 && g < (verses.size() - 22); g++) {

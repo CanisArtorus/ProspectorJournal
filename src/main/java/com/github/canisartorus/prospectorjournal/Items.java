@@ -55,7 +55,7 @@ public class Items {
 				addItem(i++, "Rock Sample Bag (Fabric)", TIP_BAG_1, new SampleBoxBehaviour(MT.Rubber, 6, 48), TC.VACUOS.get(1), TC.INSTRUMENTUM.get(1));
 				addItem(i++, "Rock Sample Bag (Leather)", TIP_BAG_1, new SampleBoxBehaviour(MT.Leather, 6), TC.VACUOS.get(2), TC.INSTRUMENTUM.get(1));
 				makeBox(ANY.WoodNormal,	8);
-				makeBox(MT.WoodSealed,	12);
+				makeBox(MT.WoodTreated,	12);
 				makeBox(MT.Skyroot,		12);
 				makeBox(MT.Weedwood,	8);
 				makeBox(MT.Livingwood,	12);
@@ -155,7 +155,7 @@ public class Items {
 		short i = 1;
 		CR.shaped(Items.mBoxes.make(i++), CR.NONE, " LS", "LbL", " L ", 'L', OD.itemLeather, 'S', OP.stick.dat(ANY.Wood));
 		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "P P", " P ", 'P', OD.plankAnyWood, 'S', OP.stick.dat(ANY.WoodNormal));
-		woodBoxRecipe(i++, MT.WoodSealed);
+		woodBoxRecipe(i++, MT.WoodTreated);
 		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "P P", " P ", 'P', OD.plankSkyroot, 'S', OP.stick.dat(MT.Skyroot));
 		CR.shaped(Items.mBoxes.make(i++), CR.DEF, " PS", "P P", " P ", 'P', OD.plankWeedwood, 'S', OP.stick.dat(MT.Weedwood));
 		woodBoxRecipe(i++, MT.Livingwood);
@@ -228,7 +228,7 @@ public class Items {
 		caMTEReg.add("Rock Sample Box (Wood)", CTAB_BOXES, 		0, 0, SampleCrateTile.class,	0, 1, tCrate,
 				UT.NBT.make(CS.NBT_MATERIAL, ANY.WoodNormal, CS.NBT_COLOR, UT.Code.getRGBaInt(MT.Wood.fRGBaSolid), CS.NBT_HARDNESS, 3.0f, CS.NBT_RESISTANCE, 3.0f, CS.NBT_FLAMMABILITY, 100, CS.NBT_TEXTURE, "woodchest", CS.INV_SIZE, 8),
 				" PS", "P P", " P ", 'P', OD.plankAnyWood, 'S', OP.stick.dat(ANY.WoodNormal));
-		makeWoodBox(MT.WoodSealed,		1, 3.0f, 12, true, tCrate);
+		makeWoodBox(MT.WoodTreated,		1, 3.0f, 12, true, tCrate);
 		caMTEReg.add("Rock Sample Box (SkyRoot)", CTAB_BOXES,	2, 0, SampleCrateTile.class,	MT.Skyroot.mToolQuality, 1, tCrate,
 				UT.NBT.make(CS.NBT_MATERIAL, MT.Skyroot, CS.NBT_COLOR, UT.Code.getRGBaInt(MT.SkyRoot.fRGBaSolid), CS.NBT_HARDNESS, 4.0f, CS.NBT_RESISTANCE, 4.0f, CS.NBT_FLAMMABILITY, 100, CS.NBT_TEXTURE, "woodchest", CS.INV_SIZE, 12),
 				" PS", "P P", " P ", 'P', OD.plankSkyroot, 'S', OP.stick.dat(MT.Skyroot));
