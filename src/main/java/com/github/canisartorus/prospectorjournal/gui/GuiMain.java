@@ -116,7 +116,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		this.buttonList.clear();
 		final int tEnd = Math.min( (high-low)*2, NUM_ROWS * 2);
 		for (int j = 0; j< tEnd; j+=2) {
-			this.buttonList.add(new GuiButton(j  , start +400, x +8*j, 20, 10, CurrentData.getExhaustName()));
+			this.buttonList.add(new GuiButton(j  , start +400, x +8*j, 20, 10, StatCollector.translateToLocal("btn.delete.name")));
 			this.buttonList.add(new GuiButton(j+1, start +370, x +8*j, 30, 10, StatCollector.translateToLocal("btn.mark.name")));
 		}
 //		this.buttonList.add(new GuiButton(buttonList.size(), start + 265, 5, 80, 20, StatCollector.translateToLocal("btn.map.name")));

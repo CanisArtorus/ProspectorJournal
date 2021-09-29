@@ -20,14 +20,14 @@ import net.minecraft.util.StatCollector;
 public final class ExcavatorMenuData extends AbstractMenuData {
 
 	private List<Display<VoidMine>> zonesIE = new ArrayList<>();
-	
+
 	public ExcavatorMenuData(){
 		super(StatCollector.translateToLocal("btn.excavator.name"),
 				Utils.EXCAVATOR
 				);
-		obviousEnd = true;
+		// obviousEnd = true;
 	}
-	
+
 	@Override
 	public void forget() {	zonesIE.clear();	}
 
@@ -48,12 +48,12 @@ public final class ExcavatorMenuData extends AbstractMenuData {
 		Collections.sort(zonesIE, sortBy == Utils.DISTANCE ? zonesIE.get(0).getCloseComparator() : zonesIE.get(0).getQualityComparator(sortBy));
 		return zonesIE.size() ;
 	}
-	
+
 	@Override
 	boolean exhaust(int iEntry) {
 		final VoidMine q = zonesIE.get(iEntry).datum;
 		for(VoidMine e : ProspectorJournal.voidVeins) {
-			if(e.dim == q.dim && e.x == q.x && e.z == q.z && 
+			if(e.dim == q.dim && e.x == q.x && e.z == q.z &&
 //					e.oreSet == q.oreSet) {
 					e.getOreName().equalsIgnoreCase(q.getOreName()) ) {
 				if(ProspectorJournal.doGui && ProspectorJournal.xMarker == q.x && ProspectorJournal.zMarker == q.z) {
@@ -86,7 +86,7 @@ public final class ExcavatorMenuData extends AbstractMenuData {
 		if(ProspectorJournal.xMarker == p.datum.x && ProspectorJournal.zMarker == p.datum.z ) {
 			colour = Utils.GREEN;
 		} else colour = Utils.WHITE;
-		
+
 		ts = StatCollector.translateToLocal("str.any.name");
    		FRO.drawString(ts, aStart + (83 -(FRO.getStringWidth(ts)/2)), l, colour);
 //   		ts = Utils.approx(p.datum.multiple) + StatCollector.translateToLocal("sym.x.name");
@@ -108,7 +108,7 @@ public final class ExcavatorMenuData extends AbstractMenuData {
     	FRO.drawString(ts, aStart + (52 -(FRO.getStringWidth(ts)/2)), l, colour);
     	ts = Integer.toString(p.datum.z);
     	FRO.drawString(ts, aStart + (112 -(FRO.getStringWidth(ts)/2)), l, colour);
-		
+
 	}
 
 	@Override
