@@ -128,6 +128,24 @@ public class Utils {
 		}
 	}
 
+	public static void chatAt(EntityPlayer aPlayer, Utils.ChatString rock2, String mDetail) {
+		if(aPlayer.isClientWorld()) {
+			net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(rock2.toString() + mDetail);
+			aPlayer.addChatMessage(chaty);
+		} else {
+			Utils.NW_PJ.sendToPlayer(new ChatPacket(rock2), (EntityPlayerMP) aPlayer);
+		}
+	}
+
+	public static void chatAt(EntityPlayer aPlayer, Utils.ChatString rock2, byte mSourceType, short matID) {
+		if(aPlayer.isClientWorld()) {
+			net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(rock2.toString() + StatCollector.translateToLocal("msg.type" + mSourceType + ".name") + matID);
+			aPlayer.addChatMessage(chaty);
+		} else {
+			Utils.NW_PJ.sendToPlayer(new ChatPacket(rock2), (EntityPlayerMP) aPlayer);
+		}
+	}
+
 	public static enum ChatString {
 		ROCK("msg.rock.name"),
 		DRILL_FAIL("msg.iesamplefail.name"),
@@ -140,7 +158,8 @@ public class Utils {
 		DUPE("msg.duplicate.name"),
 		DEPLETED("msg.depleted.name"),
 		CHANGED("msg.iechanged.name"),
-		RECLASS("msg.reclass.name")
+		RECLASS("msg.reclass.name"),
+		FINDING("msg.finding.name")
 		;
 		ChatString(String key) {
 			mKey = key;

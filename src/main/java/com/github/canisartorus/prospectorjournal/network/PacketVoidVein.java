@@ -17,7 +17,7 @@ import net.minecraft.world.IBlockAccess;
 /**
  * @author Gregorius Techneticies
  * @author Alexander James
- * 
+ *
  * optimized to have a smaller Packet Size within XZ[-524288;+524287]
  * Because most people don't go farther, they shouldn't be punished with Bandwidth waste-age, if they are not that far away.
  */
@@ -26,13 +26,13 @@ public class PacketVoidVein implements IPacket {
 	public int mZ;
 	private final byte mDecoderType;
 	public String mName;
-	
+
 	/** @param aDecoderType has to be a Number between [0 and 3] */
 	public PacketVoidVein(int aDecoderType) {
 		mDecoderType = (byte)(aDecoderType & 3);
 		mX = mZ = 0;
 	}
-	
+
 	/** The Super-Constructor for the Packet to be sent. */
 	public PacketVoidVein(int aX, int aZ, String aName) {
 		mX = aX;
@@ -40,12 +40,12 @@ public class PacketVoidVein implements IPacket {
 		mName = aName;
 		mDecoderType = (byte)((mX>=Short.MIN_VALUE&&mX<=Short.MAX_VALUE?1:0)|(mZ>=Short.MIN_VALUE&&mZ<=Short.MAX_VALUE?2:0));
 	}
-	
+
 	@Override
 	public final byte getPacketID() {
 		return (byte)(24 + mDecoderType); // 4 Packet Handlers need to be registered to receive the possibilities of the 0-3 Range of mDecoderType.
 	}
-	
+
 	@Override
 	public final ByteArrayDataOutput encode() {
 		ByteArrayDataOutput rOut = ByteStreams.newDataOutput(16);
@@ -54,7 +54,7 @@ public class PacketVoidVein implements IPacket {
 		rOut.writeUTF(mName);
 		return rOut;
 	}
-	
+
 	@Override
 	public final IPacket decode(ByteArrayDataInput aData) {
 		return new PacketVoidVein((mDecoderType&1)!=0?aData.readShort():aData.readInt(), (mDecoderType&2)!=0?aData.readShort():aData.readInt(), aData.readUTF());
@@ -94,6 +94,7 @@ public class PacketVoidVein implements IPacket {
 		if (tDat.isValid()) {
 			ProspectorJournal.voidVeins.add(tDat);
 			Utils.writeJson(Utils.IE_VOID_FILE);
+			if (ConfigHandler.verbose) Utils.chatAt(mPlayer, Utils.ChatString.FINDING, mName);
 		}
 	}
 }

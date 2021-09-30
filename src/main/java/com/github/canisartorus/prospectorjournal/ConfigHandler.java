@@ -33,6 +33,7 @@ public class ConfigHandler {
 		ConfigHandler.needHUD = tMainConfig.getBoolean("HelmetHUD_false", GENERAL, false, "If the tracking arrow should only be visible when wearing headgear with an integrated HUD, in addition to when carrying the notebook.");
 		ConfigHandler.HUDsList = tMainConfig.getStringList("Available HUDs", GENERAL, new String[] {"glasses", "item.BiblioGlasses", "item.logisticHUDGlasses", "reactorcraft_item_goggles", "rotarycraft_item_iogoggles", "armor.goggles", "ItemGoggles", "magitechGoggles", "revealingHelm", "pneumaticHelmet", "naturalistHelmet"}, "The internal names of every piece of headgear that is considered have a HUD.");
 		ConfigHandler.trackRock = tMainConfig.getBoolean("TrackStoneRocks_false", GENERAL, false, "Should indicator rocks for stone layer types be tracked? Normally non-ore rock data is discarded.");
+		ConfigHandler.verbose = tMainConfig.getBoolean("MentionSamplePickUp_true", GENERAL, true, "Sends chat message when a smaple is recorded.");
 		ConfigHandler.makeBoxes = tMainConfig.getBoolean("CreateSampleBags_false", GENERAL, false, "Register the sample bag and Sample Box items to hold lots of Rocks. \n ACHTUNG! Currently very buggy.");
 		ConfigHandler.fortunateBoxes = tMainConfig.getBoolean("FortuneHarvestRocks_true", GENERAL, true, "If the sample box and sample bag items should have built-in enchantments like a GT Tool.");
 		ConfigHandler.smeltBoxes = tMainConfig.getBoolean("AutoSmeltRocks_false", GENERAL, false, "Will sample boxes made of hot metals bake the rocks they contain?");

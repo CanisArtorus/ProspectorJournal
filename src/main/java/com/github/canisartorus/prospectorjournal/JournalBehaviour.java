@@ -239,6 +239,8 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		    	//make a new entry
 	    		ProspectorJournal.bedrockFault.add(new GeoTag(meta, dim, x, z, sourceType == Utils.BEDROCK ? false : true));
 	    		Utils.writeJson(Utils.GT_BED_FILE);
+					if (ConfigHandler.verbose)
+						Utils.chatAt(aPlayer, ChatString.FINDING, sourceType, meta);
 	    	}
 	    }
 	    if(meta == 0) return;
@@ -276,12 +278,15 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
                 		}
                 		break;
                 	default:
-                    	if(n.sample)
-                    		return;
+                  	if(n.sample) {
+											if (ConfigHandler.verbose)
+												Utils.chatAt(aPlayer, ChatString.FLOWERS);
+                  		return;
+										}
                     	if (n.y > (short) 10)
                     		continue;
-						Utils.chatAt(aPlayer, ChatString.RECLASS);// "I've found that vein already!");
-						return;
+										Utils.chatAt(aPlayer, ChatString.RECLASS);// "I've found that vein already!");
+										return;
                 	}
                 	// Editing an existing vein
                 	if(n.multiple == 4) {
@@ -292,6 +297,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
                 		n.z = z;
                 	}
                     Utils.writeJson(Utils.GT_FILE);
+									if(ConfigHandler.verbose) Utils.chatAt(aPlayer, ChatString.FINDING, sourceType, meta);
                     return;
                 }
             }
@@ -308,5 +314,6 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
         	ProspectorJournal.rockSurvey.add(new RockMatter(meta, dim, x, 10, z, true));
 		}
         Utils.writeJson(Utils.GT_FILE);
+		if(ConfigHandler.verbose) Utils.chatAt(aPlayer, ChatString.FINDING, sourceType, meta);
 	}
 }
