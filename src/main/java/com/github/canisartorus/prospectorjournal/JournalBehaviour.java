@@ -176,7 +176,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 	 * @param aPlayer
 	 */
 //	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
-	public static void TakeSample(final World aWorld, int x, int y, int z, int meta, byte sourceType, final EntityPlayer aPlayer) {
+	public static void TakeSample(final World aWorld, int x, int y, int z, short meta, byte sourceType, final EntityPlayer aPlayer) {
 		final int dim = aWorld.provider.dimensionId;
 		if(ConfigHandler.debug)
 			System.out.println(ProspectorJournal.MOD_NAME+"[Info] Sampling "+meta+" at "+ x +","+y+","+z+" on world "+dim);

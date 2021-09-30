@@ -13,7 +13,7 @@ public class ConfigHandler {
 		trackRock, fortunateBoxes, smeltBoxes,
 		allowSmelt, exportDwarf,
 		applyPatches, patchHazMat, //generateArmour,
-		debug, debugBag, backupTextArrows,
+		debug, debugBag, backupTextArrows, verbose,
 		makeBoxes
 		;
 	public static double arrowSize
