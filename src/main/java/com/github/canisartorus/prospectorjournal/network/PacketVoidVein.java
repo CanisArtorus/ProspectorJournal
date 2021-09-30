@@ -1,6 +1,7 @@
 package com.github.canisartorus.prospectorjournal.network;
 
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.ConfigHandler;
 import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 import com.github.canisartorus.prospectorjournal.lib.Utils;
 import com.github.canisartorus.prospectorjournal.lib.VoidMine;
