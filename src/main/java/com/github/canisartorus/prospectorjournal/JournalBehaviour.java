@@ -82,14 +82,14 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 			final ItemStack sample = ((gregapi.block.prefixblock.PrefixBlock) b).getItemStackFromBlock(aWorld, x, y, z, gregapi.data.CS.SIDE_INVALID);
 			final String tName = b.getUnlocalizedName();
 			if(tName.endsWith(".bedrock")) {
-				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.BEDROCK, aPlayer);
+				TakeSample(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.BEDROCK, aPlayer);
 			} else if (tName.startsWith("gt.meta.ore.normal.")) {
-				TakeSample(aWorld, x, y, z, sample.getItemDamage(), Utils.ORE_VEIN, aPlayer);
+				TakeSample(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ORE_VEIN, aPlayer);
 			} else
 				Utils.chatAt(aPlayer, ChatString.SMALL);// "Small ore, not worth recording");
 			return true;
 		} else if( b instanceof gregapi.block.misc.BlockBaseFlower) {
-			int type = 0;
+			short type = 0;
 			if(b.getUnlocalizedName().equalsIgnoreCase("gt.block.flower.a")) {
 				switch(aWorld.getBlockMetadata(x, y, z)) {
 				case 0:	// Gold
