@@ -33,7 +33,7 @@ public class PacketOreSurvey extends PacketCoordinates implements IPacket {
 //			return;
 //		}
 		try {
-			if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID +"[INFO] : Client recieved sample of material "+ meta +".");
+			if(com.github.canisartorus.prospectorjournal.ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID +"[INFO] : Client recieved sample of material " + meta + ".");
 			com.github.canisartorus.prospectorjournal.JournalBehaviour.TakeSample((net.minecraft.world.World)aWorld, mX, mY, mZ, meta, type, net.minecraft.client.Minecraft.getMinecraft().thePlayer);
 		} catch (Exception e) {
 			System.out.println(ProspectorJournal.MOD_NAME + "[WARNING] : Packet processing failure "+e.toString());
