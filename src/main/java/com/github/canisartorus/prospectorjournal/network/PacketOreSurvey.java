@@ -14,11 +14,11 @@ public class PacketOreSurvey extends PacketCoordinates implements IPacket {
 
 	public short meta = 0;
 	public byte type;
-	
+
 	public PacketOreSurvey(int aDecoderType) {
 		super(aDecoderType);
 	}
-	
+
 	public PacketOreSurvey(int aX, int aY, int aZ, short aMeta, byte aType) {
 		super(aX, aY, aZ);
 		meta = aMeta;
@@ -33,6 +33,7 @@ public class PacketOreSurvey extends PacketCoordinates implements IPacket {
 //			return;
 //		}
 		try {
+			if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID +"[INFO] : Client recieved sample of material "+ meta +".");
 			com.github.canisartorus.prospectorjournal.JournalBehaviour.TakeSample((net.minecraft.world.World)aWorld, mX, mY, mZ, meta, type, net.minecraft.client.Minecraft.getMinecraft().thePlayer);
 		} catch (Exception e) {
 			System.out.println(ProspectorJournal.MOD_NAME + "[WARNING] : Packet processing failure "+e.toString());
