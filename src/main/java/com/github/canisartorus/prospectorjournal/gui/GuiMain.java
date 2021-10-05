@@ -75,8 +75,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		}
 		// on failure, display would be meaningless, so close it
 		System.out.println(ProspectorJournal.MOD_ID + "[WARN]: Dimension list can't find "+ this.dimID +". GUIMain closed.");
-		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: loaded dimensions: " + new ArrayList<Integer>(DimensionManager.getIDs()) );}
-		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: knowable dimensions: " + new ArrayList<Integer>(DimensionManager.getStaticDimensionIDs()) );}
+		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: loaded dimensions: " + DimensionManager.getIDs().toString() );}
+		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: knowable dimensions: " + DimensionManager.getStaticDimensionIDs().toString() );}
 		this.dimID = 0;
 		astralSearch();
 		this.mc.displayGuiScreen(null);
