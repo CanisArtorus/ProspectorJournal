@@ -129,9 +129,9 @@ public class Utils {
 		}
 	}
 
-	public static void chatAt(EntityPlayer aPlayer, Utils.ChatString rock2, String mDetail) {
+	public static void chatAt(EntityPlayer aPlayer, Utils.ChatString rock2, byte mSourceType, String mDetail) {
 		if(aPlayer.isClientWorld()) {
-			net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(rock2.toString() + mDetail);
+			net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(rock2.toString() + StatCollector.translateToLocal("msg.type" + mSourceType + ".name") + " " + mDetail);
 			aPlayer.addChatMessage(chaty);
 		} else {
 			Utils.NW_PJ.sendToPlayer(new ChatPacket(rock2), (EntityPlayerMP) aPlayer);

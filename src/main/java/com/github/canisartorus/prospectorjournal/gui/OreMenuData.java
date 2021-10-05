@@ -95,7 +95,7 @@ public class OreMenuData extends AbstractMenuData {
 		} else if(r.datum.dead)
 			colour = Utils.GRAY;
 		else colour = Utils.WHITE;
-		
+
 		ts = r.datum.sample ? ("<"+ Integer.toString(r.datum.y)+ "?" ) : Integer.toString(r.datum.y);
    		FRO.drawString(ts, aStart + (83 -(FRO.getStringWidth(ts)/2)), l, colour);
 		ts = r.datum.multiple + StatCollector.translateToLocal("sym.x.name");
@@ -106,13 +106,13 @@ public class OreMenuData extends AbstractMenuData {
 		if(tOre == 0)	{	;
 		} else if(lastSort == Utils.DISTANCE || lastSort == tOre) {
 			try {
-			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l,  OP.blockDust.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 16).getIconIndex(), 16, 16);
+			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.crushedPurified.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 16).getIconIndex(), 16, 16);
 			} catch (Throwable e) {
 				aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, Textures.ItemIcons.RENDERING_ERROR.getIcon(0), 16, 16);
 				e.printStackTrace();
 			}
 		} else {
-			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.crushedPurified.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 1).getIconIndex(), 16, 16);
+			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.dustSmall.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 1).getIconIndex(), 16, 16);
 		}
 
     	ts = Integer.toString(r.dist);

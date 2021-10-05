@@ -373,7 +373,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 
 //	    net.minecraft.client.renderer.entity.RenderItem.getInstance().renderIcon(aX, aY, aIcon, 16, 16);
 	    super.drawTexturedModelRectFromIcon(aX, aY, aIcon, aWide, aHeight);
-			if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Drawing Icon "+ aIcon.toString() + " at " + aX + "," + aY);}
+			// if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Drawing Icon "+ aIcon.toString() + " at " + aX + "," + aY);}
 
 	    GL11.glEnable(GL11.GL_LIGHTING);
 	    GL11.glDisable(GL11.GL_ALPHA_TEST);

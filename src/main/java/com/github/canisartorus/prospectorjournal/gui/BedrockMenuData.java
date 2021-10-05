@@ -23,8 +23,8 @@ public class BedrockMenuData extends AbstractMenuData {
 	private List<Display<GeoTag>> rockSpots = new ArrayList<>();
 
 	public BedrockMenuData() {
-		super(StatCollector.translateToLocal("btn.bedrock.name"), 
-				Utils.BEDROCK 
+		super(StatCollector.translateToLocal("btn.bedrock.name"),
+				Utils.BEDROCK
 				);
 	}
 
@@ -87,7 +87,7 @@ public class BedrockMenuData extends AbstractMenuData {
 		} else if(q.datum.dead)
 			colour = Utils.GRAY;
 		else colour = Utils.WHITE;
-		
+
 		ts = q.datum.sample ? StatCollector.translateToLocal("str.floor.name") : "0";
    		FRO.drawString(ts, aStart + (83 -(FRO.getStringWidth(ts)/2)), l, colour);
    		ts = StatCollector.translateToLocal("sym.inf.name");
@@ -98,13 +98,13 @@ public class BedrockMenuData extends AbstractMenuData {
 		if(tOre == 0)	{	;
 		} else if(lastSort == Utils.DISTANCE || lastSort == tOre) {
 			try {
-			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.dust.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 16).getIconIndex(), 16, 16);
+			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.oreRaw.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 16).getIconIndex(), 16, 16);
 			} catch (Throwable e) {
 				e.printStackTrace();
 				aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, Textures.ItemIcons.RENDERING_ERROR.getIcon(0), 16, 16);
 			}
 		} else {
-			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.crushedPurified.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 1).getIconIndex(), 16, 16);
+			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.crushedRefined.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 1).getIconIndex(), 16, 16);
 		}
 
     	ts = Integer.toString(q.dist);
@@ -113,7 +113,7 @@ public class BedrockMenuData extends AbstractMenuData {
     	FRO.drawString(ts, aStart + (52 -(FRO.getStringWidth(ts)/2)), l, colour);
     	ts = Integer.toString(q.datum.z);
     	FRO.drawString(ts, aStart + (112 -(FRO.getStringWidth(ts)/2)), l, colour);
-		
+
 	}
 
 	@Override

@@ -95,7 +95,7 @@ public class PacketVoidVein implements IPacket {
 		if (tDat.isValid()) {
 			ProspectorJournal.voidVeins.add(tDat);
 			Utils.writeJson(Utils.IE_VOID_FILE);
-			if (ConfigHandler.verbose) Utils.chatAt(mPlayer, Utils.ChatString.FINDING, mName);
+			if (ConfigHandler.verbose) Utils.chatAt(mPlayer, Utils.ChatString.FINDING, Utils.EXCAVATOR, mName);
 		}
 	}
 }
