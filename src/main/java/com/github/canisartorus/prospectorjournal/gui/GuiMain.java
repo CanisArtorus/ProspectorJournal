@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.github.canisartorus.prospectorjournal.KeyBindings;
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.ConfigHandler;
 //import com.github.canisartorus.prospectorjournal.compat.IEHandler;
 import com.github.canisartorus.prospectorjournal.lib.DimTag;
 import com.github.canisartorus.prospectorjournal.lib.Dwarf;
