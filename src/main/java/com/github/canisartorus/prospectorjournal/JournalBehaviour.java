@@ -321,6 +321,6 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
         	ProspectorJournal.rockSurvey.add(new RockMatter(meta, dim, x, 10, z, true));
 		}
         Utils.writeJson(Utils.GT_FILE);
-		if(ConfigHandler.verbose) Utils.chatAt(aPlayer, ChatString.FINDING, sourceType, meta);
+		if(ConfigHandler.verbose && sourceType != Utils.FLOWER && sourceType != Utils.BEDROCK) Utils.chatAt(aPlayer, ChatString.FINDING, sourceType, meta);
 	}
 }
