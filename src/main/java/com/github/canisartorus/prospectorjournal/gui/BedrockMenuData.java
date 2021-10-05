@@ -104,7 +104,7 @@ public class BedrockMenuData extends AbstractMenuData {
 				aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, Textures.ItemIcons.RENDERING_ERROR.getIcon(0), 16, 16);
 			}
 		} else {
-			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.crushedRefined.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 1).getIconIndex(), 16, 16);
+			aMenu.drawTexturedModelRectFromIcon(aStart + 172, l, OP.crushedCentrifuged.mat(OreDictMaterial.MATERIAL_ARRAY[tOre], 1).getIconIndex(), 16, 16);
 		}
 
     	ts = Integer.toString(q.dist);
