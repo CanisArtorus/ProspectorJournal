@@ -74,7 +74,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			}
 		}
 		// on failure, display would be meaningless, so close it
-		System.out.println(ProspectorJournal.MOD_ID + "[WARN]: Dimension list late to populate. GUIMain closed.");
+		System.out.println(ProspectorJournal.MOD_ID + "[WARN]: Dimension list can't find "+ this.dimID +". GUIMain closed.");
+		this.dimID = 0;
 		astralSearch();
 		this.mc.displayGuiScreen(null);
 	}
@@ -91,7 +92,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 				} catch (Throwable t) {
 					ProspectorJournal.dims.add(new DimTag(i, Integer.toString(i)));
 				}
-			}
+			} else if (ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[WARN]: world is NULL for dimension " + i + ", skipping it in the astralSearch list");}
 		}
 		Collections.sort(ProspectorJournal.dims, DimTag.astralOrder);
 	}
