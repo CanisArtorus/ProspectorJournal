@@ -35,7 +35,7 @@ public final class ProspectorJournal extends gregapi.api.Abstract_Mod {
 	/** This is your Mods Name */
 	public static final String MOD_NAME = "ProspectorJournal";
 	/** This is your Mods Version */
-	public static final String VERSION = "ProspectorJournal-MC1710-0.10.5"; 
+	public static final String VERSION = "ProspectorJournal-MC1710-0.11.0"; 
 	/** Contains a ModData Object for ID and Name. Doesn't have to be changed. */
 	public static gregapi.code.ModData MOD_DATA = new gregapi.code.ModData(MOD_ID, MOD_NAME);
 

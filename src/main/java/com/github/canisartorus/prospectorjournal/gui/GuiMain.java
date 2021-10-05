@@ -75,8 +75,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		}
 		// on failure, display would be meaningless, so close it
 		System.out.println(ProspectorJournal.MOD_ID + "[WARN]: Dimension list can't find "+ this.dimID +". GUIMain closed.");
-		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: loaded dimensions: " + DimensionManager.getIDs() );}
-		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: knowable dimensions: " + DimensionManager.getStaticDimensionIDs() );}
+		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: loaded dimensions: " + new ArrayList<Integer>(DimensionManager.getIDs()) );}
+		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: knowable dimensions: " + new ArrayList<Integer>(DimensionManager.getStaticDimensionIDs()) );}
 		this.dimID = 0;
 		astralSearch();
 		this.mc.displayGuiScreen(null);
@@ -90,13 +90,13 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		// getIDs() is for loaded worlds
 		// getStaticDimensionIDs() "not public api" actually enumerates the dimensions that are possible
 		for (int i : DimensionManager.getStaticDimensionIDs()) {
-			if(DimensionManager.getWorld(i) != null) {
+			// if(DimensionManager.getWorld(i) != null) {
 				try {
 					ProspectorJournal.dims.add(new DimTag(i, DimensionManager.getProvider(i).getDimensionName()));
 				} catch (Throwable t) {
 					ProspectorJournal.dims.add(new DimTag(i, Integer.toString(i)));
 				}
-			} else if (ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[WARN]: world is NULL for dimension " + i + ", skipping it in the astralSearch list");} // 10.5 - not reached, not problem #9
+			// } else if (ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[WARN]: world is NULL for dimension " + i + ", skipping it in the astralSearch list");} // 10.4 - not reached, not directly problem #9; is 10.5, same problem
 		}
 		Collections.sort(ProspectorJournal.dims, DimTag.astralOrder);
 	}
