@@ -75,6 +75,8 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		}
 		// on failure, display would be meaningless, so close it
 		System.out.println(ProspectorJournal.MOD_ID + "[WARN]: Dimension list can't find "+ this.dimID +". GUIMain closed.");
+		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: loaded dimensions: " + DimensionManager.getIDs() );}
+		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: knowable dimensions: " + DimensionManager.getStaticDimensionIDs() );}
 		this.dimID = 0;
 		astralSearch();
 		this.mc.displayGuiScreen(null);
@@ -85,14 +87,16 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 	 */
 	public void astralSearch() {
 		ProspectorJournal.dims.clear();
-		for (int i : DimensionManager.getIDs()) {
+		// getIDs() is for loaded worlds
+		// getStaticDimensionIDs() "not public api" actually enumerates the dimensions that are possible
+		for (int i : DimensionManager.getStaticDimensionIDs()) {
 			if(DimensionManager.getWorld(i) != null) {
 				try {
 					ProspectorJournal.dims.add(new DimTag(i, DimensionManager.getProvider(i).getDimensionName()));
 				} catch (Throwable t) {
 					ProspectorJournal.dims.add(new DimTag(i, Integer.toString(i)));
 				}
-			} else if (ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[WARN]: world is NULL for dimension " + i + ", skipping it in the astralSearch list");}
+			} else if (ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[WARN]: world is NULL for dimension " + i + ", skipping it in the astralSearch list");} // 10.5 - not reached, not problem #9
 		}
 		Collections.sort(ProspectorJournal.dims, DimTag.astralOrder);
 	}
