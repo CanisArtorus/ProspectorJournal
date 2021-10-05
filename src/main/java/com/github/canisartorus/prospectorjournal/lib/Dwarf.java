@@ -52,14 +52,6 @@ public class Dwarf implements Runnable {
 			return N_SELF * C_SELF;
 		return 0;
 	}
-//	public static int getFractionIn(MineralMine deposit, short product) {
-//		if (deposit instanceof GeoTag)
-//			return Dwarf.getFractionIn(((GeoTag)deposit).ore, product);
-//		if (deposit instanceof VoidMine)
-//			return com.github.canisartorus.prospectorjournal.compat.IEHandler.Dwarf.getFractionIn(((VoidMine)deposit).oreSet, product);
-//		return 0;
-//	}
-
 
 	/**
 	 *  Reads the list of materials and byproducts to build a data table
@@ -82,6 +74,7 @@ public class Dwarf implements Runnable {
 					gc.mBy2.put(odm.mID, C_PURE + 3 - j);
 				}
 				/*
+				// 6.14.15 changed how this works
 				switch (odm.mByProducts.size()) {
 				case 0:
 					gc.mBy.put(odm.mID, N_SELF);
@@ -136,8 +129,6 @@ public class Dwarf implements Runnable {
 				gc.mBy2.putIfAbsent(odm.mID, C_PURE);
 				*/
 				if(ConfigHandler.allowSmelt) {
-//					if(ConfigHandler.debug)
-//						System.out.println("smelting "+odm.mID);
 					final short tID = odm.mTargetSmelting.mMaterial.mID;
 					final int purity = (int) (odm.mTargetSmelting.mAmount / gregapi.data.CS.U9);
 					if (purity > gc.mBy2.getOrDefault(tID, 0))

@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import com.github.canisartorus.prospectorjournal.ProspectorJournal;
+import com.github.canisartorus.prospectorjournal.lib.Dwarf;
 import com.github.canisartorus.prospectorjournal.network.ChatPacket;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,7 +51,7 @@ public class Utils {
         	json = gson.toJson(ProspectorJournal.bedrockFault);
         	break;
         case DWARF_FILE:
-        	json = gson.toJson(com.github.canisartorus.prospectorjournal.lib.Dwarf.knowledge);
+        	json = gson.toJson(Dwarf.knowledge);
         	break;
         case IE_VOID_FILE:
         	json = gson.toJson(ProspectorJournal.voidVeins);
@@ -139,7 +140,7 @@ public class Utils {
 
 	public static void chatAt(EntityPlayer aPlayer, Utils.ChatString rock2, byte mSourceType, short matID) {
 		if(aPlayer.isClientWorld()) {
-			net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(rock2.toString() + StatCollector.translateToLocal("msg.type" + mSourceType + ".name") + matID);
+			net.minecraft.util.ChatComponentText chaty = new net.minecraft.util.ChatComponentText(rock2.toString() + StatCollector.translateToLocal("msg.type" + mSourceType + ".name") + " "+ Dwarf.name(matID) );
 			aPlayer.addChatMessage(chaty);
 		} else {
 			Utils.NW_PJ.sendToPlayer(new ChatPacket(rock2), (EntityPlayerMP) aPlayer);

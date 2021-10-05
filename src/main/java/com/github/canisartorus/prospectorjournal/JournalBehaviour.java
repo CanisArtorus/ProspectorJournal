@@ -51,11 +51,11 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 		if(!aWorld.isRemote) {
 			// stuff that needs server-side data
 		final net.minecraft.tileentity.TileEntity i = aWorld.getTileEntity(x, y, z);
-		if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: server clicked a TileEntity");
+		// if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: server clicked a TileEntity");
 		if (i instanceof TileEntityBase03MultiTileEntities) {
-			if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server clicked on a gt.TEB03MultiTileEntity");
+			// if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server clicked on a gt.TEB03MultiTileEntity");
 			if(((TileEntityBase03MultiTileEntities)i).getTileEntityName().equalsIgnoreCase("gt.multitileentity.rock")) {
-				if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server clicked a gtRock!");
+				// if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server clicked a gtRock!");
 				// serverside data only!!!
 				final ItemStack sample = ((gregtech.tileentity.misc.MultiTileEntityRock)i).mRock;	//XXX GT
 				if(sample == null) {
@@ -69,10 +69,10 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 					Utils.chatAt(aPlayer, ChatString.ROCK);
 				} else if ( gregapi.data.OP.oreRaw.contains(sample) ){
 					// the rawOre 'rocks' that specifically indicate a bedrock vein
-					if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server found a RawOre Rock!!");
+					// if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server found a RawOre Rock!!");
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.FLOWER, aPlayer);
 				} else {
-					if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server found an ore bearing Rock.");
+					// if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server found an ore bearing Rock.");
 					TakeSampleServer(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ROCK, aPlayer);
 				}
 				return true;
@@ -164,7 +164,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 
 //	@cpw.mods.fml.relauncher.SideOnly(cpw.mods.fml.relauncher.Side.SERVER)
 	static void TakeSampleServer(final World aWorld, int x, int y, int z, short meta, byte sourceType, final EntityPlayer aPlayer) {
-		if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server is thinking about the sample.");
+		// if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server is thinking about the sample.");
 		if (sourceType == Utils.ROCK && ( meta == 8649 || meta == 8757) ) {
 			Utils.chatAt(aPlayer, ChatString.METEOR);// "It fell from the sky. Not related to an ore vein.");
 //			return;

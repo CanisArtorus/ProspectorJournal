@@ -46,6 +46,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 
 	public GuiMain() {
 		oSearchBox = new SearchBox(this);
+		if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: GUIMain initializing...");}
 	}
 
 	private static void allClear() {
@@ -72,6 +73,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			}
 		}
 		// on failure, display would be meaningless, so close it
+		System.out.println(ProspectorJournal.MOD_ID + "[WARN]: Dimension list late to populate. GUIMain closed.");
 		astralSearch();
 		this.mc.displayGuiScreen(null);
 	}
@@ -162,6 +164,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 			final int i = button.id / 2;
 			ProspectorJournal.doGui = true;
 			CurrentData.trackCoords(low + i);
+			if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Tracking started; GUIMain closed voluntarily.");}
 			this.mc.displayGuiScreen(null);
 			allClear();
 		}
@@ -172,14 +175,16 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 		// searchbox stuff
 		if(oSearchBox.hasFocus){
 			if(i == 1) {	//esc key
-				this.mc.displayGuiScreen(null);
-				allClear();
-				return;
+				// this.mc.displayGuiScreen(null);
+				// allClear();
+				// return;
+				oSearchBox.hasFocus = false;
 			} // else if (i == ) // enter & return keys
 		// TODO typing in search
 			updateScreen();
 		// close on hotkey press, or ESCape key
 		} else if(i == KeyBindings.rocksMenu.getKeyCode() || i == 1) {
+			if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: GUIMain closed voluntarily by keypress");}
 			this.mc.displayGuiScreen(null);
 			allClear();
 		}
@@ -362,6 +367,7 @@ public class GuiMain extends net.minecraft.client.gui.GuiScreen {
 
 //	    net.minecraft.client.renderer.entity.RenderItem.getInstance().renderIcon(aX, aY, aIcon, 16, 16);
 	    super.drawTexturedModelRectFromIcon(aX, aY, aIcon, aWide, aHeight);
+			if(ConfigHandler.debug) {System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Drawing Icon "+ aIcon.toString() + " at " + aX + "," + aY);}
 
 	    GL11.glEnable(GL11.GL_LIGHTING);
 	    GL11.glDisable(GL11.GL_ALPHA_TEST);
