@@ -57,7 +57,7 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 			if(((TileEntityBase03MultiTileEntities)i).getTileEntityName().equalsIgnoreCase("gt.multitileentity.rock")) {
 				// if(ConfigHandler.debug) System.out.println(ProspectorJournal.MOD_ID + "[INFO]: Server clicked a gtRock!");
 				// serverside data only!!!
-				final ItemStack sample = ((gregtech.tileentity.misc.MultiTileEntityRock)i).mRock;	//XXX GT
+				final ItemStack sample = ((gregtech.tileentity.placeables.MultiTileEntityRock)i).mRock;	//XXX GT
 				if(sample == null) {
 					// is default rock.
 					if(ConfigHandler.trackRock) TakeSampleServer(aWorld, x, y, z,
