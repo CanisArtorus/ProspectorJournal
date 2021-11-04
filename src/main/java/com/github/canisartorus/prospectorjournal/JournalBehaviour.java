@@ -89,10 +89,13 @@ public class JournalBehaviour extends gregapi.item.multiitem.behaviors.IBehavior
 			final String tName = b.getUnlocalizedName();
 			if(tName.endsWith(".bedrock")) {
 				TakeSample(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.BEDROCK, aPlayer);
-			} else if (tName.startsWith("gt.meta.ore.normal.")) {
-				TakeSample(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ORE_VEIN, aPlayer);
-			} else
-				Utils.chatAt(aPlayer, ChatString.SMALL);// "Small ore, not worth recording");
+			} else if (tName.startsWith("gt.meta.ore.")) {
+			  if (tName.startsWith("gt.meta.ore.normal.")) {
+					TakeSample(aWorld, x, y, z, (short)sample.getItemDamage(), Utils.ORE_VEIN, aPlayer);
+				} else
+					Utils.chatAt(aPlayer, ChatString.SMALL);// "Small ore, not worth recording");
+			} // else
+				// storage blocks, not ore.
 			return true;
 		} else if( b instanceof gregapi.block.misc.BlockBaseFlower) {
 			short type = 0;
